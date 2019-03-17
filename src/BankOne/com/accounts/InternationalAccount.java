@@ -13,8 +13,8 @@ public class InternationalAccount extends Account {
         } else throw new Exception("NotEnoughMoney");
     }
 
-    public InternationalAccount(BigDecimal amountOfMoney, int debitIdCount,
+    public InternationalAccount(BigDecimal amountOfMoney,
                                 String number, Customer ownerOfAccount) {
-        super(amountOfMoney, debitIdCount, number, ownerOfAccount);
+        super(amountOfMoney, number, ownerOfAccount);
     }
 }

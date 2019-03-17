@@ -7,9 +7,9 @@ import java.util.Date;
 
 public class InternationalOutTransaction extends Transaction {
 
-    private InternationalAccount internationalAccountOfTransaction;
+    private final InternationalAccount internationalAccountOfTransaction;
 
-    private String toWhichAccountNumber;
+    private final String toWhichAccountNumber;
 
     public InternationalOutTransaction(int id, BigDecimal deliveredAmount, Date dateOfTransaction,
                                        InternationalAccount internationalAccountOfTransaction,

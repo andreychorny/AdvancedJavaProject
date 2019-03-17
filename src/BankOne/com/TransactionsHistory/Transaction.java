@@ -5,11 +5,11 @@ import java.util.Date;
 
 public abstract class Transaction {
 
-    private int id;
+    private final int id;
 
-    private BigDecimal deliveredAmount;
+    private final BigDecimal deliveredAmount;
 
-    private Date dateOfTransaction;
+    private final Date dateOfTransaction;
 
     Transaction(int id, BigDecimal deliveredAmount, Date dateOfTransaction) {
         this.id = id;

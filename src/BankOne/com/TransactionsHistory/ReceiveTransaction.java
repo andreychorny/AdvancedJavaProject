@@ -7,9 +7,9 @@ import java.util.Date;
 
 public class ReceiveTransaction extends Transaction {
 
-    private Account receiveAccount;
+    private final Account receiveAccount;
 
-    private String fromWhichAccountNumber;
+    private final String fromWhichAccountNumber;
 
     public ReceiveTransaction(int id, BigDecimal deliveredAmount,
                               Date dateOfTransaction, Account receiveAccount,

@@ -15,9 +15,9 @@ public class SavingAccount extends Account {
         } else throw new Exception("NotEnoughMoney");
     }
 
-    public SavingAccount(BigDecimal amountOfMoney, int debitIdCount, String number,
+    public SavingAccount(BigDecimal amountOfMoney, String number,
                          Customer ownerOfAccount) {
-        super(amountOfMoney, debitIdCount, number, ownerOfAccount);
+        super(amountOfMoney, number, ownerOfAccount);
         this.creditIdCount = 0;
     }
 }

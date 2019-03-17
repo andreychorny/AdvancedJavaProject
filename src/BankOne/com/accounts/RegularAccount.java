@@ -15,9 +15,9 @@ public class RegularAccount extends Account {
         } else throw new Exception("NotEnoughMoney");
     }
 
-    public RegularAccount(BigDecimal amountOfMoney, int debitIdCount, String number,
+    public RegularAccount(BigDecimal amountOfMoney, String number,
                           Customer ownerOfAccount) {
-        super(amountOfMoney, debitIdCount, number, ownerOfAccount);
+        super(amountOfMoney, number, ownerOfAccount);
         this.creditIdCount = 0;
     }
 }

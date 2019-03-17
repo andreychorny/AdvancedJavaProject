@@ -7,9 +7,9 @@ import java.util.Date;
 
 public class RegularOutTransaction extends Transaction {
 
-    private RegularAccount regularAccountOfTransaction;
+    private final RegularAccount regularAccountOfTransaction;
 
-    private String toWhichAccountNumber;
+    private final String toWhichAccountNumber;
 
     public RegularOutTransaction(int id, BigDecimal deliveredAmount, Date dateOfTransaction,
                                  RegularAccount regularAccountOfTransaction,

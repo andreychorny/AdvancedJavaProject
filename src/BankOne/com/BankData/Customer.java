@@ -42,4 +42,16 @@ public class Customer {
     void checkHistory() {
 
     }
+
+    public int getAllTransactionsId() {
+        return allTransactionsId;
+    }
+
+    public Map<Integer, Transaction> getHistory() {
+        return history;
+    }
+
+    public void setAllTransactionsId(int allTransactionsId) {
+        this.allTransactionsId = allTransactionsId;
+    }
 }
