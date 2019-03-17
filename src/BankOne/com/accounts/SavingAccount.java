@@ -9,7 +9,7 @@ import java.util.Date;
 public class SavingAccount extends Account {
     private int creditIdCount;
 
-    void credit(Account toWhichAccount, BigDecimal howMuch) throws Exception {
+    public void credit(Account toWhichAccount, BigDecimal howMuch) throws Exception {
         if (getAmountOfMoney().compareTo(howMuch) >= 0) {
             setAmountOfMoney(getAmountOfMoney().subtract(howMuch));
             toWhichAccount.debit(howMuch);

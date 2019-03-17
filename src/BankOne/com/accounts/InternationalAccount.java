@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class InternationalAccount extends Account {
 
-    void wire(Account toWhichAccount, BigDecimal howMuch) throws Exception {
+    public void wire(Account toWhichAccount, BigDecimal howMuch) throws Exception {
         if (getAmountOfMoney().compareTo(howMuch) >= 0) {
             setAmountOfMoney(getAmountOfMoney().subtract(howMuch));
             Date dateOfTransaction = new Date();
