@@ -24,12 +24,23 @@ public abstract class Account {
     void debit(BigDecimal arrivedCash) {
         setAmountOfMoney(getAmountOfMoney().add(arrivedCash));
         Date dateOfTransaction = new Date();
-        historyOfAccount.add(new AccountMemento(amountOfMoney,debitIdCount,number,dateOfTransaction));
-        ownerOfAccount.getHistory().put(ownerOfAccount.getAllTransactionsId(),
-                new ReceiveTransaction(debitIdCount, arrivedCash,dateOfTransaction,
-                        this,this.getNumber()));
-        ownerOfAccount.setAllTransactionsId(ownerOfAccount.getAllTransactionsId()+1);
+        createNewMemento(dateOfTransaction);
+        writeDebitToHistory(dateOfTransaction, arrivedCash);
         debitIdCount++;
+    }
+
+    void createNewMemento(Date dateOfTransaction) {
+        historyOfAccount.add(new AccountMemento(amountOfMoney, debitIdCount, number, dateOfTransaction));
+    }
+
+    void writeDebitToHistory(Date dateOfTransaction, BigDecimal arrivedCash) {
+        ownerOfAccount.getHistory().put(ownerOfAccount.getAllTransactionsId(),
+                createNewReceiveTransaction(dateOfTransaction,arrivedCash));
+        ownerOfAccount.setAllTransactionsId(ownerOfAccount.getAllTransactionsId() + 1);
+    }
+    ReceiveTransaction createNewReceiveTransaction(Date dateOfTransaction, BigDecimal arrivedCash){
+        return new ReceiveTransaction(debitIdCount, arrivedCash, dateOfTransaction,
+                this, this.getNumber());
     }
 
     Account(BigDecimal amountOfMoney, String number, Customer ownerOfAccount) {
@@ -37,7 +48,7 @@ public abstract class Account {
         this.debitIdCount = 0;
         this.number = number;
         this.ownerOfAccount = ownerOfAccount;
-        historyOfAccount.add(new AccountMemento(amountOfMoney,debitIdCount,number,new Date()));
+        historyOfAccount.add(new AccountMemento(amountOfMoney, debitIdCount, number, new Date()));
     }
 
     BigDecimal getAmountOfMoney() {
@@ -70,5 +81,13 @@ public abstract class Account {
 
     public void setOwnerOfAccount(Customer ownerOfAccount) {
         this.ownerOfAccount = ownerOfAccount;
+    }
+
+    public List<AccountMemento> getHistoryOfAccount() {
+        return historyOfAccount;
+    }
+
+    public void setHistoryOfAccount(List<AccountMemento> historyOfAccount) {
+        this.historyOfAccount = historyOfAccount;
     }
 }

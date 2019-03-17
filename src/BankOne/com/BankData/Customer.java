@@ -54,4 +54,12 @@ public class Customer {
     public void setAllTransactionsId(int allTransactionsId) {
         this.allTransactionsId = allTransactionsId;
     }
+
+    public int getInternationalIdCount() {
+        return internationalIdCount;
+    }
+
+    public void setInternationalIdCount(int internationalIdCount) {
+        this.internationalIdCount = internationalIdCount;
+    }
 }
