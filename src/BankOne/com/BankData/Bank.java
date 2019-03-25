@@ -19,7 +19,7 @@ public class Bank {
 
     }
 
-    void createNewCustomer() {
+    static void createNewCustomer() {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter first name of new customer");
         String firstName = in.nextLine();
@@ -27,8 +27,10 @@ public class Bank {
         String lastName = in.nextLine();
         System.out.println("Enter year of birth");
         int yearOfBirth = in.nextInt();
+        yearOfBirth = yearOfBirth - 1900;
         System.out.println("Enter month(number) of birth");
         int monthOfBirth = in.nextInt();
+        monthOfBirth = monthOfBirth - 1 ;
         System.out.println("Enter day of birth");
         int dayOfBirth = in.nextInt();
         customers.add(new Customer(firstName, lastName, new Date(yearOfBirth, monthOfBirth, dayOfBirth), new Date()));
@@ -41,5 +43,17 @@ public class Bank {
             }
         }
         return null;
+    }
+
+    static void outputAllAccounts(){
+        for(Customer customer : customers){
+            for(Account account : customer.getAccounts()){
+                Class accClass = account.getClass();
+                String nameOfClass = accClass.toString();
+                nameOfClass = nameOfClass.substring(nameOfClass.lastIndexOf(".")+1);
+                System.out.println( nameOfClass+": " + account.getNumber());
+                System.out.println("amount of money: " + account.getAmountOfMoney());
+            }
+        }
     }
 }

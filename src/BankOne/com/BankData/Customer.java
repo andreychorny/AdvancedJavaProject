@@ -55,6 +55,7 @@ public class Customer {
 
     void creditFromRegular(int index, Scanner in) throws Exception {
         RegularAccount accInUse = (RegularAccount) accounts.get(index);
+        in.nextLine();
         System.out.println("Write number of account to deliver funds:");
         String deliverToNumber = in.nextLine();
         System.out.println("Amount of money to deliver: ");
@@ -103,13 +104,13 @@ public class Customer {
         int n = in.nextInt();
         switch (n) {
             case 1:
-                accounts.add(new RegularAccount(new BigDecimal(0), createRandomNumber(), this));
+                accounts.add(new RegularAccount(new BigDecimal(1000), createRandomNumber(), this));
                 break;
             case 2:
-                accounts.add(new SavingAccount(new BigDecimal(0), createRandomNumber(), this));
+                accounts.add(new SavingAccount(new BigDecimal(1000), createRandomNumber(), this));
                 break;
             case 3:
-                accounts.add(new InternationalAccount(new BigDecimal(0), createRandomNumber(), this));
+                accounts.add(new InternationalAccount(new BigDecimal(1000), createRandomNumber(), this));
                 break;
             default:
                 chooseOperation();
@@ -119,8 +120,9 @@ public class Customer {
 
     String createRandomNumber() {
         StringBuffer generatedNumber = new StringBuffer("");
-        for (int i = 0; i < 16; i++) {
-            generatedNumber.append((int) Math.random() * 10);
+        for (int i = 1; i < 17; i++) {
+            generatedNumber.append((int) (Math.random() * 10));
+            if(i%4==0 && i!=16) generatedNumber.append("-");
         }
         return generatedNumber.toString();
     }
@@ -166,5 +168,21 @@ public class Customer {
 
     public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public Date getDateOfJoiningToBank() {
+        return dateOfJoiningToBank;
     }
 }

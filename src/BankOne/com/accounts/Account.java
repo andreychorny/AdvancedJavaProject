@@ -21,7 +21,7 @@ public abstract class Account {
 
     private List<AccountMemento> historyOfAccount = new LinkedList<>();
 
-    void debit(BigDecimal arrivedCash) {
+    protected void debit(BigDecimal arrivedCash) {
         setAmountOfMoney(getAmountOfMoney().add(arrivedCash));
         Date dateOfTransaction = new Date();
         createNewMemento(dateOfTransaction);
@@ -51,7 +51,7 @@ public abstract class Account {
         historyOfAccount.add(new AccountMemento(amountOfMoney, debitIdCount, number, new Date()));
     }
 
-    BigDecimal getAmountOfMoney() {
+    public BigDecimal getAmountOfMoney() {
         return amountOfMoney;
     }
 
@@ -90,4 +90,6 @@ public abstract class Account {
     public void setHistoryOfAccount(List<AccountMemento> historyOfAccount) {
         this.historyOfAccount = historyOfAccount;
     }
+
+
 }
