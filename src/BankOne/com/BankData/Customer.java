@@ -116,12 +116,22 @@ public class Customer {
         }
     }
 
+
     String createRandomNumber() {
         StringBuffer generatedNumber = new StringBuffer("");
         for (int i = 0; i < 16; i++) {
             generatedNumber.append((int) Math.random() * 10);
         }
         return generatedNumber.toString();
+    }
+
+    public Customer(String firstName, String lastName, Date dateOfBirth, Date dateOfJoiningToBank) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.dateOfJoiningToBank = dateOfJoiningToBank;
+        allTransactionsId = 0;
+        internationalIdCount = 0;
     }
 
     void checkHistory() {
