@@ -124,7 +124,9 @@ public class Customer {
             generatedNumber.append((int) (Math.random() * 10));
             if(i%4==0 && i!=16) generatedNumber.append("-");
         }
-        return generatedNumber.toString();
+        String result = generatedNumber.toString();
+        if(!Bank.checkIfNumberUnique(result)) result = createRandomNumber();
+        return result;
     }
 
     public Customer(String firstName, String lastName, Date dateOfBirth, Date dateOfJoiningToBank) {

@@ -47,6 +47,7 @@ public class Bank {
 
     static void outputAllAccounts(){
         for(Customer customer : customers){
+            System.out.println("Customer: " + customer.getFirstName() +" " + customer.getLastName() + ":");
             for(Account account : customer.getAccounts()){
                 Class accClass = account.getClass();
                 String nameOfClass = accClass.toString();
@@ -55,5 +56,14 @@ public class Bank {
                 System.out.println("amount of money: " + account.getAmountOfMoney());
             }
         }
+    }
+
+    static boolean checkIfNumberUnique(String number){
+        for(Customer customer : customers){
+            for(Account account : customer.getAccounts()){
+                if(account.getNumber().equals(number)) return false;
+            }
+        }
+        return true;
     }
 }
