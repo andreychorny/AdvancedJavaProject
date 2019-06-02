@@ -19,10 +19,10 @@ public class InternationalAccount extends Account {
     }
 
     void writeWireToHistory(Date dateOfTransaction, BigDecimal howMuch, Account toWhichAccount) {
-        getOwnerOfAccount().getHistory().put(getOwnerOfAccount().getAllTransactionsId(),
+        getOwnerOfAccount().getHistory().put(getOwnerOfAccount().getLastTransactionsId(),
                 createNewInternationalOutTransaction(dateOfTransaction, howMuch, toWhichAccount));
         getOwnerOfAccount().setInternationalIdCount(getOwnerOfAccount().getInternationalIdCount() + 1);
-        getOwnerOfAccount().setAllTransactionsId(getOwnerOfAccount().getAllTransactionsId() + 1);
+        getOwnerOfAccount().setLastTransactionsId(getOwnerOfAccount().getLastTransactionsId() + 1);
     }
 
     InternationalOutTransaction createNewInternationalOutTransaction(Date dateOfTransaction,

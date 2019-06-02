@@ -16,8 +16,7 @@ public class Main {
         Bank.customers.get(0).makeCredit();
         Bank.outputAllAccounts();
 
-        Bank.customers.get(0).getHistory();
-
+        Bank.checkTransactionOfCustomer(Bank.customers.get(0));
     }
 
     public static void customerOutput(int id){

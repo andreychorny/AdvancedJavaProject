@@ -14,7 +14,7 @@ public class Customer {
 
     private int internationalIdCount;
 
-    private int allTransactionsId;
+    private int lastTransactionsId;
 
     private String firstName;
 
@@ -117,7 +117,6 @@ public class Customer {
         }
     }
 
-
     String createRandomNumber() {
         StringBuffer generatedNumber = new StringBuffer("");
         for (int i = 1; i < 17; i++) {
@@ -134,7 +133,7 @@ public class Customer {
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.dateOfJoiningToBank = dateOfJoiningToBank;
-        allTransactionsId = 0;
+        lastTransactionsId = 0;
         internationalIdCount = 0;
     }
 
@@ -144,16 +143,16 @@ public class Customer {
         }
     }
 
-    public int getAllTransactionsId() {
-        return allTransactionsId;
+    public int getLastTransactionsId() {
+        return lastTransactionsId;
     }
 
     public Map<Integer, Transaction> getHistory() {
         return history;
     }
 
-    public void setAllTransactionsId(int allTransactionsId) {
-        this.allTransactionsId = allTransactionsId;
+    public void setLastTransactionsId(int lastTransactionsId) {
+        this.lastTransactionsId = lastTransactionsId;
     }
 
     public int getInternationalIdCount() {

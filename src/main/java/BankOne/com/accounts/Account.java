@@ -4,7 +4,6 @@ import BankOne.com.BankData.Customer;
 import BankOne.com.TransactionsHistory.ReceiveTransaction;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,9 +33,9 @@ public abstract class Account {
     }
 
     void writeDebitToHistory(Date dateOfTransaction, BigDecimal arrivedCash) {
-        ownerOfAccount.getHistory().put(ownerOfAccount.getAllTransactionsId(),
+        ownerOfAccount.getHistory().put(ownerOfAccount.getLastTransactionsId(),
                 createNewReceiveTransaction(dateOfTransaction,arrivedCash));
-        ownerOfAccount.setAllTransactionsId(ownerOfAccount.getAllTransactionsId() + 1);
+        ownerOfAccount.setLastTransactionsId(ownerOfAccount.getLastTransactionsId() + 1);
     }
     ReceiveTransaction createNewReceiveTransaction(Date dateOfTransaction, BigDecimal arrivedCash){
         return new ReceiveTransaction(debitIdCount, arrivedCash, dateOfTransaction,
@@ -91,5 +90,8 @@ public abstract class Account {
         this.historyOfAccount = historyOfAccount;
     }
 
-
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

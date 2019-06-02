@@ -1,7 +1,7 @@
 package BankOne.com.accounts;
 
 import BankOne.com.BankData.Customer;
-import BankOne.com.TransactionsHistory.LocalOutTransaction;
+import BankOne.com.TransactionsHistory.LocalSendTransaction;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -20,11 +20,11 @@ public class SavingAccount extends Account {
         } else throw new Exception("NotEnoughMoney");
     }
     void writeCreditToHistory(Date dateOfTransaction, Account toWhichAccount, BigDecimal howMuch){
-        getOwnerOfAccount().getHistory().put(getOwnerOfAccount().getAllTransactionsId(),
+        getOwnerOfAccount().getHistory().put(getOwnerOfAccount().getLastTransactionsId(),
                 createNewLocalOutTransaction(dateOfTransaction, howMuch, toWhichAccount));
     }
-    LocalOutTransaction createNewLocalOutTransaction(Date dateOfTransaction, BigDecimal howMuch, Account toWhichAccount){
-        return new LocalOutTransaction(creditIdCount,howMuch,dateOfTransaction,this,
+    LocalSendTransaction createNewLocalOutTransaction(Date dateOfTransaction, BigDecimal howMuch, Account toWhichAccount){
+        return new LocalSendTransaction(creditIdCount,howMuch,dateOfTransaction,this,
                 toWhichAccount.getNumber());
     }
 

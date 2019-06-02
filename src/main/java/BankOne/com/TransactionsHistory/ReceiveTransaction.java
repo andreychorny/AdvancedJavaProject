@@ -18,4 +18,12 @@ public class ReceiveTransaction extends Transaction {
         this.receiveAccount = receiveAccount;
         this.fromWhichAccountNumber = fromWhichAccountNumber;
     }
+
+    @Override
+    public String toString() {
+        return "Receive Transaction id= " + super.id + ", at date:" + super.dateOfTransaction + ":\n" +
+                "AccountFrom: "+ fromWhichAccountNumber +
+                ", amount of money sent: " + deliveredAmount +
+                "; to Account:" + receiveAccount.getNumber();
+    }
 }

@@ -18,4 +18,12 @@ public class InternationalOutTransaction extends Transaction {
         this.internationalAccountOfTransaction = internationalAccountOfTransaction;
         this.toWhichAccountNumber = toWhichAccountNumber;
     }
+
+    @Override
+    public String toString() {
+        return "International Out Transaction id= " + super.id + ", at date:" +
+                super.dateOfTransaction + ":\n" +"AccountFrom: "+
+                internationalAccountOfTransaction.getNumber() + ", amount of money sent: " +
+                deliveredAmount + "; to Account:" + toWhichAccountNumber;
+    }
 }

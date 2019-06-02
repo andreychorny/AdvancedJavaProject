@@ -1,28 +1,34 @@
 package BankOne.com.BankData;
 
+import BankOne.com.TransactionsHistory.Transaction;
 import BankOne.com.accounts.Account;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Bank {
 
     static Logger logger = LogManager.getLogger(Bank.class);
-
     static List<Customer> customers = new ArrayList<>();
 
     void checkAllTransactions() {
 
     }
 
-    void checkTransactionOfCustomer() {
-
+   static void checkTransactionOfCustomer(Customer customer) {
+        logger.info("REPORT ABOUT TRANSACTIONS OF CUSTOMER" + customer.getFirstName() +" " +
+                customer.getLastName() + ": ");
+        for(Transaction transaction : customer.getHistory().values()){
+            logger.info(transaction);
+        }
     }
-
+    static void checkFiveLastCustomers() {
+        logger.info("REPORT ABOUT 5 LAST CUSTOMERS: ");
+        for(int i=(customers.size()-5); i<customers.size();i++){
+            logger.info(customers.get(i));
+        }
+    }
     static void createNewCustomer() {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter first name of new customer");
