@@ -11,31 +11,30 @@ public class Bank {
 
     static Logger logger = LogManager.getLogger(Bank.class);
     static List<Customer> customers = new ArrayList<>();
+    static List<Employee> employees = new ArrayList<>();
 
-    void createNewCustomer() {
-        Scanner in = new Scanner(System.in);
-        System.out.println("Enter first name of new customer");
-        String firstName = in.nextLine();
-        System.out.println("Enter last name of new customer");
-        String lastName = in.nextLine();
-        System.out.println("Enter year of birth");
-        int yearOfBirth = in.nextInt();
-        yearOfBirth = yearOfBirth - 1900;
-        System.out.println("Enter month(number) of birth");
-        int monthOfBirth = in.nextInt();
-        monthOfBirth = monthOfBirth - 1;
-        System.out.println("Enter day of birth");
-        int dayOfBirth = in.nextInt();
-        customers.add(new Customer(firstName, lastName, new Date(yearOfBirth, monthOfBirth, dayOfBirth), new Date()));
-    }
-
-    static Account findAccount(String number) {
+    public static Account findAccount(String number) {
         for (Customer customer : customers) {
             for (Account account : customer.getAccounts()) {
                 if (account.getNumber().equals(number)) return account;
             }
         }
         return null;
+    }
+
+    void createNewEmployee() throws  Exception{
+        Scanner in = new Scanner(System.in);
+        String login = in.nextLine();
+        String password = in.nextLine();
+        if(Bank.checkIfLoginUnique(login)){
+            System.out.println("Enter first name of new employee");
+            String firstName = in.nextLine();
+            System.out.println("Enter last name of new employee");
+            String lastName = in.nextLine();
+            employees.add(new Employee(login, password, firstName, lastName));
+        }else{
+            throw new Exception("LOGIN IS NOT UNIQUE!!!");
+        }
     }
 
     void outputAllAccounts() {
@@ -51,13 +50,42 @@ public class Bank {
         }
     }
 
-    static boolean checkIfNumberUnique(String number) {
+    public static boolean checkIfNumberUnique(String number) {
         for (Customer customer : customers) {
             for (Account account : customer.getAccounts()) {
                 if (account.getNumber().equals(number)) return false;
             }
         }
         return true;
+    }
+
+
+    public static boolean checkIfLoginUnique(String login) {
+        for (Customer customer : customers) {
+            if (customer.getLogin().equals(login)) return false;
+        }
+        for (Employee employee : employees) {
+            if (employee.getLogin().equals(login)) return false;
+        }
+        return true;
+    }
+
+    public static boolean checkIfCustomerInfoIsSuitable(String login, char[] password) {
+        for (Customer customer : customers) {
+            if (customer.getLogin().equals(login) && Arrays.equals(customer.getPassword(),password)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Customer retrieveCustomerByLogin(String login){
+        for (Customer customer : customers) {
+            if (customer.getLogin().equals(login)){
+                return customer;
+            }
+        }
+        return null;
     }
 
     public List<Customer> getCustomers() {
