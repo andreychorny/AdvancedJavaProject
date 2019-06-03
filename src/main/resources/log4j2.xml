@@ -5,7 +5,18 @@
     </Properties>
 
     <Appenders>
-        <RollingFile name="fileLogger" fileName="${basePath}/app-info.log" filePattern="${basePath}/app-info-%d{yyyy-MM-dd}.log">
+        <RollingFile name="fileBankLogger" fileName="${basePath}/Bank.log"
+                     filePattern="${basePath}/Bank-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="fileReportsServiceLogger" fileName="${basePath}/ReportsService.log"
+                     filePattern="${basePath}/ReportsService-%d{yyyy-MM-dd}.log">
             <PatternLayout>
                 <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
             </PatternLayout>
@@ -21,10 +32,13 @@
     </Appenders>
     <Loggers>
         <Logger name="BankOne.com.BankData" level="debug" additivity="true">
-            <appender-ref ref="fileLogger" level="debug" />
+            <appender-ref ref="fileBankLogger" level="debug" />
         </Logger>
         <Root level="debug" additivity="false">
             <appender-ref ref="console" />
         </Root>
+        <Logger name="BankOne.com.services" level="debug" additivity="true">
+            <appender-ref ref="fileReportsServiceLogger" level="debug" />
+        </Logger>
     </Loggers>
 </Configuration>
