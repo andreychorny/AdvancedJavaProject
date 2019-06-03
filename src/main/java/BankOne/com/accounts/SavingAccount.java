@@ -33,4 +33,5 @@ public class SavingAccount extends Account {
         super(amountOfMoney, number, ownerOfAccount);
         this.creditIdCount = 0;
     }
+
 }

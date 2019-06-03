@@ -6,6 +6,8 @@ import BankOne.com.accounts.Account;
 import BankOne.com.accounts.InternationalAccount;
 import BankOne.com.accounts.RegularAccount;
 import BankOne.com.accounts.SavingAccount;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -19,6 +21,9 @@ public class CustomerService {
     private Customer currentCustomer;
 
     private List<Account> accounts;
+
+    private static Logger logger = LogManager.getLogger(CustomerService.class);
+
 
     public CustomerService(String login, char[] password) throws Exception {
         if (Bank.checkIfCustomerInfoIsSuitable(login, password)) {
@@ -95,20 +100,20 @@ public class CustomerService {
     void requestForNewAccount(int numberOfAccountType) {
         switch (numberOfAccountType) {
             case 1:
-                accounts.add(new RegularAccount(new BigDecimal(1000), createRandomNumber(), currentCustomer));
+                Bank.getRequestsForAccount().add(new RegularAccount(new BigDecimal(1000), createRandomNumber(), currentCustomer));
                 break;
             case 2:
-                accounts.add(new SavingAccount(new BigDecimal(1000), createRandomNumber(), currentCustomer));
+                Bank.getRequestsForAccount().add(new SavingAccount(new BigDecimal(1000), createRandomNumber(), currentCustomer));
                 break;
             case 3:
-                accounts.add(new InternationalAccount(new BigDecimal(1000), createRandomNumber(), currentCustomer));
+                Bank.getRequestsForAccount().add(new InternationalAccount(new BigDecimal(1000), createRandomNumber(), currentCustomer));
                 break;
         }
     }
 
     void checkHistory() {
         for (int i : currentCustomer.getHistory().keySet()) {
-            System.out.println(i + ": " + currentCustomer.getHistory().get(i));
+            logger.info(i + ": " + currentCustomer.getHistory().get(i));
         }
     }
 

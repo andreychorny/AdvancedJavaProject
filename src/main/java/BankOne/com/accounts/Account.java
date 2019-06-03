@@ -20,7 +20,7 @@ public abstract class Account {
 
     private List<AccountMemento> historyOfAccount = new LinkedList<>();
 
-    protected void debit(BigDecimal arrivedCash) {
+    void debit(BigDecimal arrivedCash) {
         setAmountOfMoney(getAmountOfMoney().add(arrivedCash));
         Date dateOfTransaction = new Date();
         createNewMemento(dateOfTransaction);
@@ -66,7 +66,7 @@ public abstract class Account {
         return ownerOfAccount;
     }
 
-    public void setAmountOfMoney(BigDecimal amountOfMoney) {
+    void setAmountOfMoney(BigDecimal amountOfMoney) {
         this.amountOfMoney = amountOfMoney;
     }
 
@@ -92,6 +92,10 @@ public abstract class Account {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Account{" +
+                "number=" + number +
+                ", amountOfMoney='" + amountOfMoney + '\'' +
+                ", ownerOfAccount=" + ownerOfAccount +
+                '}';
     }
 }

@@ -10,8 +10,12 @@ import java.util.*;
 public class Bank {
 
     static Logger logger = LogManager.getLogger(Bank.class);
-    static List<Customer> customers = new ArrayList<>();
-    static List<Employee> employees = new ArrayList<>();
+
+    private static List<Customer> customers = new ArrayList<>();
+
+    private static List<Employee> employees = new ArrayList<>();
+
+    private static List<Account> requestsForAccount = new ArrayList<>();
 
     public static Account findAccount(String number) {
         for (Customer customer : customers) {
@@ -22,17 +26,17 @@ public class Bank {
         return null;
     }
 
-    void createNewEmployee() throws  Exception{
+    void createNewEmployee() throws Exception {
         Scanner in = new Scanner(System.in);
         String login = in.nextLine();
         String password = in.nextLine();
-        if(Bank.checkIfLoginUnique(login)){
+        if (Bank.checkIfLoginUnique(login)) {
             System.out.println("Enter first name of new employee");
             String firstName = in.nextLine();
             System.out.println("Enter last name of new employee");
             String lastName = in.nextLine();
             employees.add(new Employee(login, password, firstName, lastName));
-        }else{
+        } else {
             throw new Exception("LOGIN IS NOT UNIQUE!!!");
         }
     }
@@ -50,6 +54,10 @@ public class Bank {
         }
     }
 
+    protected static void addRequestForNewAccount(Account account){
+        requestsForAccount.add(account);
+    }
+
     public static boolean checkIfNumberUnique(String number) {
         for (Customer customer : customers) {
             for (Account account : customer.getAccounts()) {
@@ -58,7 +66,6 @@ public class Bank {
         }
         return true;
     }
-
 
     public static boolean checkIfLoginUnique(String login) {
         for (Customer customer : customers) {
@@ -72,16 +79,16 @@ public class Bank {
 
     public static boolean checkIfCustomerInfoIsSuitable(String login, char[] password) {
         for (Customer customer : customers) {
-            if (customer.getLogin().equals(login) && Arrays.equals(customer.getPassword(),password)){
+            if (customer.getLogin().equals(login) && Arrays.equals(customer.getPassword(), password)) {
                 return true;
             }
         }
         return false;
     }
 
-    public static Customer retrieveCustomerByLogin(String login){
+    public static Customer retrieveCustomerByLogin(String login) {
         for (Customer customer : customers) {
-            if (customer.getLogin().equals(login)){
+            if (customer.getLogin().equals(login)) {
                 return customer;
             }
         }
@@ -90,5 +97,9 @@ public class Bank {
 
     public List<Customer> getCustomers() {
         return customers;
+    }
+
+    public static List<Account> getRequestsForAccount() {
+        return requestsForAccount;
     }
 }

@@ -2,6 +2,7 @@ package BankOne.com.services;
 
 import BankOne.com.BankData.Bank;
 import BankOne.com.BankData.Customer;
+import BankOne.com.accounts.Account;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+
+import static BankOne.com.BankData.Bank.getRequestsForAccount;
 
 public class EmployeeService {
 
@@ -43,4 +46,24 @@ public class EmployeeService {
     void viewDataOfClient(Customer customer) {
         logger.info(customer.toString());
     }
+
+    //possible realisation of this is strongly depended from front-end
+    void acceptRequestsForAccounts(boolean decision){
+        List<Account> requests = Bank.getRequestsForAccount();
+        if(requests.size()!=0){
+            Account chechingAccount = requests.get(0);
+            logger.info("Request from: " + chechingAccount.getOwnerOfAccount().getFirstName() + " " +
+                    chechingAccount.getOwnerOfAccount().getLastName() + " with login: " +
+                    chechingAccount.getOwnerOfAccount().getLogin());
+            logger.info("Requested account of type " + chechingAccount.getClass().getName());
+            logger.info("Do you accept this account?");
+
+            //somewhere here should be decision check on front-end
+            if(decision) {
+                chechingAccount.getOwnerOfAccount().addAccount(chechingAccount);
+            }
+            requests.remove(0);
+        }
+    }
+
 }

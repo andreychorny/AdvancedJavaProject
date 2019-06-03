@@ -37,7 +37,7 @@ public class Customer {
                     Date dateOfBirth, Date dateOfJoiningToBank) {
         this.login = login;
         this.password = new char[password.length()];
-        for(int i=0; i<login.length();i++){
+        for (int i = 0; i < login.length(); i++) {
             this.password[i] = password.charAt(i);
         }
         this.firstName = firstName;
@@ -109,19 +109,23 @@ public class Customer {
         this.password = password;
     }
 
+    public<A extends Account> void addAccount(A account){
+        accounts.add(account);
+    }
+
     @Override
     public String toString() {
         String accountsInfo = new String("");
-        for(Account account : accounts){
-                accountsInfo = accountsInfo + accounts.indexOf(account) + "). "+
-                        account.getClass().getName() +": "+ account.getNumber() +"\n";
+        for (Account account : accounts) {
+            accountsInfo = accountsInfo + accounts.indexOf(account) + "). " +
+                    account.getClass().getName() + ": " + account.getNumber() + "\n";
         }
         return "Customer{" +
-                "login='" + login + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", dateOfJoiningToBank=" + dateOfJoiningToBank +
+                "login='" + login + "\n" +
+                ", firstName='" + firstName + "\n" +
+                ", lastName='" + lastName + "\n" +
+                ", dateOfBirth=" + dateOfBirth + "\n" +
+                ", dateOfJoiningToBank=" + dateOfJoiningToBank + "\n" +
                 ", accounts:" + accountsInfo +
                 '}';
     }
