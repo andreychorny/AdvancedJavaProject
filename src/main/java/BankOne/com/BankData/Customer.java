@@ -33,7 +33,6 @@ public class Customer {
     }
 
     void makeCredit() throws Exception {
-        List<Integer> acceptableAccountsIds = new LinkedList<>();
         System.out.println("You have such Acceptable accounts:");
         for (Account account : accounts) {
             if (account instanceof RegularAccount) System.out.println(accounts.indexOf(account) + ": Regular:" +

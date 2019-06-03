@@ -17,4 +17,15 @@ public abstract class Transaction {
         this.dateOfTransaction = dateOfTransaction;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public BigDecimal getDeliveredAmount() {
+        return deliveredAmount;
+    }
+
+    public Date getDateOfTransaction() {
+        return dateOfTransaction;
+    }
 }

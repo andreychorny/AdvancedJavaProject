@@ -16,7 +16,7 @@ public class Main {
         Bank.customers.get(0).makeCredit();
         Bank.outputAllAccounts();
 
-        Bank.checkTransactionOfCustomer(Bank.customers.get(0));
+        Bank.generateReportTransactionOfCustomer(Bank.customers.get(0));
     }
 
     public static void customerOutput(int id){

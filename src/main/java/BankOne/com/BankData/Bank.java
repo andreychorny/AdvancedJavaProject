@@ -16,14 +16,41 @@ public class Bank {
 
     }
 
-   static void checkTransactionOfCustomer(Customer customer) {
+   static void generateReportTransactionOfCustomer(Customer customer) {
         logger.info("REPORT ABOUT TRANSACTIONS OF CUSTOMER" + customer.getFirstName() +" " +
                 customer.getLastName() + ": ");
         for(Transaction transaction : customer.getHistory().values()){
             logger.info(transaction);
         }
     }
-    static void checkFiveLastCustomers() {
+
+    static void generateReportTransactionForSpecificDate(Date date) {
+        logger.info("REPORT ABOUT TRANSACTIONS OF DATE: " + date);
+        for(Customer customer : customers){
+            logger.info("Customer: " + customer.getFirstName() +" " +
+                    customer.getLastName() + ": ");
+            for(Transaction transaction : customer.getHistory().values()){
+                if(transaction.getDateOfTransaction().equals(date)) {
+                    logger.info(transaction);
+                }
+            }
+        }
+    }
+
+    static <T extends Transaction> void generateReportTransactionForSpecificType(T typeOfTransactionToCheck) {
+        String checkedType = typeOfTransactionToCheck.getClass().getName();
+        logger.info("REPORT ABOUT TRANSACTIONS OF TYPE: " + checkedType);
+        for(Customer customer : customers){
+            logger.info("Customer: " + customer.getFirstName() +" " +
+                    customer.getLastName() + ": ");
+            for(Transaction transaction : customer.getHistory().values()){
+                if(transaction.getClass().getName().equals(checkedType)) {
+                    logger.info(transaction);
+                }
+            }
+        }
+    }
+    static void generateReportFiveLastCustomers() {
         logger.info("REPORT ABOUT 5 LAST CUSTOMERS: ");
         for(int i=(customers.size()-5); i<customers.size();i++){
             logger.info(customers.get(i));
