@@ -1,3 +1,5 @@
+package BankOne;
+
 import BankOne.com.BankData.Bank;
 import BankOne.com.BankData.Employee;
 import org.junit.jupiter.api.Test;
@@ -25,5 +27,6 @@ public class BankJUnit {
                 newEmployeeTwoPassword, newEmployeeTwoFirstName,newEmployeeTwoLastName),
                 "Login exist in database Exception");
 
+        assertEquals(Bank.retrievePersonByLogin("Ouroboros").getClass(),Employee.class);
     }
 }

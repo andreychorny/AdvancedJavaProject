@@ -75,19 +75,30 @@ public class Bank {
         return true;
     }
 
-    public static boolean checkIfCustomerInfoIsSuitable(String login, char[] password) {
+    public static<T extends Person> boolean checkIfPersonInfoIsSuitable(String login,
+                                                                        char[] password) {
         for (Customer customer : customers) {
             if (customer.getLogin().equals(login) && Arrays.equals(customer.getPassword(), password)) {
+                return true;
+            }
+        }
+        for (Employee employee : employees) {
+            if (employee.getLogin().equals(login) && Arrays.equals(employee.getPassword(), password)) {
                 return true;
             }
         }
         return false;
     }
 
-    public static Customer retrieveCustomerByLogin(String login) {
+    public static<T extends Person> T retrievePersonByLogin(String login) {
         for (Customer customer : customers) {
             if (customer.getLogin().equals(login)) {
-                return customer;
+                return (T)customer;
+            }
+        }
+        for (Employee employee : employees) {
+            if (employee.getLogin().equals(login)) {
+                return (T)employee;
             }
         }
         return null;

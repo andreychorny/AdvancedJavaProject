@@ -2,23 +2,31 @@ package BankOne.com.services;
 
 import BankOne.com.BankData.Bank;
 import BankOne.com.BankData.Customer;
+import BankOne.com.BankData.Employee;
 import BankOne.com.accounts.Account;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
-
-import static BankOne.com.BankData.Bank.getRequestsForAccount;
 
 public class EmployeeService {
 
     private List<Customer> customers = new ArrayList<>();
 
+    private Employee currentEmployee;
+
     private static Logger logger = LogManager.getLogger(EmployeeService.class);
+
+    public EmployeeService(String login, char[] password) throws Exception {
+        if (Bank.checkIfPersonInfoIsSuitable(login, password)) {
+            currentEmployee = Bank.retrievePersonByLogin(login);
+        }else {
+            throw new Exception("WRONG LOGGING INFO!");
+        }
+    }
 
     void createNewCustomer() throws Exception {
         Scanner in = new Scanner(System.in);
@@ -66,5 +74,6 @@ public class EmployeeService {
             requests.remove(0);
         }
     }
+
 
 }

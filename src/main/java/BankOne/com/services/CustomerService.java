@@ -25,8 +25,8 @@ public class CustomerService {
     private static Logger logger = LogManager.getLogger(CustomerService.class);
 
     public CustomerService(String login, char[] password) throws Exception {
-        if (Bank.checkIfCustomerInfoIsSuitable(login, password)) {
-            currentCustomer = Bank.retrieveCustomerByLogin(login);
+        if (Bank.checkIfPersonInfoIsSuitable(login, password)) {
+            currentCustomer = Bank.retrievePersonByLogin(login);
             accounts = currentCustomer.getAccounts();
         }else {
             throw new Exception("WRONG LOGGING INFO!");
