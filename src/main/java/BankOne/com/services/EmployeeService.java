@@ -6,6 +6,7 @@ import BankOne.com.accounts.Account;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +38,7 @@ public class EmployeeService {
             System.out.println("Enter day of birth");
             int dayOfBirth = in.nextInt();
             customers.add(new Customer(login, password, firstName, lastName,
-                    new Date(yearOfBirth, monthOfBirth, dayOfBirth), new Date()));
+                    LocalDate.of(yearOfBirth, monthOfBirth, dayOfBirth), LocalDate.now()));
         } else {
             throw new Exception("LOGIN IS NOT UNIQUE!!!");
         }

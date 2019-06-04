@@ -4,7 +4,7 @@ import BankOne.com.BankData.Customer;
 import BankOne.com.TransactionsHistory.ReceiveTransaction;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,22 +22,22 @@ public abstract class Account {
 
     void debit(BigDecimal arrivedCash) {
         setAmountOfMoney(getAmountOfMoney().add(arrivedCash));
-        Date dateOfTransaction = new Date();
+        LocalDate dateOfTransaction = LocalDate.now();
         createNewMemento(dateOfTransaction);
         writeDebitToHistory(dateOfTransaction, arrivedCash);
         debitIdCount++;
     }
 
-    void createNewMemento(Date dateOfTransaction) {
+    void createNewMemento(LocalDate dateOfTransaction) {
         historyOfAccount.add(new AccountMemento(amountOfMoney, debitIdCount, number, dateOfTransaction));
     }
 
-    void writeDebitToHistory(Date dateOfTransaction, BigDecimal arrivedCash) {
+    void writeDebitToHistory(LocalDate dateOfTransaction, BigDecimal arrivedCash) {
         ownerOfAccount.getHistory().put(ownerOfAccount.getLastTransactionsId(),
                 createNewReceiveTransaction(dateOfTransaction,arrivedCash));
         ownerOfAccount.setLastTransactionsId(ownerOfAccount.getLastTransactionsId() + 1);
     }
-    ReceiveTransaction createNewReceiveTransaction(Date dateOfTransaction, BigDecimal arrivedCash){
+    ReceiveTransaction createNewReceiveTransaction(LocalDate dateOfTransaction, BigDecimal arrivedCash){
         return new ReceiveTransaction(debitIdCount, arrivedCash, dateOfTransaction,
                 this, this.getNumber());
     }
@@ -47,7 +47,7 @@ public abstract class Account {
         this.debitIdCount = 0;
         this.number = number;
         this.ownerOfAccount = ownerOfAccount;
-        historyOfAccount.add(new AccountMemento(amountOfMoney, debitIdCount, number, new Date()));
+        historyOfAccount.add(new AccountMemento(amountOfMoney, debitIdCount, number, LocalDate.now()));
     }
 
     public BigDecimal getAmountOfMoney() {

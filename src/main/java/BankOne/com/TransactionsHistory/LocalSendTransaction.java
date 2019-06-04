@@ -4,7 +4,6 @@ import BankOne.com.accounts.Account;
 import BankOne.com.accounts.RegularAccount;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 public class LocalSendTransaction extends Transaction {
 
@@ -12,10 +11,10 @@ public class LocalSendTransaction extends Transaction {
 
     private final String toWhichAccountNumber;
 
-    public LocalSendTransaction(int id, BigDecimal deliveredAmount, Date dateOfTransaction,
+    public LocalSendTransaction(int id, BigDecimal deliveredAmount,
                                 Account accountOfTransaction,
                                 String toWhichAccountNumber) {
-        super(id, deliveredAmount, dateOfTransaction);
+        super(id, deliveredAmount);
         this.accountOfTransaction = accountOfTransaction;
         this.toWhichAccountNumber = toWhichAccountNumber;
     }

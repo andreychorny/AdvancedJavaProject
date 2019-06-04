@@ -3,7 +3,7 @@ package BankOne.com.TransactionsHistory;
 import BankOne.com.accounts.Account;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class ReceiveTransaction extends Transaction {
 
@@ -12,9 +12,9 @@ public class ReceiveTransaction extends Transaction {
     private final String fromWhichAccountNumber;
 
     public ReceiveTransaction(int id, BigDecimal deliveredAmount,
-                              Date dateOfTransaction, Account receiveAccount,
+                              LocalDate dateOfTransaction, Account receiveAccount,
                               String fromWhichAccountNumber) {
-        super(id, deliveredAmount, dateOfTransaction);
+        super(id, deliveredAmount);
         this.receiveAccount = receiveAccount;
         this.fromWhichAccountNumber = fromWhichAccountNumber;
     }

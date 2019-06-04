@@ -3,7 +3,7 @@ package BankOne.com.accounts;
 import BankOne.com.BankData.Customer;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class AccountMemento {
 
@@ -13,9 +13,10 @@ public class AccountMemento {
 
     private final Integer debitIdCount;
 
-    private final Date dateOfChange;
+    private final LocalDate dateOfChange;
 
-    public AccountMemento(BigDecimal amountOfMoney, int debitIdCount, String number, Date dateOfChange) {
+    public AccountMemento(BigDecimal amountOfMoney, int debitIdCount, String number,
+                          LocalDate dateOfChange) {
         this.amountOfMoney = amountOfMoney;
         this.debitIdCount = debitIdCount;
         this.number = number;

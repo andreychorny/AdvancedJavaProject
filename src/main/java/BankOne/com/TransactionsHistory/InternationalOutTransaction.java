@@ -3,7 +3,7 @@ package BankOne.com.TransactionsHistory;
 import BankOne.com.accounts.InternationalAccount;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class InternationalOutTransaction extends Transaction {
 
@@ -11,10 +11,10 @@ public class InternationalOutTransaction extends Transaction {
 
     private final String toWhichAccountNumber;
 
-    public InternationalOutTransaction(int id, BigDecimal deliveredAmount, Date dateOfTransaction,
+    public InternationalOutTransaction(int id, BigDecimal deliveredAmount,
                                        InternationalAccount internationalAccountOfTransaction,
                                        String toWhichAccountNumber) {
-        super(id, deliveredAmount, dateOfTransaction);
+        super(id, deliveredAmount);
         this.internationalAccountOfTransaction = internationalAccountOfTransaction;
         this.toWhichAccountNumber = toWhichAccountNumber;
     }

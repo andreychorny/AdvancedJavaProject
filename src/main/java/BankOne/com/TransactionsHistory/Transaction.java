@@ -1,7 +1,7 @@
 package BankOne.com.TransactionsHistory;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 public abstract class Transaction {
 
@@ -9,12 +9,12 @@ public abstract class Transaction {
 
     protected final BigDecimal deliveredAmount;
 
-    protected final Date dateOfTransaction;
+    protected final LocalDate dateOfTransaction;
 
-    Transaction(int id, BigDecimal deliveredAmount, Date dateOfTransaction) {
+    Transaction(int id, BigDecimal deliveredAmount) {
         this.id = id;
         this.deliveredAmount = deliveredAmount;
-        this.dateOfTransaction = dateOfTransaction;
+        this.dateOfTransaction = LocalDate.now();
     }
 
     public int getId() {
@@ -25,7 +25,7 @@ public abstract class Transaction {
         return deliveredAmount;
     }
 
-    public Date getDateOfTransaction() {
+    public LocalDate getLocalDateOfTransaction() {
         return dateOfTransaction;
     }
 }

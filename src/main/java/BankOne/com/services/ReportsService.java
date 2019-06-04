@@ -6,6 +6,7 @@ import BankOne.com.TransactionsHistory.Transaction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class ReportsService {
@@ -40,13 +41,13 @@ public class ReportsService {
             }
         }
     }
-    void generateReportTransactionForSpecificDate(Date date) {
+    void generateReportTransactionForSpecificDate(LocalDate date) {
         logger.info("REPORT ABOUT TRANSACTIONS OF DATE: " + date);
         for (Customer customer : customers) {
             logger.info("Customer: " + customer.getFirstName() + " " +
                     customer.getLastName() + ": ");
             for (Transaction transaction : customer.getHistory().values()) {
-                if (transaction.getDateOfTransaction().equals(date)) {
+                if (transaction.getLocalDateOfTransaction().equals(date)) {
                     logger.info(transaction);
                 }
             }

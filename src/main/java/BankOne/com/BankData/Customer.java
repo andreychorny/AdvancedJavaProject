@@ -8,6 +8,7 @@ import BankOne.com.accounts.SavingAccount;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.*;
 
 public class Customer {
@@ -32,12 +33,12 @@ public class Customer {
 
     private Map<Integer, Transaction> history = new TreeMap<>();
 
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
-    private Date dateOfJoiningToBank;
+    private LocalDate dateOfJoiningToBank;
 
     public Customer(String login, String password, String firstName, String lastName,
-                    Date dateOfBirth, Date dateOfJoiningToBank) {
+                    LocalDate dateOfBirth, LocalDate dateOfJoiningToBank) {
         this.login = login;
         this.password = new char[password.length()];
         for (int i = 0; i < login.length(); i++) {
@@ -90,11 +91,11 @@ public class Customer {
         return lastName;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public Date getDateOfJoiningToBank() {
+    public LocalDate getDateOfJoiningToBank() {
         return dateOfJoiningToBank;
     }
 

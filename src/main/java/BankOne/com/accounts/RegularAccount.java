@@ -4,7 +4,7 @@ import BankOne.com.BankData.Customer;
 import BankOne.com.TransactionsHistory.LocalSendTransaction;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class RegularAccount extends Account {
 
@@ -13,20 +13,20 @@ public class RegularAccount extends Account {
     public void credit(Account toWhichAccount, BigDecimal howMuch) throws Exception {
         if (getAmountOfMoney().compareTo(howMuch) >= 0) {
             setAmountOfMoney(getAmountOfMoney().subtract(howMuch));
-            Date dateOfTransaction = new Date();
+            LocalDate dateOfTransaction = LocalDate.now();
             createNewMemento(dateOfTransaction);
-            writeCreditToHistory(dateOfTransaction,toWhichAccount,howMuch);
+            writeCreditToHistory(toWhichAccount,howMuch);
             creditIdCount++;
             toWhichAccount.debit(howMuch);
         } else throw new Exception("NotEnoughMoney");
     }
 
-    void writeCreditToHistory(Date dateOfTransaction, Account toWhichAccount, BigDecimal howMuch){
+    void writeCreditToHistory(Account toWhichAccount, BigDecimal howMuch){
         getOwnerOfAccount().getHistory().put(getOwnerOfAccount().getLastTransactionsId(),
-                createNewLocalOutTransaction(dateOfTransaction, howMuch, toWhichAccount));
+                createNewLocalSendTransaction( howMuch, toWhichAccount));
     }
-    LocalSendTransaction createNewLocalOutTransaction(Date dateOfTransaction, BigDecimal howMuch, Account toWhichAccount){
-       return new LocalSendTransaction(creditIdCount,howMuch,dateOfTransaction,this,
+    LocalSendTransaction createNewLocalSendTransaction(BigDecimal howMuch, Account toWhichAccount){
+       return new LocalSendTransaction(creditIdCount,howMuch,this,
                toWhichAccount.getNumber());
     }
 
