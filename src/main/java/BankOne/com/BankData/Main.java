@@ -20,9 +20,9 @@ public class Main {
     }
 
     public static void customerOutput(int id){
-        Customer customer = Bank.customers.get(id);
-        System.out.println(customer.getFirstName() +" "+customer.getLastName());
-        System.out.println(customer.getDateOfBirth());
-        System.out.println(customer.getDateOfJoiningToBank());
+//        Customer customer = Bank.customers.get(id);
+//        System.out.println(customer.getFirstName() +" "+customer.getLastName());
+//        System.out.println(customer.getDateOfBirth());
+//        System.out.println(customer.getDateOfJoiningToBank());
     }
 }

@@ -24,7 +24,6 @@ public class CustomerService {
 
     private static Logger logger = LogManager.getLogger(CustomerService.class);
 
-
     public CustomerService(String login, char[] password) throws Exception {
         if (Bank.checkIfCustomerInfoIsSuitable(login, password)) {
             currentCustomer = Bank.retrieveCustomerByLogin(login);
@@ -53,7 +52,7 @@ public class CustomerService {
         }
     }
 
-    void creditFromRegular(int index, Scanner in) throws Exception {
+    private void creditFromRegular(int index, Scanner in) throws Exception {
         RegularAccount accInUse = (RegularAccount) accounts.get(index);
         in.nextLine();
         System.out.println("Write number of account to deliver funds:");
@@ -65,7 +64,7 @@ public class CustomerService {
         if (accDeliverTo != null) accInUse.credit(accDeliverTo, amountToDeliver);
     }
 
-    void creditFromSaving(int index, Scanner in) throws Exception {
+    private void creditFromSaving(int index, Scanner in) throws Exception {
         SavingAccount accInUse = (SavingAccount) accounts.get(index);
         System.out.println("Write number of account to deliver funds:");
         String deliverToNumber = in.nextLine();
@@ -73,10 +72,16 @@ public class CustomerService {
         BigDecimal amountToDeliver = new BigDecimal(in.nextDouble());
         amountToDeliver = amountToDeliver.setScale(2, RoundingMode.CEILING);
         Account accDeliverTo = Bank.findAccount(deliverToNumber);
-        if (accDeliverTo != null) accInUse.credit(accDeliverTo, amountToDeliver);
+        if(accDeliverTo == null) {
+            throw new Exception("THERE IS NO SUCH ACCOUNT(TO DELIVER FUNDS)!");
+        }
+        if(!(accDeliverTo instanceof  RegularAccount)) {
+            throw new Exception("YOU CANNOT SEND MONEY FROM SAVING TYPE OF ACCOUNT TO THIS TYPE!");
+        }
+        accInUse.credit(accDeliverTo, amountToDeliver);
     }
 
-    void makeWire() throws Exception {
+    private void makeWire() throws Exception {
         List<Integer> acceptableAccountsIds = new LinkedList<>();
         System.out.println("You have such Acceptable accounts:");
         for (Account account : accounts) {
@@ -100,13 +105,16 @@ public class CustomerService {
     void requestForNewAccount(int numberOfAccountType) {
         switch (numberOfAccountType) {
             case 1:
-                Bank.getRequestsForAccount().add(new RegularAccount(new BigDecimal(1000), createRandomNumber(), currentCustomer));
+                Bank.getRequestsForAccount().add(new RegularAccount(new BigDecimal(1000),
+                        Bank.createRandomNumberForAcc(currentCustomer), currentCustomer));
                 break;
             case 2:
-                Bank.getRequestsForAccount().add(new SavingAccount(new BigDecimal(1000), createRandomNumber(), currentCustomer));
+                Bank.getRequestsForAccount().add(new SavingAccount(new BigDecimal(1000),
+                        Bank.createRandomNumberForAcc(currentCustomer), currentCustomer));
                 break;
             case 3:
-                Bank.getRequestsForAccount().add(new InternationalAccount(new BigDecimal(1000), createRandomNumber(), currentCustomer));
+                Bank.getRequestsForAccount().add(new InternationalAccount(new BigDecimal(1000),
+                        Bank.createRandomNumberForAcc(currentCustomer), currentCustomer));
                 break;
         }
     }
@@ -117,14 +125,4 @@ public class CustomerService {
         }
     }
 
-    private String createRandomNumber() {
-        StringBuffer generatedNumber = new StringBuffer();
-        for (int i = 1; i < 17; i++) {
-            generatedNumber.append((int) (Math.random() * 10));
-            if (i % 4 == 0 && i != 16) generatedNumber.append("-");
-        }
-        String result = generatedNumber.toString();
-        if (!Bank.checkIfNumberUnique(result)) result = createRandomNumber();
-        return result;
-    }
 }

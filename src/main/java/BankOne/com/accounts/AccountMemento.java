@@ -7,11 +7,11 @@ import java.util.Date;
 
 public class AccountMemento {
 
+    private final String number;
+
     private final BigDecimal amountOfMoney;
 
     private final Integer debitIdCount;
-
-    private final String number;
 
     private final Date dateOfChange;
 
@@ -20,5 +20,14 @@ public class AccountMemento {
         this.debitIdCount = debitIdCount;
         this.number = number;
         this.dateOfChange = dateOfChange;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountMemento{" +
+                "number='" + number + '\'' +
+                ", amountOfMoney=" + amountOfMoney +
+                ", dateOfChange=" + dateOfChange +
+                '}';
     }
 }

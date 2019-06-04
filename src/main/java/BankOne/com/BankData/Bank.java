@@ -5,6 +5,7 @@ import BankOne.com.accounts.Account;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class Bank {
@@ -93,6 +94,22 @@ public class Bank {
             }
         }
         return null;
+    }
+
+    public static String createRandomNumberForAcc(Customer customer) {
+        StringBuffer generatedNumber = new StringBuffer();
+        //"BC" is a Bank Code
+        generatedNumber.append("BC-");
+        DecimalFormat formatter = new DecimalFormat("00000");
+        String customerIdFormatted = formatter.format(customer.getId());
+        generatedNumber.append(customerIdFormatted);
+        generatedNumber.append("-");
+        for (int i = 0; i < 3; i++) {
+            generatedNumber.append((int) (Math.random() * 10));
+        }
+        String result = generatedNumber.toString();
+        if (!Bank.checkIfNumberUnique(result)) result = createRandomNumberForAcc(customer);
+        return result;
     }
 
     public List<Customer> getCustomers() {

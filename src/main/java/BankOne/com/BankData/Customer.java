@@ -16,6 +16,10 @@ public class Customer {
 
     private int lastTransactionsId;
 
+    private int id;
+
+    private static int currentLastCustomerId = 0;
+
     private String login;
 
     private char[] password;
@@ -32,7 +36,6 @@ public class Customer {
 
     private Date dateOfJoiningToBank;
 
-
     public Customer(String login, String password, String firstName, String lastName,
                     Date dateOfBirth, Date dateOfJoiningToBank) {
         this.login = login;
@@ -46,6 +49,8 @@ public class Customer {
         this.dateOfJoiningToBank = dateOfJoiningToBank;
         lastTransactionsId = 0;
         internationalIdCount = 0;
+        id = currentLastCustomerId;
+        currentLastCustomerId += 1;
     }
 
 
@@ -128,5 +133,9 @@ public class Customer {
                 ", dateOfJoiningToBank=" + dateOfJoiningToBank + "\n" +
                 ", accounts:" + accountsInfo +
                 '}';
+    }
+
+    public int getId() {
+        return id;
     }
 }
