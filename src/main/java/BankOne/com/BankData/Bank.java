@@ -27,17 +27,14 @@ public class Bank {
         return null;
     }
 
-    void createNewEmployee() throws Exception {
-        Scanner in = new Scanner(System.in);
-        String login = in.nextLine();
-        String password = in.nextLine();
+    public static Employee createNewEmployee(String login, String password, String firstName,
+                                      String lastName) throws Exception {
         if (Bank.checkIfLoginUnique(login)) {
-            System.out.println("Enter first name of new employee");
-            String firstName = in.nextLine();
-            System.out.println("Enter last name of new employee");
-            String lastName = in.nextLine();
-            employees.add(new Employee(login, password, firstName, lastName));
+            Employee newEmployee = new Employee(login, password, firstName, lastName);
+            employees.add(newEmployee);
+            return newEmployee;
         } else {
+            logger.warn("ENTERED LOGIN IS NOT UNIQUE!");
             throw new Exception("LOGIN IS NOT UNIQUE!!!");
         }
     }
