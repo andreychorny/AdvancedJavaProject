@@ -1,0 +1,56 @@
+[INFO ] 2019-06-05 02:24:36.597 [main] EmployeeService - Retrieving data of customer:
+[INFO ] 2019-06-05 02:24:36.740 [main] EmployeeService - Customer{
+login= CustLogin
+ firstName= CustName,
+ lastName= CustLastName,
+ dateOfBirth= 2000-11-27,
+ dateOfJoiningToBank= 2019-06-05,
+ accounts:}
+[INFO ] 2019-06-05 02:25:25.416 [main] EmployeeService - Retrieving data of customer:
+[INFO ] 2019-06-05 02:25:25.420 [main] EmployeeService - Customer{
+login= CustLogin
+ firstName= CustName,
+ lastName= CustLastName,
+ dateOfBirth= 2000-11-27,
+ dateOfJoiningToBank= 2019-06-05,
+ accounts:}
+[INFO ] 2019-06-05 02:28:26.614 [main] EmployeeService - Retrieving data of customer:
+[INFO ] 2019-06-05 02:28:26.624 [main] EmployeeService - Customer{
+login= CustLogin
+ firstName= CustName,
+ lastName= CustLastName,
+ dateOfBirth= 2000-11-27,
+ dateOfJoiningToBank= 2019-06-05,
+ accounts:}
+[INFO ] 2019-06-05 02:30:17.477 [main] EmployeeService - Retrieving data of customer:
+[INFO ] 2019-06-05 02:30:17.477 [main] EmployeeService - Customer{
+login= CustLogin
+ firstName= CustName,
+ lastName= CustLastName,
+ dateOfBirth= 2000-11-27,
+ dateOfJoiningToBank= 2019-06-05,
+ accounts:}
+[INFO ] 2019-06-05 02:32:52.741 [main] EmployeeService - Retrieving data of customer:
+[INFO ] 2019-06-05 02:32:52.745 [main] EmployeeService - Customer{
+login= CustLogin
+ firstName= CustName,
+ lastName= CustLastName,
+ dateOfBirth= 2000-11-27,
+ dateOfJoiningToBank= 2019-06-05,
+ accounts:}
+[INFO ] 2019-06-05 02:34:50.898 [main] EmployeeService - Retrieving data of customer:
+[INFO ] 2019-06-05 02:34:50.913 [main] EmployeeService - Customer{
+login= CustLogin
+ firstName= CustName,
+ lastName= CustLastName,
+ dateOfBirth= 2000-11-27,
+ dateOfJoiningToBank= 2019-06-05,
+ accounts:}
+[INFO ] 2019-06-05 02:35:29.947 [main] EmployeeService - Retrieving data of customer:
+[INFO ] 2019-06-05 02:35:29.947 [main] EmployeeService - Customer{
+login= CustLogin
+ firstName= CustName,
+ lastName= CustLastName,
+ dateOfBirth= 2000-11-27,
+ dateOfJoiningToBank= 2019-06-05,
+ accounts:}

@@ -75,8 +75,9 @@ public class Bank {
         return true;
     }
 
-    public static<T extends Person> boolean checkIfPersonInfoIsSuitable(String login,
-                                                                        char[] password) {
+    public static<T extends Person> boolean checkIfLoggingInfoIsSuitable(String login,
+                                                                        String passwordString) {
+        char[] password = passwordString.toCharArray();
         for (Customer customer : customers) {
             if (customer.getLogin().equals(login) && Arrays.equals(customer.getPassword(), password)) {
                 return true;
@@ -120,7 +121,7 @@ public class Bank {
         return result;
     }
 
-    public List<Customer> getCustomers() {
+    public static List<Customer> getCustomers() {
         return customers;
     }
 

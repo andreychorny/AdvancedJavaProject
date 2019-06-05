@@ -7,6 +7,8 @@ import BankOne.com.accounts.Account;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
+import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,46 +16,34 @@ import java.util.Scanner;
 
 public class EmployeeService {
 
-    private List<Customer> customers = new ArrayList<>();
-
     private Employee currentEmployee;
 
     private static Logger logger = LogManager.getLogger(EmployeeService.class);
 
-    public EmployeeService(String login, char[] password) throws Exception {
-        if (Bank.checkIfPersonInfoIsSuitable(login, password)) {
+    public EmployeeService(String login, String password) throws Exception {
+        if (Bank.checkIfLoggingInfoIsSuitable(login, password)) {
             currentEmployee = Bank.retrievePersonByLogin(login);
         }else {
             throw new Exception("WRONG LOGGING INFO!");
         }
     }
 
-    void createNewCustomer() throws Exception {
-        Scanner in = new Scanner(System.in);
-        String login = in.nextLine();
-        String password = in.nextLine();
+    public Customer createNewCustomer(String login, String password, String firstName,
+                           String lastName, LocalDate dateOfBirth) throws Exception {
         if (Bank.checkIfLoginUnique(login)) {
-            System.out.println("Enter first name of new customer");
-            String firstName = in.nextLine();
-            System.out.println("Enter last name of new customer");
-            String lastName = in.nextLine();
-            System.out.println("Enter year of birth");
-            int yearOfBirth = in.nextInt();
-            yearOfBirth = yearOfBirth - 1900;
-            System.out.println("Enter month(number) of birth");
-            int monthOfBirth = in.nextInt();
-            monthOfBirth = monthOfBirth - 1;
-            System.out.println("Enter day of birth");
-            int dayOfBirth = in.nextInt();
-            customers.add(new Customer(login, password, firstName, lastName,
-                    LocalDate.of(yearOfBirth, monthOfBirth, dayOfBirth), LocalDate.now()));
+            Customer newCustomer = new Customer(login, password, firstName, lastName,
+                    dateOfBirth, LocalDate.now());
+            Bank.getCustomers().add(newCustomer);
+            return newCustomer;
         } else {
-            throw new Exception("LOGIN IS NOT UNIQUE!!!");
+            throw new Exception("ENTERED LOGIN IS NOT UNIQUE!!!");
         }
     }
 
-    void viewDataOfClient(Customer customer) {
+    public String viewDataOfClient(Customer customer) {
+        logger.info("Retrieving data of customer:");
         logger.info(customer.toString());
+        return customer.toString();
     }
 
     //possible realisation of this is strongly depended from front-end
@@ -74,6 +64,4 @@ public class EmployeeService {
             requests.remove(0);
         }
     }
-
-
 }

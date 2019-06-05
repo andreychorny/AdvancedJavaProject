@@ -1,5 +1,8 @@
 package BankOne.com.BankData;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public abstract class Person {
 
     private String login;
@@ -50,5 +53,23 @@ public abstract class Person {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return Objects.equals(getLogin(), person.getLogin()) &&
+                Arrays.equals(getPassword(), person.getPassword()) &&
+                Objects.equals(getFirstName(), person.getFirstName()) &&
+                Objects.equals(getLastName(), person.getLastName());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(getLogin(), getFirstName(), getLastName());
+        result = 31 * result + Arrays.hashCode(getPassword());
+        return result;
     }
 }

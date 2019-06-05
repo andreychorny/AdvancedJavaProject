@@ -91,17 +91,36 @@ public class Customer extends Person {
             accountsInfo = accountsInfo + accounts.indexOf(account) + "). " +
                     account.getClass().getName() + ": " + account.getNumber() + "\n";
         }
-        return "Customer{" +
-                "login='" + getLogin() + "\n" +
-                ", firstName='" + getFirstName() + "\n" +
-                ", lastName='" + getLastName() + "\n" +
-                ", dateOfBirth=" + dateOfBirth + "\n" +
-                ", dateOfJoiningToBank=" + dateOfJoiningToBank + "\n" +
-                ", accounts:" + accountsInfo +
+        return "Customer{\n" +
+                "login= " + getLogin() + "\n" +
+                " firstName= " + getFirstName() + ",\n" +
+                " lastName= " + getLastName() + ",\n" +
+                " dateOfBirth= " + dateOfBirth + ",\n" +
+                " dateOfJoiningToBank= " + dateOfJoiningToBank + ",\n" +
+                " accounts:" + accountsInfo +
                 '}';
     }
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Customer customer = (Customer) o;
+        return getInternationalIdCount() == customer.getInternationalIdCount() &&
+                getLastTransactionsId() == customer.getLastTransactionsId() &&
+                Objects.equals(getAccounts(), customer.getAccounts()) &&
+                Objects.equals(getHistory(), customer.getHistory()) &&
+                Objects.equals(getDateOfBirth(), customer.getDateOfBirth()) &&
+                Objects.equals(getDateOfJoiningToBank(), customer.getDateOfJoiningToBank());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getInternationalIdCount(), getLastTransactionsId(), getId(), getAccounts(), getHistory(), getDateOfBirth(), getDateOfJoiningToBank());
     }
 }

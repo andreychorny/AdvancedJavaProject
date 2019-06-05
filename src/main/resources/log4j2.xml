@@ -15,8 +15,8 @@
             </Policies>
         </RollingFile>
 
-        <RollingFile name="fileReportsServiceLogger" fileName="${basePath}/ReportsService.log"
-                     filePattern="${basePath}/ReportsService-%d{yyyy-MM-dd}.log">
+        <RollingFile name="fileServicesLogger" fileName="${basePath}/Services.log"
+                     filePattern="${basePath}/Services-%d{yyyy-MM-dd}.log">
             <PatternLayout>
                 <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
             </PatternLayout>
@@ -38,7 +38,7 @@
             <appender-ref ref="console" />
         </Root>
         <Logger name="BankOne.com.services" level="debug" additivity="true">
-            <appender-ref ref="fileReportsServiceLogger" level="debug" />
+            <appender-ref ref="fileServicesLogger" level="debug" />
         </Logger>
     </Loggers>
 </Configuration>
