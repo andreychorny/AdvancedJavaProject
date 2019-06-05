@@ -24,7 +24,7 @@ public abstract class Account {
         setAmountOfMoney(getAmountOfMoney().add(arrivedCash));
         LocalDate dateOfTransaction = LocalDate.now();
         createNewMemento(dateOfTransaction);
-        writeDebitToHistory(dateOfTransaction, arrivedCash);
+        writeDebitToCustomerHistory(dateOfTransaction, arrivedCash);
         debitIdCount++;
     }
 
@@ -32,12 +32,12 @@ public abstract class Account {
         historyOfAccount.add(new AccountMemento(amountOfMoney, debitIdCount, number, dateOfTransaction));
     }
 
-    void writeDebitToHistory(LocalDate dateOfTransaction, BigDecimal arrivedCash) {
+    void writeDebitToCustomerHistory(LocalDate dateOfTransaction, BigDecimal arrivedCash) {
         ownerOfAccount.getHistory().put(ownerOfAccount.getLastTransactionsId(),
                 createNewReceiveTransaction(dateOfTransaction,arrivedCash));
         ownerOfAccount.setLastTransactionsId(ownerOfAccount.getLastTransactionsId() + 1);
     }
-    ReceiveTransaction createNewReceiveTransaction(LocalDate dateOfTransaction, BigDecimal arrivedCash){
+    private ReceiveTransaction createNewReceiveTransaction(LocalDate dateOfTransaction, BigDecimal arrivedCash){
         return new ReceiveTransaction(debitIdCount, arrivedCash, dateOfTransaction,
                 this, this.getNumber());
     }

@@ -14,19 +14,19 @@ public class InternationalAccount extends Account {
             setAmountOfMoney(getAmountOfMoney().subtract(howMuch));
             LocalDate dateOfTransaction = LocalDate.now();
             createNewMemento(dateOfTransaction);
-            writeWireToHistory(dateOfTransaction, howMuch, toWhichAccount);
+            writeWireToCustomerHistory(dateOfTransaction, howMuch, toWhichAccount);
             toWhichAccount.debit(howMuch);
         } else throw new Exception("NotEnoughMoney");
     }
 
-    void writeWireToHistory(LocalDate dateOfTransaction, BigDecimal howMuch, Account toWhichAccount) {
+    void writeWireToCustomerHistory(LocalDate dateOfTransaction, BigDecimal howMuch, Account toWhichAccount) {
         getOwnerOfAccount().getHistory().put(getOwnerOfAccount().getLastTransactionsId(),
                 createNewInternationalOutTransaction(dateOfTransaction, howMuch, toWhichAccount));
         getOwnerOfAccount().setInternationalIdCount(getOwnerOfAccount().getInternationalIdCount() + 1);
         getOwnerOfAccount().setLastTransactionsId(getOwnerOfAccount().getLastTransactionsId() + 1);
     }
 
-    InternationalOutTransaction createNewInternationalOutTransaction(LocalDate dateOfTransaction,
+    private InternationalOutTransaction createNewInternationalOutTransaction(LocalDate dateOfTransaction,
                                                                      BigDecimal howMuch, Account toWhichAccount) {
         return new InternationalOutTransaction(getOwnerOfAccount().getInternationalIdCount(),
                 howMuch, this,

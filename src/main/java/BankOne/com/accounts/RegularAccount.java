@@ -15,13 +15,13 @@ public class RegularAccount extends Account {
             setAmountOfMoney(getAmountOfMoney().subtract(howMuch));
             LocalDate dateOfTransaction = LocalDate.now();
             createNewMemento(dateOfTransaction);
-            writeCreditToHistory(toWhichAccount,howMuch);
+            writeCreditToCustomerHistory(toWhichAccount,howMuch);
             creditIdCount++;
             toWhichAccount.debit(howMuch);
         } else throw new Exception("NotEnoughMoney");
     }
 
-    void writeCreditToHistory(Account toWhichAccount, BigDecimal howMuch){
+    private void writeCreditToCustomerHistory(Account toWhichAccount, BigDecimal howMuch){
         getOwnerOfAccount().getHistory().put(getOwnerOfAccount().getLastTransactionsId(),
                 createNewLocalSendTransaction( howMuch, toWhichAccount));
     }
