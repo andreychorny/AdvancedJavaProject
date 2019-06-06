@@ -11,7 +11,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -33,32 +32,27 @@ public class CustomerService {
         }
     }
 
-    void makeCredit() throws Exception {
-        System.out.println("You have such Acceptable accounts:");
+    void showAllAccounts() throws Exception {
         for (Account account : accounts) {
-            if (account instanceof RegularAccount) System.out.println(accounts.indexOf(account) + ": Regular:" +
-                    account.getNumber());
-            if (account instanceof SavingAccount) System.out.println(accounts.indexOf(account) + ": Saving:" +
-                    account.getNumber());
-        }
-        System.out.println("Please choose the index of account for credit:");
-        Scanner in = new Scanner(System.in);
-        int index = in.nextInt();
-        if (accounts.get(index) instanceof RegularAccount) {
-            creditFromRegular(index, in);
-        }
-        if (accounts.get(index) instanceof SavingAccount) {
-            creditFromSaving(index, in);
+            if (account instanceof RegularAccount) {
+                logger.info(accounts.indexOf(account) + ": Regular:" +
+                        account.getNumber() + "  balance:" + account.getAmountOfMoney());
+            }
+            if (account instanceof SavingAccount){
+                logger.info(accounts.indexOf(account) + ": Saving:" +
+                        account.getNumber() + "  balance:" + account.getAmountOfMoney());
+            }
+            if (account instanceof InternationalAccount){
+                logger.info(accounts.indexOf(account) + ": International:" +
+                        account.getNumber() + "  balance:" + account.getAmountOfMoney());
+
+            }
         }
     }
 
-    private void creditFromRegular(int index, Scanner in) throws Exception {
-        RegularAccount accInUse = (RegularAccount) accounts.get(index);
-        in.nextLine();
-        System.out.println("Write number of account to deliver funds:");
-        String deliverToNumber = in.nextLine();
-        System.out.println("Amount of money to deliver: ");
-        BigDecimal amountToDeliver = new BigDecimal(in.nextDouble());
+    private void creditFromRegular(int indexOfAccount, String deliverToNumber, BigDecimal amountToDeliver)
+            throws Exception {
+        RegularAccount accInUse = (RegularAccount) accounts.get(indexOfAccount);
         amountToDeliver = amountToDeliver.setScale(2, RoundingMode.CEILING);
         Account accDeliverTo = Bank.findAccount(deliverToNumber);
         if (accDeliverTo != null) accInUse.credit(accDeliverTo, amountToDeliver);
@@ -102,7 +96,7 @@ public class CustomerService {
         if (accDeliverTo != null) accInUse.wire(accDeliverTo, amountToDeliver);
     }
 
-    void requestForNewAccount(int numberOfAccountType) {
+    public void requestForNewAccount(int numberOfAccountType) {
         switch (numberOfAccountType) {
             case 1:
                 Bank.getRequestsForAccount().add(new RegularAccount(new BigDecimal(1000),
@@ -125,4 +119,7 @@ public class CustomerService {
         }
     }
 
+    public Customer getCurrentCustomer() {
+        return currentCustomer;
+    }
 }

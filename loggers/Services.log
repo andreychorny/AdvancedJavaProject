@@ -1,56 +1,17 @@
-[INFO ] 2019-06-05 02:24:36.597 [main] EmployeeService - Retrieving data of customer:
-[INFO ] 2019-06-05 02:24:36.740 [main] EmployeeService - Customer{
+[INFO ] 2019-06-06 02:16:33.221 [main] EmployeeService - Retrieving data of customer:
+[INFO ] 2019-06-06 02:16:33.229 [main] EmployeeService - Customer{
 login= CustLogin
  firstName= CustName,
  lastName= CustLastName,
  dateOfBirth= 2000-11-27,
- dateOfJoiningToBank= 2019-06-05,
+ dateOfJoiningToBank= 2019-06-06,
  accounts:}
-[INFO ] 2019-06-05 02:25:25.416 [main] EmployeeService - Retrieving data of customer:
-[INFO ] 2019-06-05 02:25:25.420 [main] EmployeeService - Customer{
-login= CustLogin
- firstName= CustName,
- lastName= CustLastName,
- dateOfBirth= 2000-11-27,
- dateOfJoiningToBank= 2019-06-05,
- accounts:}
-[INFO ] 2019-06-05 02:28:26.614 [main] EmployeeService - Retrieving data of customer:
-[INFO ] 2019-06-05 02:28:26.624 [main] EmployeeService - Customer{
-login= CustLogin
- firstName= CustName,
- lastName= CustLastName,
- dateOfBirth= 2000-11-27,
- dateOfJoiningToBank= 2019-06-05,
- accounts:}
-[INFO ] 2019-06-05 02:30:17.477 [main] EmployeeService - Retrieving data of customer:
-[INFO ] 2019-06-05 02:30:17.477 [main] EmployeeService - Customer{
-login= CustLogin
- firstName= CustName,
- lastName= CustLastName,
- dateOfBirth= 2000-11-27,
- dateOfJoiningToBank= 2019-06-05,
- accounts:}
-[INFO ] 2019-06-05 02:32:52.741 [main] EmployeeService - Retrieving data of customer:
-[INFO ] 2019-06-05 02:32:52.745 [main] EmployeeService - Customer{
-login= CustLogin
- firstName= CustName,
- lastName= CustLastName,
- dateOfBirth= 2000-11-27,
- dateOfJoiningToBank= 2019-06-05,
- accounts:}
-[INFO ] 2019-06-05 02:34:50.898 [main] EmployeeService - Retrieving data of customer:
-[INFO ] 2019-06-05 02:34:50.913 [main] EmployeeService - Customer{
-login= CustLogin
- firstName= CustName,
- lastName= CustLastName,
- dateOfBirth= 2000-11-27,
- dateOfJoiningToBank= 2019-06-05,
- accounts:}
-[INFO ] 2019-06-05 02:35:29.947 [main] EmployeeService - Retrieving data of customer:
-[INFO ] 2019-06-05 02:35:29.947 [main] EmployeeService - Customer{
-login= CustLogin
- firstName= CustName,
- lastName= CustLastName,
- dateOfBirth= 2000-11-27,
- dateOfJoiningToBank= 2019-06-05,
- accounts:}
+[INFO ] 2019-06-06 02:16:33.235 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-06 02:16:33.236 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
+[INFO ] 2019-06-06 02:16:33.236 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-06 02:16:33.236 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-06 02:16:33.236 [main] EmployeeService - Requested account of type BankOne.com.accounts.SavingAccount
+[INFO ] 2019-06-06 02:16:33.237 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-06 02:16:33.237 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-06 02:16:33.237 [main] EmployeeService - Requested account of type BankOne.com.accounts.InternationalAccount
+[INFO ] 2019-06-06 02:16:33.238 [main] EmployeeService - Do you accept this account?

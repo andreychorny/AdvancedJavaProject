@@ -128,4 +128,8 @@ public class Bank {
     public static List<Account> getRequestsForAccount() {
         return requestsForAccount;
     }
+
+    public static List<Employee> getEmployees() {
+        return employees;
+    }
 }

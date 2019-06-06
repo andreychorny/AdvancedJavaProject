@@ -47,7 +47,7 @@ public class EmployeeService {
     }
 
     //possible realisation of this is strongly depended from front-end
-    void acceptRequestsForAccounts(boolean decision){
+    public void acceptRequestsForAccounts(boolean decision){
         List<Account> requests = Bank.getRequestsForAccount();
         if(requests.size()!=0){
             Account chechingAccount = requests.get(0);
