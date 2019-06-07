@@ -1,6 +1,7 @@
 package BankOne;
 
 import BankOne.com.BankData.Bank;
+import BankOne.com.BankData.Country;
 import BankOne.com.BankData.Customer;
 import BankOne.com.accounts.InternationalAccount;
 import BankOne.com.accounts.RegularAccount;
@@ -45,19 +46,19 @@ class EmployeeServiceJUnit {
         String newCustomerLastName = "Baratheon";
         LocalDate newCustomerDateOfBirth = LocalDate.of(1935, 11, 27);
         Customer newCustomer = new Customer(newCustomerLogin, newCustomerPassword, newCustomerFirstName,
-                newCustomerLastName, newCustomerDateOfBirth, LocalDate.now());
+                newCustomerLastName, newCustomerDateOfBirth, LocalDate.now(), Country.UKRAINE);
         assertEquals(newCustomer, serviceForTest.createNewCustomer(newCustomerLogin,
                 newCustomerPassword, newCustomerFirstName, newCustomerLastName,
-                newCustomerDateOfBirth));
+                newCustomerDateOfBirth, Country.UKRAINE));
     }
 
     @Test
     void testLoginExistExceptionWhileCreatingCustomer() throws Exception {
         String sameLoginForTwoCustomers = "azorahai";
         serviceForTest.createNewCustomer(sameLoginForTwoCustomers,"zxcvbn", "name1",
-                "lastname1", LocalDate.of(1975, 9, 11));
+                "lastname1", LocalDate.of(1975, 9, 11),Country.AMERICA);
         assertThrows(Exception.class, () -> serviceForTest.createNewCustomer(sameLoginForTwoCustomers,"qwerty",
-                "name2","lastname2", LocalDate.of(1999,1,27)));
+                "name2","lastname2", LocalDate.of(1999,1,27),Country.ENGLAND));
 
     }
 
@@ -65,7 +66,7 @@ class EmployeeServiceJUnit {
     void testViewingDataOfSpecificCustomer() throws Exception {
         LocalDate customerDateOfBirth = LocalDate.of(2000, 11, 27);
         serviceForTest.createNewCustomer("CustLogin", "CustPassword",
-                "CustName", "CustLastName", customerDateOfBirth);
+                "CustName", "CustLastName", customerDateOfBirth, Country.POLAND);
         String outputedCustomerInfo = serviceForTest.viewDataOfClient(
                 Bank.retrievePersonByLogin("CustLogin"));
         assertEquals(rightFormatOfKeepingCustomerInfo(), outputedCustomerInfo);
@@ -76,7 +77,7 @@ class EmployeeServiceJUnit {
         Customer currentCustomer;
         LocalDate dateOfCustomerBirth = LocalDate.of(1955, 10, 26);
         currentCustomer = serviceForTest.createNewCustomer("loginCustomer", "qwerty",
-                "Bob", "Dylan", dateOfCustomerBirth);
+                "Bob", "Dylan", dateOfCustomerBirth, Country.GERMANY);
         CustomerService customerService;
         customerService = new CustomerService("loginCustomer", "qwerty");
         customerService.requestForNewAccount(1);

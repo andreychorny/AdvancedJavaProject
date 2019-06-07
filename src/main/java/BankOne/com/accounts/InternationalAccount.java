@@ -9,6 +9,8 @@ import java.util.Date;
 
 public class InternationalAccount extends Account {
 
+    private String IBAN;
+
     public void wire(Account toWhichAccount, BigDecimal howMuch) throws Exception {
         if (getAmountOfMoney().compareTo(howMuch) >= 0) {
             setAmountOfMoney(getAmountOfMoney().subtract(howMuch));
@@ -30,11 +32,11 @@ public class InternationalAccount extends Account {
                                                                      BigDecimal howMuch, Account toWhichAccount) {
         return new InternationalOutTransaction(getOwnerOfAccount().getInternationalIdCount(),
                 howMuch, this,
-                toWhichAccount.getNumber());
+                toWhichAccount.getNumber(),IBAN);
     }
 
-    public InternationalAccount(BigDecimal amountOfMoney,
-                                String number, Customer ownerOfAccount) {
+    public InternationalAccount(BigDecimal amountOfMoney, String number, Customer ownerOfAccount, String IBAN) {
         super(amountOfMoney, number, ownerOfAccount);
+        this.IBAN = IBAN;
     }
 }

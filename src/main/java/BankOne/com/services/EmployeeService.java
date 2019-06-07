@@ -1,6 +1,7 @@
 package BankOne.com.services;
 
 import BankOne.com.BankData.Bank;
+import BankOne.com.BankData.Country;
 import BankOne.com.BankData.Customer;
 import BankOne.com.BankData.Employee;
 import BankOne.com.accounts.Account;
@@ -29,10 +30,10 @@ public class EmployeeService {
     }
 
     public Customer createNewCustomer(String login, String password, String firstName,
-                           String lastName, LocalDate dateOfBirth) throws Exception {
+                                      String lastName, LocalDate dateOfBirth, Country country) throws Exception {
         if (Bank.checkIfLoginUnique(login)) {
             Customer newCustomer = new Customer(login, password, firstName, lastName,
-                    dateOfBirth, LocalDate.now());
+                    dateOfBirth, LocalDate.now(), country);
             Bank.getCustomers().add(newCustomer);
             return newCustomer;
         } else {

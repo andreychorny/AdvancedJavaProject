@@ -2,12 +2,7 @@ package BankOne.com.BankData;
 
 import BankOne.com.TransactionsHistory.Transaction;
 import BankOne.com.accounts.Account;
-import BankOne.com.accounts.InternationalAccount;
-import BankOne.com.accounts.RegularAccount;
-import BankOne.com.accounts.SavingAccount;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -21,6 +16,7 @@ public class Customer extends Person {
 
     private static int currentLastCustomerId = 0;
 
+    private Country country;
 
     private List<Account> accounts = new ArrayList<>();
 
@@ -31,10 +27,11 @@ public class Customer extends Person {
     private LocalDate dateOfJoiningToBank;
 
     public Customer(String login, String password, String firstName, String lastName,
-                    LocalDate dateOfBirth, LocalDate dateOfJoiningToBank) {
+                    LocalDate dateOfBirth, LocalDate dateOfJoiningToBank, Country country) {
         super(login, password, firstName, lastName);
         this.dateOfBirth = dateOfBirth;
         this.dateOfJoiningToBank = dateOfJoiningToBank;
+        this.country = country;
         lastTransactionsId = 0;
         internationalIdCount = 0;
         id = currentLastCustomerId;
@@ -119,5 +116,9 @@ public class Customer extends Person {
 
     public void setInternationalIdCount(int internationalIdCount) {
         this.internationalIdCount = internationalIdCount;
+    }
+
+    public Country getCountry() {
+        return country;
     }
 }

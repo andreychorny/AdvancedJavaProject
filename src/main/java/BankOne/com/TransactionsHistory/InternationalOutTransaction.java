@@ -11,12 +11,15 @@ public class InternationalOutTransaction extends Transaction {
 
     private final String toWhichAccountNumber;
 
+    private final String IBAN;
+
     public InternationalOutTransaction(int id, BigDecimal deliveredAmount,
                                        InternationalAccount internationalAccountOfTransaction,
-                                       String toWhichAccountNumber) {
+                                       String toWhichAccountNumber, String IBAN) {
         super(id, deliveredAmount);
         this.internationalAccountOfTransaction = internationalAccountOfTransaction;
         this.toWhichAccountNumber = toWhichAccountNumber;
+        this.IBAN = IBAN;
     }
 
     @Override

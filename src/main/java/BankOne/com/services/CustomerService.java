@@ -88,22 +88,9 @@ public class CustomerService {
         return accInUse.getAmountOfMoney();
     }
 
-    private void makeWire() throws Exception {
-        List<Integer> acceptableAccountsIds = new LinkedList<>();
-        System.out.println("You have such Acceptable accounts:");
-        for (Account account : currentCustomer.getAccounts()) {
-            if (account instanceof InternationalAccount)
-                System.out.println(currentCustomer.getAccounts().indexOf(account) + ": International:" +
-                        account.getNumber());
-        }
-        System.out.println("Please choose the index of account for wire:");
-        Scanner in = new Scanner(System.in);
-        int index = in.nextInt();
-        InternationalAccount accInUse = (InternationalAccount) currentCustomer.getAccounts().get(index);
-        System.out.println("Write number of account to deliver funds:");
-        String deliverToNumber = in.nextLine();
-        System.out.println("Amount of money to deliver: ");
-        BigDecimal amountToDeliver = new BigDecimal(in.nextDouble());
+    private void wireFromInternational(int indexOfAccount, String deliverToNumber, BigDecimal amountToDeliver)
+            throws Exception {
+        InternationalAccount accInUse = (InternationalAccount) currentCustomer.getAccounts().get(indexOfAccount);
         amountToDeliver = amountToDeliver.setScale(2, RoundingMode.CEILING);
         Account accDeliverTo = Bank.findAccount(deliverToNumber);
         if (accDeliverTo != null) accInUse.wire(accDeliverTo, amountToDeliver);
@@ -121,7 +108,8 @@ public class CustomerService {
                 break;
             case 3:
                 Bank.getRequestsForAccount().add(new InternationalAccount(new BigDecimal(1000),
-                        Bank.createRandomNumberForAcc(currentCustomer), currentCustomer));
+                        Bank.createRandomNumberForAcc(currentCustomer), currentCustomer,
+                        currentCustomer.getCountry().getCountryIBAN()));
                 break;
         }
     }

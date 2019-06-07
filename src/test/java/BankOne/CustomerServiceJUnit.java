@@ -1,6 +1,7 @@
 package BankOne;
 
 import BankOne.com.BankData.Bank;
+import BankOne.com.BankData.Country;
 import BankOne.com.BankData.Customer;
 import BankOne.com.accounts.Account;
 import BankOne.com.accounts.InternationalAccount;
@@ -27,7 +28,7 @@ public class CustomerServiceJUnit {
         employeeService = new EmployeeService("loginEmployee", "password");
         LocalDate dateOfCustomerBirth = LocalDate.of(1955, 10, 26);
         currentCustomer = employeeService.createNewCustomer("loginCustomer", "qwerty",
-                "Bob", "Dylan", dateOfCustomerBirth);
+                "Bob", "Dylan", dateOfCustomerBirth, Country.AMERICA);
         customerService = new CustomerService("loginCustomer", "qwerty");
 
     }
@@ -108,7 +109,7 @@ public class CustomerServiceJUnit {
 
     Customer createSecondCustomerAndHisAccounts() throws Exception {
         Customer secondCustomer = employeeService.createNewCustomer("login2", "password2",
-                "name2","lastName2", LocalDate.of(1996, 8, 24));
+                "name2","lastName2", LocalDate.of(1996, 8, 24), Country.POLAND);
         CustomerService secondCustomerService = new CustomerService("login2", "password2");
         secondCustomerService.requestForNewAccount(1);
         secondCustomerService.requestForNewAccount(2);
