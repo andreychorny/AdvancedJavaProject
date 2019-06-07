@@ -6,34 +6,33 @@ import BankOne.com.accounts.InternationalAccount;
 import BankOne.com.accounts.RegularAccount;
 import BankOne.com.services.CustomerService;
 import BankOne.com.services.EmployeeService;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class EmployeeServiceJUnit {
+class EmployeeServiceJUnit {
 
     static EmployeeService serviceForTest;
 
-    @BeforeAll
-    static void createEmployeesToWorkWith() throws Exception {
+    @BeforeEach
+    void createEmployeesToWorkWith() throws Exception {
         Bank.createNewEmployee("ouroboros", "superqwerty",
                 "Andrii", "Chornyi");
         serviceForTest = new EmployeeService("ouroboros", "superqwerty");
         assertNotNull(serviceForTest);
     }
 
-    @AfterAll
-    static void cleanseAllData() throws Exception {
+    @AfterEach
+    void cleanseAllData(){
         Bank.getCustomers().clear();
         Bank.getEmployees().clear();
         Bank.getRequestsForAccount().clear();
     }
     @Test
-    void testCorrectnessOfLoggingSystem() throws Exception {
+    void testCorrectnessOfLoggingSystem(){
         assertThrows(Exception.class, () -> new EmployeeService("ouroboros", "wrongPassword"),
                 "Logging info doesn't match - Exception");
     }
@@ -86,7 +85,6 @@ public class EmployeeServiceJUnit {
         assertEquals(0,Bank.getRequestsForAccount().size());
         assertEquals(RegularAccount.class,currentCustomer.getAccounts().get(0).getClass());
         assertEquals(InternationalAccount.class,currentCustomer.getAccounts().get(1).getClass());
-
     }
 
     private String rightFormatOfKeepingCustomerInfo() {

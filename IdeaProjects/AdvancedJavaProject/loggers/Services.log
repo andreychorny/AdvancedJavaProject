@@ -1,0 +1,79 @@
+[INFO ] 2019-06-07 13:38:44.446 [main] EmployeeService - Retrieving data of customer:
+[INFO ] 2019-06-07 13:38:44.451 [main] EmployeeService - Customer{
+login= CustLogin
+ firstName= CustName,
+ lastName= CustLastName,
+ dateOfBirth= 2000-11-27,
+ dateOfJoiningToBank= 2019-06-07,
+ accounts:}
+[INFO ] 2019-06-07 13:38:44.467 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-07 13:38:44.467 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
+[INFO ] 2019-06-07 13:38:44.467 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-07 13:38:44.468 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-07 13:38:44.468 [main] EmployeeService - Requested account of type BankOne.com.accounts.SavingAccount
+[INFO ] 2019-06-07 13:38:44.468 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-07 13:38:44.469 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-07 13:38:44.469 [main] EmployeeService - Requested account of type BankOne.com.accounts.InternationalAccount
+[INFO ] 2019-06-07 13:38:44.469 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-07 13:39:31.258 [main] EmployeeService - Retrieving data of customer:
+[INFO ] 2019-06-07 13:39:31.265 [main] EmployeeService - Customer{
+login= CustLogin
+ firstName= CustName,
+ lastName= CustLastName,
+ dateOfBirth= 2000-11-27,
+ dateOfJoiningToBank= 2019-06-07,
+ accounts:}
+[INFO ] 2019-06-07 13:39:31.343 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-07 13:39:31.343 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
+[INFO ] 2019-06-07 13:39:31.343 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-07 13:39:31.343 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-07 13:39:31.344 [main] EmployeeService - Requested account of type BankOne.com.accounts.SavingAccount
+[INFO ] 2019-06-07 13:39:31.344 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-07 13:39:31.345 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-07 13:39:31.345 [main] EmployeeService - Requested account of type BankOne.com.accounts.InternationalAccount
+[INFO ] 2019-06-07 13:39:31.346 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-07 13:51:32.776 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-07 13:51:32.780 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
+[INFO ] 2019-06-07 13:51:32.780 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-07 13:51:32.781 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-07 13:51:32.781 [main] EmployeeService - Requested account of type BankOne.com.accounts.SavingAccount
+[INFO ] 2019-06-07 13:51:32.782 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-07 13:51:32.782 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-07 13:51:32.782 [main] EmployeeService - Requested account of type BankOne.com.accounts.InternationalAccount
+[INFO ] 2019-06-07 13:51:32.783 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-07 13:51:32.783 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-07 13:51:32.783 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
+[INFO ] 2019-06-07 13:51:32.784 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-07 13:51:32.789 [main] CustomerService - 0: Regular:BC-00000-327  balance:1000
+1: Saving:BC-00000-537  balance:10002: International:BC-00000-541  balance:10003: Regular:BC-00000-417  balance:1000
+
+[INFO ] 2019-06-07 13:53:51.802 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-07 13:53:51.808 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
+[INFO ] 2019-06-07 13:53:51.808 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-07 13:53:51.808 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-07 13:53:51.808 [main] EmployeeService - Requested account of type BankOne.com.accounts.SavingAccount
+[INFO ] 2019-06-07 13:53:51.809 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-07 13:53:51.809 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-07 13:53:51.809 [main] EmployeeService - Requested account of type BankOne.com.accounts.InternationalAccount
+[INFO ] 2019-06-07 13:53:51.809 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-07 13:53:51.809 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-07 13:53:51.810 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
+[INFO ] 2019-06-07 13:53:51.811 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-07 13:53:51.816 [main] CustomerService - 0: Regular:BC-00000-070  balance:1000
+1: Saving:BC-00000-157  balance:10002: International:BC-00000-623  balance:10003: Regular:BC-00000-976  balance:1000
+
+[INFO ] 2019-06-07 13:55:02.451 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-07 13:55:02.455 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
+[INFO ] 2019-06-07 13:55:02.455 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-07 13:55:02.456 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-07 13:55:02.456 [main] EmployeeService - Requested account of type BankOne.com.accounts.SavingAccount
+[INFO ] 2019-06-07 13:55:02.456 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-07 13:55:02.457 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-07 13:55:02.457 [main] EmployeeService - Requested account of type BankOne.com.accounts.InternationalAccount
+[INFO ] 2019-06-07 13:55:02.457 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-07 13:55:02.458 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-07 13:55:02.458 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
+[INFO ] 2019-06-07 13:55:02.458 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-07 13:55:02.462 [main] CustomerService - 0: Regular:BC-00000-192  balance:1000
+1: Saving:BC-00000-042  balance:10002: International:BC-00000-457  balance:10003: Regular:BC-00000-083  balance:1000
+

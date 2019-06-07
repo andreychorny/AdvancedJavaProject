@@ -19,47 +19,47 @@ public class CustomerService {
 
     private Customer currentCustomer;
 
-    private List<Account> accounts;
 
     private static Logger logger = LogManager.getLogger(CustomerService.class);
 
     public CustomerService(String login, String password) throws Exception {
         if (Bank.checkIfLoggingInfoIsSuitable(login, password)) {
             currentCustomer = Bank.retrievePersonByLogin(login);
-            accounts = currentCustomer.getAccounts();
         }else {
             throw new Exception("WRONG LOGGING INFO!");
         }
     }
 
-    void showAllAccounts() throws Exception {
-        for (Account account : accounts) {
+    public String showAllAccounts() throws Exception {
+        String allAccountsInfo = "";
+        for (Account account : currentCustomer.getAccounts()) {
             if (account instanceof RegularAccount) {
-                logger.info(accounts.indexOf(account) + ": Regular:" +
-                        account.getNumber() + "  balance:" + account.getAmountOfMoney());
+                allAccountsInfo += currentCustomer.getAccounts().indexOf(account) + ": Regular:" +
+                        account.getNumber() + "  balance:" + account.getAmountOfMoney() +"\n";
             }
             if (account instanceof SavingAccount){
-                logger.info(accounts.indexOf(account) + ": Saving:" +
-                        account.getNumber() + "  balance:" + account.getAmountOfMoney());
+                allAccountsInfo += currentCustomer.getAccounts().indexOf(account) + ": Saving:" +
+                        account.getNumber() + "  balance:" + account.getAmountOfMoney()+"\n";
             }
             if (account instanceof InternationalAccount){
-                logger.info(accounts.indexOf(account) + ": International:" +
-                        account.getNumber() + "  balance:" + account.getAmountOfMoney());
-
+                allAccountsInfo += currentCustomer.getAccounts().indexOf(account) + ": International:" +
+                        account.getNumber() + "  balance:" + account.getAmountOfMoney()+"\n";
             }
         }
+        logger.info(allAccountsInfo);
+        return allAccountsInfo;
     }
 
     private void creditFromRegular(int indexOfAccount, String deliverToNumber, BigDecimal amountToDeliver)
             throws Exception {
-        RegularAccount accInUse = (RegularAccount) accounts.get(indexOfAccount);
+        RegularAccount accInUse = (RegularAccount) currentCustomer.getAccounts().get(indexOfAccount);
         amountToDeliver = amountToDeliver.setScale(2, RoundingMode.CEILING);
         Account accDeliverTo = Bank.findAccount(deliverToNumber);
         if (accDeliverTo != null) accInUse.credit(accDeliverTo, amountToDeliver);
     }
 
     private void creditFromSaving(int index, Scanner in) throws Exception {
-        SavingAccount accInUse = (SavingAccount) accounts.get(index);
+        SavingAccount accInUse = (SavingAccount) currentCustomer.getAccounts().get(index);
         System.out.println("Write number of account to deliver funds:");
         String deliverToNumber = in.nextLine();
         System.out.println("Amount of money to deliver: ");
@@ -78,15 +78,15 @@ public class CustomerService {
     private void makeWire() throws Exception {
         List<Integer> acceptableAccountsIds = new LinkedList<>();
         System.out.println("You have such Acceptable accounts:");
-        for (Account account : accounts) {
+        for (Account account : currentCustomer.getAccounts()) {
             if (account instanceof InternationalAccount)
-                System.out.println(accounts.indexOf(account) + ": International:" +
+                System.out.println(currentCustomer.getAccounts().indexOf(account) + ": International:" +
                         account.getNumber());
         }
         System.out.println("Please choose the index of account for wire:");
         Scanner in = new Scanner(System.in);
         int index = in.nextInt();
-        InternationalAccount accInUse = (InternationalAccount) accounts.get(index);
+        InternationalAccount accInUse = (InternationalAccount) currentCustomer.getAccounts().get(index);
         System.out.println("Write number of account to deliver funds:");
         String deliverToNumber = in.nextLine();
         System.out.println("Amount of money to deliver: ");

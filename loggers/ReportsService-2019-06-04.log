@@ -1,7 +1,0 @@
-[INFO ] 2019-06-05 01:58:50.026 [main] EmployeeService - Customer{
-login=CustLogin
- firstName=CustName,
- lastName=CustLastName,
- dateOfBirth=2000-11-27,
- dateOfJoiningToBank=2019-06-05,
- accounts:}
