@@ -52,10 +52,6 @@ public class Bank {
         }
     }
 
-    protected static void addRequestForNewAccount(Account account){
-        requestsForAccount.add(account);
-    }
-
     public static boolean checkIfNumberUnique(String number) {
         for (Customer customer : customers) {
             for (Account account : customer.getAccounts()) {

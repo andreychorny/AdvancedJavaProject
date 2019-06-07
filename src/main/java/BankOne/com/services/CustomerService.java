@@ -56,7 +56,7 @@ public class CustomerService {
         amountToDeliver = amountToDeliver.setScale(2, RoundingMode.DOWN);
         logger.info("Customer id:" + currentCustomer.getId() + ", " + currentCustomer.getFirstName() + " " +
                 currentCustomer.getLastName() + "\n sends funds from RegularAccount:" +
-                currentCustomer.getAccounts().get(indexOfAccount) + " to Account:" + deliverToNumber
+                currentCustomer.getAccounts().get(indexOfAccount).getNumber() + " to Account:" + deliverToNumber
                 + "\n in amount of " + amountToDeliver.toString() + "$");
         Account accDeliverTo = Bank.findAccount(deliverToNumber);
         if (accDeliverTo != null) {
@@ -67,21 +67,25 @@ public class CustomerService {
         return accInUse.getAmountOfMoney();
     }
 
-    private void creditFromSaving(int index, Scanner in) throws Exception {
-        SavingAccount accInUse = (SavingAccount) currentCustomer.getAccounts().get(index);
-        System.out.println("Write number of account to deliver funds:");
-        String deliverToNumber = in.nextLine();
-        System.out.println("Amount of money to deliver: ");
-        BigDecimal amountToDeliver = new BigDecimal(in.nextDouble());
-        amountToDeliver = amountToDeliver.setScale(2, RoundingMode.CEILING);
+    public BigDecimal creditFromSavingAcc(int indexOfAccount, String deliverToNumber, BigDecimal amountToDeliver)
+            throws Exception {
+        SavingAccount accInUse = (SavingAccount) currentCustomer.getAccounts().get(indexOfAccount);
+        amountToDeliver = amountToDeliver.setScale(2, RoundingMode.DOWN);
+        logger.info("Customer id:" + currentCustomer.getId() + ", " + currentCustomer.getFirstName() + " " +
+                currentCustomer.getLastName() + "\n sends funds from SavingAccount:" +
+                currentCustomer.getAccounts().get(indexOfAccount).getNumber() + " to Account:" + deliverToNumber
+                + "\n in amount of " + amountToDeliver.toString() + "$");
         Account accDeliverTo = Bank.findAccount(deliverToNumber);
-        if (accDeliverTo == null) {
-            throw new Exception("THERE IS NO SUCH ACCOUNT(TO DELIVER FUNDS)!");
+        if (accDeliverTo != null && (accDeliverTo instanceof RegularAccount)) {
+            accInUse.credit(accDeliverTo, amountToDeliver);
+        }else if(accDeliverTo == null){
+            logger.warn("THERE IS NO SUCH ACCOUNT NUMBER AS " + deliverToNumber + "!!!");
+            throw new Exception("No such account number to send money!");
+        }else if(!(accDeliverTo instanceof RegularAccount)){
+            logger.warn("YOU CANNOT SEND MONEY FROM SAVING ACCOUNT TO THIS TYPE OF ACCOUNTS!");
+            throw new Exception("Wrong type of destination account!");
         }
-        if (!(accDeliverTo instanceof RegularAccount)) {
-            throw new Exception("YOU CANNOT SEND MONEY FROM SAVING TYPE OF ACCOUNT TO THIS TYPE!");
-        }
-        accInUse.credit(accDeliverTo, amountToDeliver);
+        return accInUse.getAmountOfMoney();
     }
 
     private void makeWire() throws Exception {

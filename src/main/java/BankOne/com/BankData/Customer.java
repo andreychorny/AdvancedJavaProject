@@ -58,18 +58,9 @@ public class Customer extends Person {
         return internationalIdCount;
     }
 
-    public void setInternationalIdCount(int internationalIdCount) {
-        this.internationalIdCount = internationalIdCount;
-    }
-
     public List<Account> getAccounts() {
         return accounts;
     }
-
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
-    }
-
 
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
@@ -121,6 +112,12 @@ public class Customer extends Person {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getInternationalIdCount(), getLastTransactionsId(), getId(), getAccounts(), getHistory(), getDateOfBirth(), getDateOfJoiningToBank());
+        return Objects.hash(super.hashCode(), getInternationalIdCount(),
+                getLastTransactionsId(), getId(), getAccounts(), getHistory(),
+                getDateOfBirth(), getDateOfJoiningToBank());
+    }
+
+    public void setInternationalIdCount(int internationalIdCount) {
+        this.internationalIdCount = internationalIdCount;
     }
 }
