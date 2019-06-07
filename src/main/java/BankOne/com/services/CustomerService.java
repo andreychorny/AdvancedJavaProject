@@ -25,7 +25,7 @@ public class CustomerService {
     public CustomerService(String login, String password) throws Exception {
         if (Bank.checkIfLoggingInfoIsSuitable(login, password)) {
             currentCustomer = Bank.retrievePersonByLogin(login);
-        }else {
+        } else {
             throw new Exception("WRONG LOGGING INFO!");
         }
     }
@@ -35,27 +35,36 @@ public class CustomerService {
         for (Account account : currentCustomer.getAccounts()) {
             if (account instanceof RegularAccount) {
                 allAccountsInfo += currentCustomer.getAccounts().indexOf(account) + ": Regular:" +
-                        account.getNumber() + "  balance:" + account.getAmountOfMoney() +"\n";
+                        account.getNumber() + "  balance:" + account.getAmountOfMoney() + "\n";
             }
-            if (account instanceof SavingAccount){
+            if (account instanceof SavingAccount) {
                 allAccountsInfo += currentCustomer.getAccounts().indexOf(account) + ": Saving:" +
-                        account.getNumber() + "  balance:" + account.getAmountOfMoney()+"\n";
+                        account.getNumber() + "  balance:" + account.getAmountOfMoney() + "\n";
             }
-            if (account instanceof InternationalAccount){
+            if (account instanceof InternationalAccount) {
                 allAccountsInfo += currentCustomer.getAccounts().indexOf(account) + ": International:" +
-                        account.getNumber() + "  balance:" + account.getAmountOfMoney()+"\n";
+                        account.getNumber() + "  balance:" + account.getAmountOfMoney() + "\n";
             }
         }
         logger.info(allAccountsInfo);
         return allAccountsInfo;
     }
 
-    private void creditFromRegular(int indexOfAccount, String deliverToNumber, BigDecimal amountToDeliver)
+    public BigDecimal creditFromRegularAcc(int indexOfAccount, String deliverToNumber, BigDecimal amountToDeliver)
             throws Exception {
         RegularAccount accInUse = (RegularAccount) currentCustomer.getAccounts().get(indexOfAccount);
-        amountToDeliver = amountToDeliver.setScale(2, RoundingMode.CEILING);
+        amountToDeliver = amountToDeliver.setScale(2, RoundingMode.DOWN);
+        logger.info("Customer id:" + currentCustomer.getId() + ", " + currentCustomer.getFirstName() + " " +
+                currentCustomer.getLastName() + "\n sends funds from RegularAccount:" +
+                currentCustomer.getAccounts().get(indexOfAccount) + " to Account:" + deliverToNumber
+                + "\n in amount of " + amountToDeliver.toString() + "$");
         Account accDeliverTo = Bank.findAccount(deliverToNumber);
-        if (accDeliverTo != null) accInUse.credit(accDeliverTo, amountToDeliver);
+        if (accDeliverTo != null) {
+            accInUse.credit(accDeliverTo, amountToDeliver);
+        }else {
+            logger.warn("THERE IS NO SUCH ACCOUNT NUMBER AS " + deliverToNumber + "!!!");
+        }
+        return accInUse.getAmountOfMoney();
     }
 
     private void creditFromSaving(int index, Scanner in) throws Exception {
@@ -66,10 +75,10 @@ public class CustomerService {
         BigDecimal amountToDeliver = new BigDecimal(in.nextDouble());
         amountToDeliver = amountToDeliver.setScale(2, RoundingMode.CEILING);
         Account accDeliverTo = Bank.findAccount(deliverToNumber);
-        if(accDeliverTo == null) {
+        if (accDeliverTo == null) {
             throw new Exception("THERE IS NO SUCH ACCOUNT(TO DELIVER FUNDS)!");
         }
-        if(!(accDeliverTo instanceof  RegularAccount)) {
+        if (!(accDeliverTo instanceof RegularAccount)) {
             throw new Exception("YOU CANNOT SEND MONEY FROM SAVING TYPE OF ACCOUNT TO THIS TYPE!");
         }
         accInUse.credit(accDeliverTo, amountToDeliver);

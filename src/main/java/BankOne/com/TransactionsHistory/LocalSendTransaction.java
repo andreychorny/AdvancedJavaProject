@@ -12,8 +12,7 @@ public class LocalSendTransaction extends Transaction {
     private final String toWhichAccountNumber;
 
     public LocalSendTransaction(int id, BigDecimal deliveredAmount,
-                                Account accountOfTransaction,
-                                String toWhichAccountNumber) {
+                                Account accountOfTransaction, String toWhichAccountNumber) {
         super(id, deliveredAmount);
         this.accountOfTransaction = accountOfTransaction;
         this.toWhichAccountNumber = toWhichAccountNumber;

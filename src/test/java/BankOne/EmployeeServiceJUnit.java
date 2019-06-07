@@ -52,6 +52,16 @@ class EmployeeServiceJUnit {
     }
 
     @Test
+    void testLoginExistExceptionWhileCreatingCustomer() throws Exception {
+        String sameLoginForTwoCustomers = "azorahai";
+        serviceForTest.createNewCustomer(sameLoginForTwoCustomers,"zxcvbn", "name1",
+                "lastname1", LocalDate.of(1975, 9, 11));
+        assertThrows(Exception.class, () -> serviceForTest.createNewCustomer(sameLoginForTwoCustomers,"qwerty",
+                "name2","lastname2", LocalDate.of(1999,1,27)));
+
+    }
+
+    @Test
     void testViewingDataOfSpecificCustomer() throws Exception {
         LocalDate customerDateOfBirth = LocalDate.of(2000, 11, 27);
         serviceForTest.createNewCustomer("CustLogin", "CustPassword",

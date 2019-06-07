@@ -12,8 +12,7 @@ public class ReceiveTransaction extends Transaction {
     private final String fromWhichAccountNumber;
 
     public ReceiveTransaction(int id, BigDecimal deliveredAmount,
-                              LocalDate dateOfTransaction, Account receiveAccount,
-                              String fromWhichAccountNumber) {
+                              Account receiveAccount, String fromWhichAccountNumber) {
         super(id, deliveredAmount);
         this.receiveAccount = receiveAccount;
         this.fromWhichAccountNumber = fromWhichAccountNumber;

@@ -34,12 +34,11 @@ public abstract class Account {
 
     void writeDebitToCustomerHistory(LocalDate dateOfTransaction, BigDecimal arrivedCash) {
         ownerOfAccount.getHistory().put(ownerOfAccount.getLastTransactionsId(),
-                createNewReceiveTransaction(dateOfTransaction,arrivedCash));
+                createNewReceiveTransaction(arrivedCash));
         ownerOfAccount.setLastTransactionsId(ownerOfAccount.getLastTransactionsId() + 1);
     }
-    private ReceiveTransaction createNewReceiveTransaction(LocalDate dateOfTransaction, BigDecimal arrivedCash){
-        return new ReceiveTransaction(debitIdCount, arrivedCash, dateOfTransaction,
-                this, this.getNumber());
+    private ReceiveTransaction createNewReceiveTransaction(BigDecimal arrivedCash){
+        return new ReceiveTransaction(debitIdCount, arrivedCash,this, this.getNumber());
     }
 
     Account(BigDecimal amountOfMoney, String number, Customer ownerOfAccount) {

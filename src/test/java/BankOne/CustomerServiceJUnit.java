@@ -10,6 +10,7 @@ import BankOne.com.services.CustomerService;
 import BankOne.com.services.EmployeeService;
 import org.junit.jupiter.api.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -77,6 +78,25 @@ public class CustomerServiceJUnit {
 
     }
 
+    @Test
+    void testCreditFromRegularAcc() throws Exception{
+        customerService = new CustomerService("loginCustomer", "qwerty");
+        customerService.requestForNewAccount(1);
+        employeeService.acceptRequestsForAccounts(true);
+        Customer secondCustomer = createSecondCustomerAndHisAccount();
+        //Amount of money: RoundingMode.DOWN
+        assertEquals(BigDecimal.valueOf(549.21),customerService.creditFromRegularAcc(0,
+                secondCustomer.getAccounts().get(0).getNumber(),BigDecimal.valueOf(450.79123)));
+    }
+
+    Customer createSecondCustomerAndHisAccount() throws Exception{
+        Customer secondCustomer = employeeService.createNewCustomer("login2","password2","name2",
+                "lastName2",LocalDate.of(1996,8,24));
+        CustomerService secondCustomerService = new CustomerService("login2","password2");
+        secondCustomerService.requestForNewAccount(1);
+        employeeService.acceptRequestsForAccounts(true);
+        return secondCustomer;
+    }
     void employeeAcceptsAllAccounts() throws Exception {
         EmployeeService employeeService = new EmployeeService("loginEmployee", "password");
         while (Bank.getRequestsForAccount().size() != 0) {
