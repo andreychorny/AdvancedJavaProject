@@ -2,6 +2,7 @@ package BankOne.com.BankData;
 
 import BankOne.com.TransactionsHistory.Transaction;
 import BankOne.com.accounts.Account;
+import BankOne.com.accounts.InternationalAccount;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -115,6 +116,16 @@ public class Bank {
         String result = generatedNumber.toString();
         if (!Bank.checkIfNumberUnique(result)) result = createRandomNumberForAcc(customer);
         return result;
+    }
+
+    public static boolean checkIfIBANIsUnique(String IBANToCheck){
+        for (Customer customer : customers) {
+            for (Account account : customer.getAccounts()) {
+                if ((account instanceof InternationalAccount) &&
+                        ((InternationalAccount) account).getIBAN().equals(IBANToCheck)) return false;
+            }
+        }
+        return true;
     }
 
     public static List<Customer> getCustomers() {

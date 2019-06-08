@@ -61,6 +61,7 @@ public class CustomerServiceJUnit {
         assertTrue(Bank.getRequestsForAccount().get(2) instanceof InternationalAccount);
         //Customer applied request, but account doesn't attached to him yet
         assertEquals(0, currentCustomer.getAccounts().size());
+        //But possible account itself already knows to which user it belongs to
         assertEquals(currentCustomer, Bank.getRequestsForAccount().get(0).getOwnerOfAccount());
         assertEquals(currentCustomer, Bank.getRequestsForAccount().get(1).getOwnerOfAccount());
         assertEquals(currentCustomer, Bank.getRequestsForAccount().get(2).getOwnerOfAccount());
@@ -83,10 +84,14 @@ public class CustomerServiceJUnit {
         customerService.requestForNewAccount(1);
         employeeService.acceptRequestsForAccounts(true);
         Customer secondCustomer = createSecondCustomerAndHisAccounts();
+        assertThrows(Exception.class, () -> customerService.creditFromRegularAcc(0,
+                secondCustomer.getAccounts().get(0).getNumber(), BigDecimal.valueOf(10000)),
+                "Not enough money on account");
         //Amount of money: RoundingMode.DOWN till 2 digits after dot
         assertEquals(BigDecimal.valueOf(549.21), customerService.creditFromRegularAcc(0,
                 secondCustomer.getAccounts().get(0).getNumber(), BigDecimal.valueOf(450.79123)));
         assertEquals(BigDecimal.valueOf(1450.79), secondCustomer.getAccounts().get(0).getAmountOfMoney());
+
     }
 
     @Test
@@ -94,6 +99,9 @@ public class CustomerServiceJUnit {
         customerService.requestForNewAccount(2);
         employeeService.acceptRequestsForAccounts(true);
         Customer secondCustomer = createSecondCustomerAndHisAccounts();
+        assertThrows(Exception.class, () -> customerService.creditFromRegularAcc(0,
+                secondCustomer.getAccounts().get(0).getNumber(), BigDecimal.valueOf(10000)),
+                "Not enough money on account");
         //Amount of money: RoundingMode.DOWN till 2 digits after dot
         assertEquals(BigDecimal.valueOf(549.21), customerService.creditFromSavingAcc(0,
                 secondCustomer.getAccounts().get(0).getNumber(), BigDecimal.valueOf(450.79123)));
@@ -104,6 +112,24 @@ public class CustomerServiceJUnit {
         assertThrows(Exception.class, () -> customerService.creditFromSavingAcc(
                 0,secondCustomer.getAccounts().get(2).getNumber(), BigDecimal.valueOf(100)),
                 "You cannot send money from saving account to international account");
+
+    }
+
+    @Test
+    void testWireFromInternationalAcc() throws Exception{
+        customerService.requestForNewAccount(3);
+        employeeService.acceptRequestsForAccounts(true);
+        Customer secondCustomer = createSecondCustomerAndHisAccounts();
+        assertThrows(Exception.class, () -> customerService.creditFromRegularAcc(0,
+                secondCustomer.getAccounts().get(2).getNumber(), BigDecimal.valueOf(10000)),
+                "Not enough money on account");
+        assertThrows(Exception.class, () -> customerService.creditFromRegularAcc(0,
+                secondCustomer.getAccounts().get(0).getNumber(), BigDecimal.valueOf(10000)),
+                "You can send money only to other international accounts");
+        //Amount of money: RoundingMode.DOWN till 2 digits after dot
+        assertEquals(BigDecimal.valueOf(549.21), customerService.wireFromInternational(0,
+                secondCustomer.getAccounts().get(2).getNumber(), BigDecimal.valueOf(450.79123)));
+        assertEquals(BigDecimal.valueOf(1450.79), secondCustomer.getAccounts().get(2).getAmountOfMoney());
 
     }
 

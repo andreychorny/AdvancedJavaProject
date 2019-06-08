@@ -1,5 +1,6 @@
 package BankOne.com.accounts;
 
+import BankOne.com.BankData.Bank;
 import BankOne.com.BankData.Customer;
 import BankOne.com.TransactionsHistory.InternationalOutTransaction;
 
@@ -31,12 +32,27 @@ public class InternationalAccount extends Account {
     private InternationalOutTransaction createNewInternationalOutTransaction(LocalDate dateOfTransaction,
                                                                      BigDecimal howMuch, Account toWhichAccount) {
         return new InternationalOutTransaction(getOwnerOfAccount().getInternationalIdCount(),
-                howMuch, this,
-                toWhichAccount.getNumber(),IBAN);
+                howMuch, this, toWhichAccount.getNumber(),IBAN);
+    }
+
+    private String generateIBAN(String countryIBANCode){
+        StringBuffer generatedIBAN = new StringBuffer();
+        generatedIBAN.append(countryIBANCode + "-");
+        for (int i = 0; i < 8; i++) {
+            generatedIBAN.append((int) (Math.random() * 10));
+        }
+        if(Bank.checkIfIBANIsUnique(generatedIBAN.toString())){
+            return generatedIBAN.toString();
+        }
+        return generateIBAN(countryIBANCode);
     }
 
     public InternationalAccount(BigDecimal amountOfMoney, String number, Customer ownerOfAccount, String IBAN) {
         super(amountOfMoney, number, ownerOfAccount);
         this.IBAN = IBAN;
+    }
+
+    public String getIBAN() {
+        return IBAN;
     }
 }

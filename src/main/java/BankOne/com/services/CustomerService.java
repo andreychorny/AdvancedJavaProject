@@ -88,12 +88,21 @@ public class CustomerService {
         return accInUse.getAmountOfMoney();
     }
 
-    private void wireFromInternational(int indexOfAccount, String deliverToNumber, BigDecimal amountToDeliver)
+    public BigDecimal wireFromInternational(int indexOfAccount, String deliverToNumber, BigDecimal amountToDeliver)
             throws Exception {
         InternationalAccount accInUse = (InternationalAccount) currentCustomer.getAccounts().get(indexOfAccount);
-        amountToDeliver = amountToDeliver.setScale(2, RoundingMode.CEILING);
+        amountToDeliver = amountToDeliver.setScale(2, RoundingMode.DOWN);
         Account accDeliverTo = Bank.findAccount(deliverToNumber);
-        if (accDeliverTo != null) accInUse.wire(accDeliverTo, amountToDeliver);
+        if (accDeliverTo != null) {
+            if (!(accDeliverTo instanceof InternationalAccount)){
+                throw new Exception("You can send money only to another international accounts");
+            }
+            accInUse.wire(accDeliverTo, amountToDeliver);
+        }else {
+            logger.warn("THERE IS NO SUCH ACCOUNT NUMBER AS " + deliverToNumber + "!!!");
+            throw new Exception("No such account number to send money!");
+        }
+        return accInUse.getAmountOfMoney();
     }
 
     public void requestForNewAccount(int numberOfAccountType) {
