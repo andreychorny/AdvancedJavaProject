@@ -1,0 +1,27 @@
+[INFO ] 2019-06-09 20:15:41.437 [main] EmployeeService - Request from: name1 lastName1 with login: login1
+[INFO ] 2019-06-09 20:15:41.483 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
+[INFO ] 2019-06-09 20:15:41.484 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-09 20:15:41.484 [main] EmployeeService - Request from: name1 lastName1 with login: login1
+[INFO ] 2019-06-09 20:15:41.486 [main] EmployeeService - Requested account of type BankOne.com.accounts.SavingAccount
+[INFO ] 2019-06-09 20:15:41.486 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-09 20:15:41.488 [main] EmployeeService - Request from: name1 lastName1 with login: login1
+[INFO ] 2019-06-09 20:15:41.488 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
+[INFO ] 2019-06-09 20:15:41.489 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-09 20:15:41.489 [main] EmployeeService - Request from: name1 lastName1 with login: login1
+[INFO ] 2019-06-09 20:15:41.489 [main] EmployeeService - Requested account of type BankOne.com.accounts.InternationalAccount
+[INFO ] 2019-06-09 20:15:41.489 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-09 20:15:41.489 [main] EmployeeService - Request from: name2 lastName2 with login: login2
+[INFO ] 2019-06-09 20:15:41.489 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
+[INFO ] 2019-06-09 20:15:41.490 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-09 20:15:41.490 [main] EmployeeService - Request from: name2 lastName2 with login: login2
+[INFO ] 2019-06-09 20:15:41.490 [main] EmployeeService - Requested account of type BankOne.com.accounts.InternationalAccount
+[INFO ] 2019-06-09 20:15:41.490 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-09 20:15:41.491 [main] CustomerService - Customer id:0, name1 lastName1
+ sends funds from RegularAccount:BC-00000-827 to Account:BC-00001-678
+ in amount of 450.79$
+[INFO ] 2019-06-09 20:15:41.494 [main] CustomerService - Customer id:0, name1 lastName1
+ sends funds from RegularAccount:BC-00000-827 to Account:BC-00000-222
+ in amount of 250.00$
+[INFO ] 2019-06-09 20:15:41.495 [main] CustomerService - Customer id:0, name1 lastName1
+ sends funds from SavingAccount:BC-00000-222 to Account:BC-00000-680
+ in amount of 1150.00$

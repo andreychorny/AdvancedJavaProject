@@ -20,11 +20,11 @@ public abstract class Account {
 
     private List<AccountMemento> historyOfAccount = new LinkedList<>();
 
-    void debit(BigDecimal arrivedCash) {
+    void debit(BigDecimal arrivedCash, String numberFromWhichAccount) {
         setAmountOfMoney(getAmountOfMoney().add(arrivedCash));
         LocalDate dateOfTransaction = LocalDate.now();
         createNewMemento(dateOfTransaction);
-        writeDebitToCustomerHistory(dateOfTransaction, arrivedCash);
+        writeDebitToCustomerHistory(dateOfTransaction, arrivedCash, numberFromWhichAccount);
         debitIdCount++;
     }
 
@@ -32,13 +32,13 @@ public abstract class Account {
         historyOfAccount.add(new AccountMemento(amountOfMoney, debitIdCount, number, dateOfTransaction));
     }
 
-    void writeDebitToCustomerHistory(LocalDate dateOfTransaction, BigDecimal arrivedCash) {
+    void writeDebitToCustomerHistory(LocalDate dateOfTransaction, BigDecimal arrivedCash, String numberFromWhichAcc) {
         ownerOfAccount.getHistory().put(ownerOfAccount.getLastTransactionsId(),
-                createNewReceiveTransaction(arrivedCash));
+                createNewReceiveTransaction(arrivedCash, numberFromWhichAcc));
         ownerOfAccount.setLastTransactionsId(ownerOfAccount.getLastTransactionsId() + 1);
     }
-    private ReceiveTransaction createNewReceiveTransaction(BigDecimal arrivedCash){
-        return new ReceiveTransaction(debitIdCount, arrivedCash,this, this.getNumber());
+    private ReceiveTransaction createNewReceiveTransaction(BigDecimal arrivedCash, String numberFromWhichAcc){
+        return new ReceiveTransaction(debitIdCount, arrivedCash,this, numberFromWhichAcc);
     }
 
     Account(BigDecimal amountOfMoney, String number, Customer ownerOfAccount) {

@@ -17,13 +17,14 @@ public class RegularAccount extends Account {
             createNewMemento(dateOfTransaction);
             writeCreditToCustomerHistory(toWhichAccount,howMuch);
             creditIdCount++;
-            toWhichAccount.debit(howMuch);
+            toWhichAccount.debit(howMuch, this.getNumber());
         } else throw new Exception("NotEnoughMoney");
     }
 
     private void writeCreditToCustomerHistory(Account toWhichAccount, BigDecimal howMuch){
         getOwnerOfAccount().getHistory().put(getOwnerOfAccount().getLastTransactionsId(),
                 createNewLocalSendTransaction( howMuch, toWhichAccount));
+        getOwnerOfAccount().setLastTransactionsId(getOwnerOfAccount().getLastTransactionsId() + 1);
     }
     LocalSendTransaction createNewLocalSendTransaction(BigDecimal howMuch, Account toWhichAccount){
        return new LocalSendTransaction(creditIdCount,howMuch,this,

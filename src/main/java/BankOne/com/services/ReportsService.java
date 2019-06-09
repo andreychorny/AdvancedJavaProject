@@ -6,22 +6,33 @@ import BankOne.com.TransactionsHistory.Transaction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
 public class ReportsService {
 
-    private Bank bank;
-    private List<Customer> customers = new ArrayList<>();
+    private List<Customer> customers;
     private static Logger logger = LogManager.getLogger(ReportsService.class);
 
 
-    void generateReportTransactionOfCustomer(Customer customer) {
-        logger.info("REPORT ABOUT TRANSACTIONS OF CUSTOMER" + customer.getFirstName() + " " +
-                customer.getLastName() + ": ");
+    public String generateReportTransactionOfCustomer(Customer customer) {
+        File file = new File("src/main/resources/", "transOfCustomer.txt");
+        String resultOutput;
+        resultOutput = "REPORT ABOUT TRANSACTIONS OF CUSTOMER: " + customer.getFirstName() + " " +
+                customer.getLastName() + ": \n";
         for (Transaction transaction : customer.getHistory().values()) {
-            logger.info(transaction);
+            resultOutput += transaction + "\n";
         }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()))) {
+            bw.write(resultOutput);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return resultOutput;
     }
 
     void generateReportTenBiggestTransaction(Customer customer) {
@@ -29,18 +40,19 @@ public class ReportsService {
         TreeSet<Transaction> biggestTransactions = new TreeSet<>((Transaction t1, Transaction t2) ->
                 t1.getDeliveredAmount().compareTo(t2.getDeliveredAmount()));
         for (Transaction currentTransaction : customer.getHistory().values()) {
-            if(biggestTransactions.size()<10){
+            if (biggestTransactions.size() < 10) {
                 biggestTransactions.add(currentTransaction);
                 logger.info(currentTransaction);
-            }else {
-                if(currentTransaction.getDeliveredAmount().
-                        compareTo(biggestTransactions.first().getDeliveredAmount()) > 0){
+            } else {
+                if (currentTransaction.getDeliveredAmount().
+                        compareTo(biggestTransactions.first().getDeliveredAmount()) > 0) {
                     biggestTransactions.pollFirst();
                     biggestTransactions.add(currentTransaction);
                 }
             }
         }
     }
+
     void generateReportTransactionForSpecificDate(LocalDate date) {
         logger.info("REPORT ABOUT TRANSACTIONS OF DATE: " + date);
         for (Customer customer : customers) {
@@ -75,9 +87,8 @@ public class ReportsService {
         }
     }
 
-    public ReportsService(Bank bank) {
-        this.bank = bank;
-        customers = this.bank.getCustomers();
+    public ReportsService() {
+        customers = Bank.getCustomers();
     }
 
 }

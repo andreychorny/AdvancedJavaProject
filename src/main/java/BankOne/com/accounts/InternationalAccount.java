@@ -18,7 +18,7 @@ public class InternationalAccount extends Account {
             LocalDate dateOfTransaction = LocalDate.now();
             createNewMemento(dateOfTransaction);
             writeWireToCustomerHistory(dateOfTransaction, howMuch, toWhichAccount);
-            toWhichAccount.debit(howMuch);
+            toWhichAccount.debit(howMuch, this.getNumber());
         } else throw new Exception("NotEnoughMoney");
     }
 
@@ -30,18 +30,18 @@ public class InternationalAccount extends Account {
     }
 
     private InternationalOutTransaction createNewInternationalOutTransaction(LocalDate dateOfTransaction,
-                                                                     BigDecimal howMuch, Account toWhichAccount) {
+                                                                             BigDecimal howMuch, Account toWhichAccount) {
         return new InternationalOutTransaction(getOwnerOfAccount().getInternationalIdCount(),
-                howMuch, this, toWhichAccount.getNumber(),IBAN);
+                howMuch, this, toWhichAccount.getNumber(), IBAN);
     }
 
-    private String generateIBAN(String countryIBANCode){
+    private String generateIBAN(String countryIBANCode) {
         StringBuffer generatedIBAN = new StringBuffer();
         generatedIBAN.append(countryIBANCode + "-");
         for (int i = 0; i < 8; i++) {
             generatedIBAN.append((int) (Math.random() * 10));
         }
-        if(Bank.checkIfIBANIsUnique(generatedIBAN.toString())){
+        if (Bank.checkIfIBANIsUnique(generatedIBAN.toString())) {
             return generatedIBAN.toString();
         }
         return generateIBAN(countryIBANCode);
@@ -49,7 +49,7 @@ public class InternationalAccount extends Account {
 
     public InternationalAccount(BigDecimal amountOfMoney, String number, Customer ownerOfAccount, String IBAN) {
         super(amountOfMoney, number, ownerOfAccount);
-        this.IBAN = IBAN;
+        this.IBAN = generateIBAN(IBAN);
     }
 
     public String getIBAN() {

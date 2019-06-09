@@ -1,0 +1,13 @@
+REPORT ABOUT TRANSACTIONS OF CUSTOMER: name1 lastName1: 
+Local Send Transaction id= 0, at date:2019-06-09:
+AccountFrom: BC-00000-977, amount of money sent: 450.79; to Account:BC-00001-139
+Local Send Transaction id= 1, at date:2019-06-09:
+AccountFrom: BC-00000-977, amount of money sent: 250.00; to Account:BC-00000-009
+Receive Transaction id= 0, at date:2019-06-09:
+ToAccount: BC-00000-009, amount of money sent: 250.00; from account:BC-00000-977
+International Out Transaction id= 0, at date:2019-06-09:
+AccountFrom: BC-00000-993, amount of money sent: 550.00; to Account:BC-00001-534
+Local Send Transaction id= 0, at date:2019-06-09:
+AccountFrom: BC-00000-009, amount of money sent: 1150.00; to Account:BC-00000-789
+Receive Transaction id= 0, at date:2019-06-09:
+ToAccount: BC-00000-789, amount of money sent: 1150.00; from account:BC-00000-009

@@ -13,16 +13,17 @@ public class SavingAccount extends Account {
     public void credit(Account toWhichAccount, BigDecimal howMuch) throws Exception {
         if (getAmountOfMoney().compareTo(howMuch) >= 0) {
             setAmountOfMoney(getAmountOfMoney().subtract(howMuch));
-            toWhichAccount.debit(howMuch);
             LocalDate dateOfTransaction = LocalDate.now();
             createNewMemento(dateOfTransaction);
             writeCreditToHistory(toWhichAccount,howMuch);
+            toWhichAccount.debit(howMuch, this.getNumber());
             creditIdCount++;
         } else throw new Exception("NotEnoughMoney");
     }
     void writeCreditToHistory(Account toWhichAccount, BigDecimal howMuch){
         getOwnerOfAccount().getHistory().put(getOwnerOfAccount().getLastTransactionsId(),
                 createNewLocalOutTransaction(howMuch, toWhichAccount));
+        getOwnerOfAccount().setLastTransactionsId(getOwnerOfAccount().getLastTransactionsId() + 1);
     }
     LocalSendTransaction createNewLocalOutTransaction(BigDecimal howMuch, Account toWhichAccount){
         return new LocalSendTransaction(creditIdCount,howMuch,this,
