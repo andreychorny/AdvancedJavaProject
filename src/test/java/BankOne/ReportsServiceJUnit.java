@@ -3,6 +3,7 @@ package BankOne;
 import BankOne.com.BankData.Bank;
 import BankOne.com.BankData.Country;
 import BankOne.com.BankData.Customer;
+import BankOne.com.TransactionsHistory.LocalSendTransaction;
 import BankOne.com.accounts.Account;
 import BankOne.com.services.CustomerService;
 import BankOne.com.services.EmployeeService;
@@ -59,6 +60,14 @@ public class ReportsServiceJUnit {
                 resultFromFile.toString());
     }
 
+    @Test
+    void testGenerateReportTransactionForSpecificType() {
+        assertEquals(rightFormatForReportOutputAboutSpecificTypeTrancs(Bank.getCustomers().get(0),
+                Bank.getCustomers().get(1)),
+                reportsService.generateReportTransactionForSpecificType(LocalSendTransaction.class));
+    }
+
+
     EmployeeService createEmployeeAndHisService() throws Exception {
         Bank.createNewEmployee("ouroboros", "superqwerty",
                 "Andrii", "Chornyi");
@@ -103,6 +112,10 @@ public class ReportsServiceJUnit {
         //SavingAcc1 -> 1150$ -> RegularAcc2
         customerService1.creditFromSavingAcc(1,
                 customer1.getAccounts().get(2).getNumber(), BigDecimal.valueOf(1150));
+        //Customer2 sends money from his only regular Acc to his only international Acc
+        customerService2.creditFromRegularAcc(0,
+                customer2.getAccounts().get(1).getNumber(), BigDecimal.valueOf(350));
+
     }
 
     private String rightFormatOfTransactionsOfCustomerOne(Customer customer1, Customer customer2) {
@@ -112,7 +125,7 @@ public class ReportsServiceJUnit {
         String savingAcc1 = accountsCust1.get(1).getNumber();
         String interAcc1 = accountsCust1.get(3).getNumber();
         String regulAcc2 = accountsCust1.get(2).getNumber();
-        String secCustinterAcc1 = accountsCust2.get(1).getNumber();
+        String secCustInterAcc1 = accountsCust2.get(1).getNumber();
 
         String secondCustRegulAcc1 = accountsCust2.get(0).getNumber();
         LocalDate dateToCheck = LocalDate.now();
@@ -128,10 +141,37 @@ public class ReportsServiceJUnit {
                 "ToAccount: " + savingAcc1 + ", amount of money sent: 250.00; from account:" +
                 regulAcc1 + "\n" +
                 "International Out Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
-                "AccountFrom: " + interAcc1 + ", amount of money sent: 550.00; to Account:" + secCustinterAcc1 + "\n" +
+                "AccountFrom: " + interAcc1 + ", amount of money sent: 550.00; to Account:" + secCustInterAcc1 + "\n" +
                 "Local Send Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
                 "AccountFrom: " + savingAcc1 + ", amount of money sent: 1150.00; to Account:" + regulAcc2 + "\n" +
                 "Receive Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
                 "ToAccount: " + regulAcc2 + ", amount of money sent: 1150.00; from account:" + savingAcc1 + "\n";
+    }
+
+    private String rightFormatForReportOutputAboutSpecificTypeTrancs(Customer customer1, Customer customer2) {
+        List<Account> accountsCust1 = customer1.getAccounts();
+        List<Account> accountsCust2 = customer2.getAccounts();
+        String regulAcc1 = accountsCust1.get(0).getNumber();
+        String savingAcc1 = accountsCust1.get(1).getNumber();
+        String regulAcc2 = accountsCust1.get(2).getNumber();
+        String secCustInterAcc1 = accountsCust2.get(1).getNumber();
+
+        String secondCustRegulAcc1 = accountsCust2.get(0).getNumber();
+        LocalDate dateToCheck = LocalDate.now();
+        String dateOfTransactions = dateToCheck.format(DateTimeFormatter.ISO_DATE);
+        return "REPORT ABOUT TRANSACTIONS OF TYPE: LocalSendTransaction\n" +
+                "Customer: name1 lastName1: \n" +
+                "Local Send Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
+                "AccountFrom: " + regulAcc1 + ", amount of money sent: 450.79; to Account:"
+                + secondCustRegulAcc1 + "\n" +
+                "Local Send Transaction id= 1, at date:" + dateOfTransactions + ":\n" +
+                "AccountFrom: " + regulAcc1 + ", amount of money sent: 250.00; to Account:" +
+                savingAcc1 + "\n" +
+                "Local Send Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
+                "AccountFrom: " + savingAcc1 + ", amount of money sent: 1150.00; to Account:" + regulAcc2 + "\n" +
+                "Customer: name2 lastName2: \n" +
+                "Local Send Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
+                "AccountFrom: "+ secondCustRegulAcc1 +", amount of money sent: 350.00; to Account:"+secCustInterAcc1+
+                "\n";
     }
 }

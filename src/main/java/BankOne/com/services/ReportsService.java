@@ -66,18 +66,20 @@ public class ReportsService {
         }
     }
 
-    <T extends Transaction> void generateReportTransactionForSpecificType(T typeOfTransactionToCheck) {
-        String checkedType = typeOfTransactionToCheck.getClass().getName();
-        logger.info("REPORT ABOUT TRANSACTIONS OF TYPE: " + checkedType);
+    public String generateReportTransactionForSpecificType(Class<? extends Transaction> classOfType) {
+        String checkedType = classOfType.getSimpleName();
+        String resultOutput;
+        resultOutput = "REPORT ABOUT TRANSACTIONS OF TYPE: " + checkedType +"\n";
         for (Customer customer : customers) {
-            logger.info("Customer: " + customer.getFirstName() + " " +
-                    customer.getLastName() + ": ");
+            resultOutput += "Customer: " + customer.getFirstName() + " " +
+                    customer.getLastName() + ": \n";
             for (Transaction transaction : customer.getHistory().values()) {
-                if (transaction.getClass().getName().equals(checkedType)) {
-                    logger.info(transaction);
+                if (transaction.getClass().getSimpleName().equals(checkedType)) {
+                    resultOutput += transaction +"\n";
                 }
             }
         }
+        return resultOutput;
     }
 
     void generateReportFiveLastCustomers() {
