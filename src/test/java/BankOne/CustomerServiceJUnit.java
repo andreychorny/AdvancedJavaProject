@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -167,7 +168,9 @@ public class CustomerServiceJUnit {
         assertTrue(currentCustomer.getAccounts().get(0) instanceof SavingAccount);
         TimeUnit.MINUTES.sleep(1);
         Bank.calculateInterestsOfCustomerAccs(currentCustomer);
-        assertEquals(BigDecimal.valueOf(1010.00),currentCustomer.getAccounts().get(0).getAmountOfMoney());
+
+        assertEquals(BigDecimal.valueOf(1010.00).setScale(2, RoundingMode.DOWN),
+                currentCustomer.getAccounts().get(0).getAmountOfMoney());
         assertEquals(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
                 ((SavingAccount)currentCustomer.getAccounts().get(0)).getTimeOfLastInterestAdd());
     }
