@@ -20,7 +20,7 @@ public class ReportsService {
 
 
     public String generateReportTransactionOfCustomer(Customer customer) {
-        File file = new File("src/main/resources/", "transOfCustomer.txt");
+        File file = new File("src/main/resources/", "transactionsOfSpecificCustomer.txt");
         String resultOutput;
         resultOutput = "REPORT ABOUT TRANSACTIONS OF CUSTOMER: " + customer.getFirstName() + " " +
                 customer.getLastName() + ": \n";

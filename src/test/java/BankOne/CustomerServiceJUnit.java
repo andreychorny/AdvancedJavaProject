@@ -11,6 +11,10 @@ import BankOne.com.services.CustomerService;
 import BankOne.com.services.EmployeeService;
 import org.junit.jupiter.api.*;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -133,6 +137,26 @@ public class CustomerServiceJUnit {
 
     }
 
+    @Test
+    void testCheckHistoryOfSpecificAccount() throws Exception {
+        createSecondCustomerAndHisAccounts();
+        createFirstCustmAccountsAndDoSomeTransactions();
+        assertEquals(rightFormatForHistoryOfSpecificAccount(),
+                customerService.checkHistoryOfSpecificAccount(0));
+
+        File file = new File("src/main/resources/", "customerReportHistoryOfAccount.txt");
+        StringBuffer resultFromFile = new StringBuffer();
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file.getAbsoluteFile()))) {
+            String line = null;
+            while ((line = bufferedReader.readLine()) != null) {
+                resultFromFile.append(line).append("\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertEquals(rightFormatForHistoryOfSpecificAccount(),resultFromFile.toString());
+    }
+
     Customer createSecondCustomerAndHisAccounts() throws Exception {
         Customer secondCustomer = employeeService.createNewCustomer("login2", "password2",
                 "name2","lastName2", LocalDate.of(1996, 8, 24), Country.POLAND);
@@ -158,5 +182,59 @@ public class CustomerServiceJUnit {
                 "1: Saving:" + currentCustomer.getAccounts().get(1).getNumber() + "  balance:1000\n" +
                 "2: International:" + currentCustomer.getAccounts().get(2).getNumber() + "  balance:1000\n" +
                 "3: Regular:" + currentCustomer.getAccounts().get(3).getNumber() + "  balance:1000\n";
+    }
+
+
+    void createFirstCustmAccountsAndDoSomeTransactions() throws Exception {
+        Customer customer1 = Bank.getCustomers().get(0);
+        Customer customer2 = Bank.getCustomers().get(1);
+        CustomerService customerService1 = new CustomerService(customer1.getLogin(),
+                new String(customer1.getPassword()));
+        CustomerService customerService2 = new CustomerService(customer2.getLogin(),
+                new String(customer2.getPassword()));
+        //customer1 has 3 accounts: 1 regular, 1 saving and 1 international
+        customerService1.requestForNewAccount(1);
+        customerService1.requestForNewAccount(2);
+        customerService1.requestForNewAccount(3);
+        while (!Bank.getRequestsForAccount().isEmpty()) {
+            employeeService.acceptRequestsForAccounts(true);
+        }
+        //Such transactions of customer1:
+        //RegularAcc1 -> 450.79$ -> SecondCustomerRegularAcc1
+        customerService1.creditFromRegularAcc(0,
+                customer2.getAccounts().get(0).getNumber(), BigDecimal.valueOf(450.79123));
+        //RegularAcc1 -> 250$ -> SavingAcc1
+        customerService1.creditFromRegularAcc(0,
+                customer1.getAccounts().get(1).getNumber(), BigDecimal.valueOf(250));
+        //InternationalAcc1 -> 550$ -> SecondCustomerInternationalAcc1
+        customerService1.wireFromInternational(2,
+                customer2.getAccounts().get(2).getNumber(), BigDecimal.valueOf(550));
+        //SavingAcc1 -> 1150$ -> RegularAcc1
+        customerService1.creditFromSavingAcc(1,
+                customer1.getAccounts().get(0).getNumber(), BigDecimal.valueOf(1150));
+        //Customer2 sends money from his only regular Acc to regularAcc1 of first customer
+        customerService2.creditFromRegularAcc(0,
+                customer1.getAccounts().get(0).getNumber(), BigDecimal.valueOf(350));
+
+    }
+
+    String rightFormatForHistoryOfSpecificAccount(){
+        String checkedAccountNumber = currentCustomer.getAccounts().get(0).getNumber();
+        String firstCustSavingAccount = currentCustomer.getAccounts().get(1).getNumber();
+        String secondCustRegularAccount = Bank.getCustomers().get(1).getAccounts().get(0).getNumber();
+        return "Customer: Bob Dylan\n" +
+                "history of Account:"+checkedAccountNumber+":\n" +
+                "Local Send Transaction id= 0, at date:2019-06-13:\n" +
+                "AccountFrom: "+checkedAccountNumber+", amount of money sent: 450.79; to Account:"+
+                secondCustRegularAccount+"\n" +
+                "Local Send Transaction id= 1, at date:2019-06-13:\n" +
+                "AccountFrom: "+checkedAccountNumber+", amount of money sent: 250.00; to Account:"+
+                firstCustSavingAccount+"\n" +
+                "Receive Transaction id= 0, at date:2019-06-13:\n" +
+                "ToAccount: "+checkedAccountNumber+", amount of money sent: 1150.00; from account:"+
+                firstCustSavingAccount+"\n" +
+                "Receive Transaction id= 1, at date:2019-06-13:\n" +
+                "ToAccount: "+checkedAccountNumber+", amount of money sent: 350.00; from account:"+
+                secondCustRegularAccount+"\n";
     }
 }

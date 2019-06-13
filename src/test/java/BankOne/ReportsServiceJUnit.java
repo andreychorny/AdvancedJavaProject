@@ -47,7 +47,7 @@ public class ReportsServiceJUnit {
     @Test
     void testGenerateReportAboutCustomer() {
         reportsService.generateReportTransactionOfCustomer(Bank.getCustomers().get(0));
-        File file = new File("src/main/resources/", "transOfCustomer.txt");
+        File file = new File("src/main/resources/", "transactionsOfSpecificCustomer.txt");
         StringBuffer resultFromFile = new StringBuffer();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file.getAbsoluteFile()))) {
             String line = null;

@@ -27,7 +27,7 @@ public class RegularAccount extends Account {
         getOwnerOfAccount().setLastTransactionsId(getOwnerOfAccount().getLastTransactionsId() + 1);
     }
     LocalSendTransaction createNewLocalSendTransaction(BigDecimal howMuch, Account toWhichAccount){
-       return new LocalSendTransaction(creditIdCount,howMuch,this,
+       return new LocalSendTransaction(creditIdCount, howMuch,this,
                toWhichAccount.getNumber());
     }
 

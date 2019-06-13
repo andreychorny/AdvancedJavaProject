@@ -9,16 +9,17 @@ import BankOne.com.accounts.SavingAccount;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+
 
 public class CustomerService {
 
     private Customer currentCustomer;
-
 
     private static Logger logger = LogManager.getLogger(CustomerService.class);
 
@@ -30,7 +31,7 @@ public class CustomerService {
         }
     }
 
-    public String showAllAccounts() throws Exception {
+    public String showAllAccounts(){
         String allAccountsInfo = "";
         for (Account account : currentCustomer.getAccounts()) {
             if (account instanceof RegularAccount) {
@@ -122,11 +123,25 @@ public class CustomerService {
                 break;
         }
     }
+    
 
-    void checkHistory() {
+    public String checkHistoryOfSpecificAccount(int indexOfAccount){
+        File file = new File("src/main/resources/", "customerReportHistoryOfAccount.txt");
+        String resultOutput;
+        Account currentAccount = currentCustomer.getAccounts().get(indexOfAccount);
+        resultOutput = "Customer: " + currentCustomer.getFirstName() + " " +
+                currentCustomer.getLastName() + "\nhistory of Account:" + currentAccount.getNumber() + ":\n" ;
         for (int i : currentCustomer.getHistory().keySet()) {
-            logger.info(i + ": " + currentCustomer.getHistory().get(i));
+            if(currentCustomer.getHistory().get(i).getAccountOfTransaction().equals(currentAccount)){
+                resultOutput += currentCustomer.getHistory().get(i) + "\n";
+            }
         }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()))) {
+            bw.write(resultOutput);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return resultOutput;
     }
 
     public Customer getCurrentCustomer() {
