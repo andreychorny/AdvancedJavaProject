@@ -3,10 +3,15 @@ package BankOne.com.BankData;
 import BankOne.com.TransactionsHistory.Transaction;
 import BankOne.com.accounts.Account;
 import BankOne.com.accounts.InternationalAccount;
+import BankOne.com.accounts.SavingAccount;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class Bank {
@@ -128,6 +133,20 @@ public class Bank {
         return true;
     }
 
+    public static void calculateInterestsOfCustomerAccs(Customer customer){
+        for (Account account : customer.getAccounts()){
+            if(account instanceof SavingAccount){
+                LocalDateTime dateOfNow = LocalDateTime.now();
+                dateOfNow = dateOfNow.truncatedTo(ChronoUnit.MINUTES);
+                long differenceInMinutes = ((SavingAccount)account).getTimeOfLastInterestAdd().until(dateOfNow,
+                        ChronoUnit.MINUTES);
+                BigDecimal moneyIncrease = account.getAmountOfMoney().multiply(BigDecimal.
+                        valueOf(0.01*differenceInMinutes));
+                account.setAmountOfMoney(account.getAmountOfMoney().add(moneyIncrease));
+                ((SavingAccount) account).setTimeOfLastInterestAdd(dateOfNow);
+            }
+        }
+    }
     public static List<Customer> getCustomers() {
         return customers;
     }

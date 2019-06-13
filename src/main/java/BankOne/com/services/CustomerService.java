@@ -27,6 +27,7 @@ public class CustomerService {
     public CustomerService(String login, String password) throws Exception {
         if (Bank.checkIfLoggingInfoIsSuitable(login, password)) {
             currentCustomer = Bank.retrievePersonByLogin(login);
+            Bank.calculateInterestsOfCustomerAccs(currentCustomer);
         } else {
             throw new Exception("WRONG LOGGING INFO!");
         }
@@ -71,6 +72,7 @@ public class CustomerService {
 
     public BigDecimal creditFromSavingAcc(int indexOfAccount, String deliverToNumber, BigDecimal amountToDeliver)
             throws Exception {
+        Bank.calculateInterestsOfCustomerAccs(currentCustomer);
         SavingAccount accInUse = (SavingAccount) currentCustomer.getAccounts().get(indexOfAccount);
         amountToDeliver = amountToDeliver.setScale(2, RoundingMode.DOWN);
         logger.info("Customer id:" + currentCustomer.getId() + ", " + currentCustomer.getFirstName() + " " +

@@ -5,10 +5,14 @@ import BankOne.com.TransactionsHistory.LocalSendTransaction;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class SavingAccount extends Account {
 
     private int creditIdCount;
+
+    private LocalDateTime timeOfLastInterestAdd;
 
     public void credit(Account toWhichAccount, BigDecimal howMuch) throws Exception {
         if (getAmountOfMoney().compareTo(howMuch) >= 0) {
@@ -34,6 +38,17 @@ public class SavingAccount extends Account {
                          Customer ownerOfAccount) {
         super(amountOfMoney, number, ownerOfAccount);
         this.creditIdCount = 0;
+        timeOfLastInterestAdd = LocalDateTime.now();
+        timeOfLastInterestAdd = timeOfLastInterestAdd.truncatedTo(ChronoUnit.MINUTES);
     }
+
+    public LocalDateTime getTimeOfLastInterestAdd() {
+        return timeOfLastInterestAdd;
+    }
+
+    public void setTimeOfLastInterestAdd(LocalDateTime timeOfLastInterestAdd) {
+        this.timeOfLastInterestAdd = timeOfLastInterestAdd;
+    }
+
 
 }

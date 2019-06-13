@@ -30,4 +30,5 @@ public class BankJUnit {
                 "password2", "nameTwo","lastNameTwo"),
                 "Login exist in database - Exception");
     }
+
 }

@@ -17,6 +17,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -157,9 +160,34 @@ public class CustomerServiceJUnit {
         assertEquals(rightFormatForHistoryOfSpecificAccount(),resultFromFile.toString());
     }
 
+    @Test
+    void testAddingInterestToSavingAcc() throws Exception{
+        customerService.requestForNewAccount(2);
+        employeeService.acceptRequestsForAccounts(true);
+        assertTrue(currentCustomer.getAccounts().get(0) instanceof SavingAccount);
+        TimeUnit.MINUTES.sleep(1);
+        Bank.calculateInterestsOfCustomerAccs(currentCustomer);
+        assertEquals(BigDecimal.valueOf(1010.00),currentCustomer.getAccounts().get(0).getAmountOfMoney());
+        assertEquals(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
+                ((SavingAccount)currentCustomer.getAccounts().get(0)).getTimeOfLastInterestAdd());
+    }
+
+    @Test
+    void testAddingInterestToSavingAccForLongTime() throws Exception{
+        customerService.requestForNewAccount(2);
+        employeeService.acceptRequestsForAccounts(true);
+        //We set false date, minus 3 days and 5 hours for current saving acc. General - difference is 77 hours.
+        setFalseDateToSavingAcc();
+        BigDecimal expectedAmountOfMoney = BigDecimal.valueOf(1000 + (1000*0.01*77*60));
+        Bank.calculateInterestsOfCustomerAccs(currentCustomer);
+        assertEquals(expectedAmountOfMoney,currentCustomer.getAccounts().get(0).getAmountOfMoney());
+        assertEquals(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
+                ((SavingAccount)currentCustomer.getAccounts().get(0)).getTimeOfLastInterestAdd());
+    }
     Customer createSecondCustomerAndHisAccounts() throws Exception {
         Customer secondCustomer = employeeService.createNewCustomer("login2", "password2",
-                "name2","lastName2", LocalDate.of(1996, 8, 24), Country.POLAND);
+                "name2","lastName2", LocalDate.of(1996, 8, 24),
+                Country.POLAND);
         CustomerService secondCustomerService = new CustomerService("login2", "password2");
         secondCustomerService.requestForNewAccount(1);
         secondCustomerService.requestForNewAccount(2);
@@ -170,14 +198,14 @@ public class CustomerServiceJUnit {
         return secondCustomer;
     }
 
-    void employeeAcceptsAllAccounts() throws Exception {
+    private void employeeAcceptsAllAccounts() throws Exception {
         EmployeeService employeeService = new EmployeeService("loginEmployee", "password");
         while (Bank.getRequestsForAccount().size() != 0) {
             employeeService.acceptRequestsForAccounts(true);
         }
     }
 
-    String rightInfoFormatForCheckAllAccounts() {
+    private String rightInfoFormatForCheckAllAccounts() {
         return "0: Regular:" + currentCustomer.getAccounts().get(0).getNumber() + "  balance:1000\n" +
                 "1: Saving:" + currentCustomer.getAccounts().get(1).getNumber() + "  balance:1000\n" +
                 "2: International:" + currentCustomer.getAccounts().get(2).getNumber() + "  balance:1000\n" +
@@ -185,7 +213,7 @@ public class CustomerServiceJUnit {
     }
 
 
-    void createFirstCustmAccountsAndDoSomeTransactions() throws Exception {
+    private void createFirstCustmAccountsAndDoSomeTransactions() throws Exception {
         Customer customer1 = Bank.getCustomers().get(0);
         Customer customer2 = Bank.getCustomers().get(1);
         CustomerService customerService1 = new CustomerService(customer1.getLogin(),
@@ -218,7 +246,7 @@ public class CustomerServiceJUnit {
 
     }
 
-    String rightFormatForHistoryOfSpecificAccount(){
+    private String rightFormatForHistoryOfSpecificAccount(){
         String checkedAccountNumber = currentCustomer.getAccounts().get(0).getNumber();
         String firstCustSavingAccount = currentCustomer.getAccounts().get(1).getNumber();
         String secondCustRegularAccount = Bank.getCustomers().get(1).getAccounts().get(0).getNumber();
@@ -236,5 +264,12 @@ public class CustomerServiceJUnit {
                 "Receive Transaction id= 1, at date:2019-06-13:\n" +
                 "ToAccount: "+checkedAccountNumber+", amount of money sent: 350.00; from account:"+
                 secondCustRegularAccount+"\n";
+    }
+
+    private void setFalseDateToSavingAcc(){
+        LocalDateTime falseDateTimeForAcc = LocalDateTime.now().minusDays(3);
+        falseDateTimeForAcc = falseDateTimeForAcc.minusHours(5);
+        falseDateTimeForAcc = falseDateTimeForAcc.truncatedTo(ChronoUnit.MINUTES);
+        ((SavingAccount)currentCustomer.getAccounts().get(0)).setTimeOfLastInterestAdd(falseDateTimeForAcc);
     }
 }

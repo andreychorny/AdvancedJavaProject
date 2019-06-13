@@ -65,7 +65,7 @@ public abstract class Account {
         return ownerOfAccount;
     }
 
-    void setAmountOfMoney(BigDecimal amountOfMoney) {
+    public void setAmountOfMoney(BigDecimal amountOfMoney) {
         this.amountOfMoney = amountOfMoney;
     }
 
@@ -88,6 +88,7 @@ public abstract class Account {
     public void setHistoryOfAccount(List<AccountMemento> historyOfAccount) {
         this.historyOfAccount = historyOfAccount;
     }
+
 
     @Override
     public String toString() {
