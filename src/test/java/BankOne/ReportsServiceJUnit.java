@@ -30,7 +30,7 @@ public class ReportsServiceJUnit {
     ReportsService reportsService;
 
     @BeforeEach
-    void createAllDataToPresent() throws Exception {
+    void createAllDataToPresent() throws IllegalArgumentException {
         EmployeeService employeeService = createEmployeeAndHisService();
         createTwoCustomers(employeeService);
         createAccountsAndDoSomeTransactions(employeeService);
@@ -69,20 +69,20 @@ public class ReportsServiceJUnit {
     }
 
 
-    EmployeeService createEmployeeAndHisService() throws Exception {
+    EmployeeService createEmployeeAndHisService() throws IllegalArgumentException {
         Bank.createNewEmployee("ouroboros", "superqwerty",
                 "Andrii", "Chornyi");
         return new EmployeeService("ouroboros", "superqwerty");
     }
 
-    void createTwoCustomers(EmployeeService employeeService) throws Exception {
+    void createTwoCustomers(EmployeeService employeeService) throws IllegalArgumentException {
         employeeService.createNewCustomer("login1", "password1", "nameOne",
                 "lastNameOne",LocalDate.of(1995, 8, 11), Country.UKRAINE);
         employeeService.createNewCustomer("login2", "password2", "nameTwo",
                 "lastNameTwo",LocalDate.of(1999, 12, 31), Country.POLAND);
     }
 
-    void createAccountsAndDoSomeTransactions(EmployeeService employeeService) throws Exception {
+    void createAccountsAndDoSomeTransactions(EmployeeService employeeService) throws IllegalArgumentException {
         Customer customer1 = Bank.getCustomers().get(0);
         Customer customer2 = Bank.getCustomers().get(1);
         CustomerService customerService1 = new CustomerService(customer1.getLogin(),

@@ -12,14 +12,14 @@ public class InternationalAccount extends Account {
 
     private String IBAN;
 
-    public void wire(Account toWhichAccount, BigDecimal howMuch) throws Exception {
+    public void wire(Account toWhichAccount, BigDecimal howMuch) throws IllegalArgumentException {
         if (getAmountOfMoney().compareTo(howMuch) >= 0) {
             setAmountOfMoney(getAmountOfMoney().subtract(howMuch));
             LocalDate dateOfTransaction = LocalDate.now();
             createNewMemento(dateOfTransaction);
             writeWireToCustomerHistory(dateOfTransaction, howMuch, toWhichAccount);
             toWhichAccount.debit(howMuch, this.getNumber());
-        } else throw new Exception("NotEnoughMoney");
+        } else throw new IllegalArgumentException("NotEnoughMoney");
     }
 
     void writeWireToCustomerHistory(LocalDate dateOfTransaction, BigDecimal howMuch, Account toWhichAccount) {

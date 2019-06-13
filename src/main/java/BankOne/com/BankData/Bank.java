@@ -34,16 +34,16 @@ public class Bank {
     }
 
     public static Employee createNewEmployee(String login, String password, String firstName,
-                                      String lastName) throws Exception {
+                                      String lastName) throws IllegalArgumentException {
         if((!nameValidation(firstName) || !nameValidation(lastName))){
             logger.warn("BAD FORMAT OF NAME OR LASTNAME! NAME AND LAST NAME MUST BE AT LEAST 2 SYMBOLS LONG AND " +
                     "DO NOT CONTAIN SPECIAL SYMBOLS!");
-            throw new Exception("WRONG FORMAT OF NAME/LASTNAME!");
+            throw new IllegalArgumentException("WRONG FORMAT OF NAME/LASTNAME!");
         }
         if((!loginAndPasswordValidation(login)) || (!loginAndPasswordValidation(password))){
             logger.warn("BAD FORMAT OF LOGIN OR PASSWORD! LOGIN AND PASSWORD MUST BE AT LEAST 6 SYMBOLS LONG AND " +
                     "DO NOT CONTAIN SPECIAL SYMBOLS EXCEPT '_'");
-            throw new Exception("WRONG FORMAT OF LOGIN/PASSWORD!");
+            throw new IllegalArgumentException("WRONG FORMAT OF LOGIN/PASSWORD!");
         }
         if (Bank.checkIfLoginUnique(login)) {
             Employee newEmployee = new Employee(login, password, firstName, lastName);
@@ -51,7 +51,7 @@ public class Bank {
             return newEmployee;
         } else {
             logger.warn("ENTERED LOGIN IS NOT UNIQUE!");
-            throw new Exception("LOGIN IS NOT UNIQUE!!!");
+            throw new IllegalArgumentException("LOGIN IS NOT UNIQUE!!!");
         }
     }
 

@@ -24,12 +24,12 @@ public class CustomerService {
 
     private static Logger logger = LogManager.getLogger(CustomerService.class);
 
-    public CustomerService(String login, String password) throws Exception {
+    public CustomerService(String login, String password) throws IllegalArgumentException {
         if (Bank.checkIfLoggingInfoIsSuitable(login, password)) {
             currentCustomer = Bank.retrievePersonByLogin(login);
             Bank.calculateInterestsOfCustomerAccs(currentCustomer);
         } else {
-            throw new Exception("WRONG LOGGING INFO!");
+            throw new IllegalArgumentException("WRONG LOGGING INFO!");
         }
     }
 
@@ -54,7 +54,7 @@ public class CustomerService {
     }
 
     public BigDecimal creditFromRegularAcc(int indexOfAccount, String deliverToNumber, BigDecimal amountToDeliver)
-            throws Exception {
+            throws IllegalArgumentException{
         RegularAccount accInUse = (RegularAccount) currentCustomer.getAccounts().get(indexOfAccount);
         amountToDeliver = amountToDeliver.setScale(2, RoundingMode.DOWN);
         logger.info("Customer id:" + currentCustomer.getId() + ", " + currentCustomer.getFirstName() + " " +
@@ -66,12 +66,13 @@ public class CustomerService {
             accInUse.credit(accDeliverTo, amountToDeliver);
         }else {
             logger.warn("THERE IS NO SUCH ACCOUNT NUMBER AS " + deliverToNumber + "!!!");
+            throw new IllegalArgumentException("NO SUCH ACCOUNT NUMBER");
         }
         return accInUse.getAmountOfMoney();
     }
 
     public BigDecimal creditFromSavingAcc(int indexOfAccount, String deliverToNumber, BigDecimal amountToDeliver)
-            throws Exception {
+            throws IllegalArgumentException {
         Bank.calculateInterestsOfCustomerAccs(currentCustomer);
         SavingAccount accInUse = (SavingAccount) currentCustomer.getAccounts().get(indexOfAccount);
         amountToDeliver = amountToDeliver.setScale(2, RoundingMode.DOWN);
@@ -84,27 +85,27 @@ public class CustomerService {
             accInUse.credit(accDeliverTo, amountToDeliver);
         }else if(accDeliverTo == null){
             logger.warn("THERE IS NO SUCH ACCOUNT NUMBER AS " + deliverToNumber + "!!!");
-            throw new Exception("No such account number to send money!");
+            throw new IllegalArgumentException("No such account number to send money!");
         }else if(!(accDeliverTo instanceof RegularAccount)){
             logger.warn("YOU CANNOT SEND MONEY FROM SAVING ACCOUNT TO THIS TYPE OF ACCOUNTS!");
-            throw new Exception("Wrong type of destination account!");
+            throw new IllegalArgumentException("Wrong type of destination account!");
         }
         return accInUse.getAmountOfMoney();
     }
 
     public BigDecimal wireFromInternational(int indexOfAccount, String deliverToNumber, BigDecimal amountToDeliver)
-            throws Exception {
+            throws IllegalArgumentException {
         InternationalAccount accInUse = (InternationalAccount) currentCustomer.getAccounts().get(indexOfAccount);
         amountToDeliver = amountToDeliver.setScale(2, RoundingMode.DOWN);
         Account accDeliverTo = Bank.findAccount(deliverToNumber);
         if (accDeliverTo != null) {
             if (!(accDeliverTo instanceof InternationalAccount)){
-                throw new Exception("You can send money only to another international accounts");
+                throw new IllegalArgumentException("You can send money only to another international accounts");
             }
             accInUse.wire(accDeliverTo, amountToDeliver);
         }else {
             logger.warn("THERE IS NO SUCH ACCOUNT NUMBER AS " + deliverToNumber + "!!!");
-            throw new Exception("No such account number to send money!");
+            throw new IllegalArgumentException("No such account number to send money!");
         }
         return accInUse.getAmountOfMoney();
     }

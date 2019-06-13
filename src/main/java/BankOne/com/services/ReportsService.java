@@ -67,6 +67,7 @@ public class ReportsService {
     }
 
     public String generateReportTransactionForSpecificType(Class<? extends Transaction> classOfType) {
+        File file = new File("src/main/resources/", "transactionForSpecificType.txt");
         String checkedType = classOfType.getSimpleName();
         String resultOutput;
         resultOutput = "REPORT ABOUT TRANSACTIONS OF TYPE: " + checkedType +"\n";
@@ -78,6 +79,11 @@ public class ReportsService {
                     resultOutput += transaction +"\n";
                 }
             }
+        }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()))) {
+            bw.write(resultOutput);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return resultOutput;
     }

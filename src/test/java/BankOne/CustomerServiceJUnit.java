@@ -31,7 +31,7 @@ public class CustomerServiceJUnit {
     private EmployeeService employeeService;
 
     @BeforeEach
-    void createCustomerToWorkWith() throws Exception {
+    void createCustomerToWorkWith() throws IllegalArgumentException {
         Bank.createNewEmployee("loginEmployee", "password", "Employee", "Employee");
         employeeService = new EmployeeService("loginEmployee", "password");
         LocalDate dateOfCustomerBirth = LocalDate.of(1955, 10, 26);
@@ -42,23 +42,23 @@ public class CustomerServiceJUnit {
     }
 
     @AfterEach
-    void cleanseAllData() throws Exception {
+    void cleanseAllData() throws IllegalArgumentException {
         Bank.getCustomers().clear();
         Bank.getEmployees().clear();
         Bank.getRequestsForAccount().clear();
     }
 
     @Test
-    void testLoggingIntoCustomerService() throws Exception {
+    void testLoggingIntoCustomerService() throws IllegalArgumentException {
         CustomerService customerServiceToTest = new CustomerService("loginCustomer", "qwerty");
         assertNotNull(customerServiceToTest);
         assertEquals(currentCustomer, customerServiceToTest.getCurrentCustomer());
-        assertThrows(Exception.class, () -> new CustomerService("loginCustomer",
-                "WrongPassword"), "Login exist in database - Exception");
+        assertThrows(IllegalArgumentException.class, () -> new CustomerService("loginCustomer",
+                "WrongPassword"), "Login exist in database - IllegalArgumentException");
     }
 
     @Test
-    void testRequestForNewAccount() throws Exception {
+    void testRequestForNewAccount() throws IllegalArgumentException {
         assertEquals(0, Bank.getRequestsForAccount().size());
         customerService.requestForNewAccount(1);
         customerService.requestForNewAccount(2);
@@ -76,7 +76,7 @@ public class CustomerServiceJUnit {
     }
 
     @Test
-    void testCheckAllAccounts() throws Exception {
+    void testCheckAllAccounts() throws IllegalArgumentException {
         customerService.requestForNewAccount(1);
         customerService.requestForNewAccount(2);
         customerService.requestForNewAccount(3);
@@ -88,11 +88,11 @@ public class CustomerServiceJUnit {
     }
 
     @Test
-    void testCreditFromRegularAcc() throws Exception {
+    void testCreditFromRegularAcc() throws IllegalArgumentException {
         customerService.requestForNewAccount(1);
         employeeService.acceptRequestsForAccounts(true);
         Customer secondCustomer = createSecondCustomerAndHisAccounts();
-        assertThrows(Exception.class, () -> customerService.creditFromRegularAcc(0,
+        assertThrows(IllegalArgumentException.class, () -> customerService.creditFromRegularAcc(0,
                 secondCustomer.getAccounts().get(0).getNumber(), BigDecimal.valueOf(10000)),
                 "Not enough money on account");
         //Amount of money: RoundingMode.DOWN till 2 digits after dot
@@ -103,35 +103,35 @@ public class CustomerServiceJUnit {
     }
 
     @Test
-    void testCreditFromSavingAcc() throws Exception {
+    void testCreditFromSavingAcc() throws IllegalArgumentException {
         customerService.requestForNewAccount(2);
         employeeService.acceptRequestsForAccounts(true);
         Customer secondCustomer = createSecondCustomerAndHisAccounts();
-        assertThrows(Exception.class, () -> customerService.creditFromRegularAcc(0,
+        assertThrows(IllegalArgumentException.class, () -> customerService.creditFromSavingAcc(0,
                 secondCustomer.getAccounts().get(0).getNumber(), BigDecimal.valueOf(10000)),
                 "Not enough money on account");
         //Amount of money: RoundingMode.DOWN till 2 digits after dot
         assertEquals(BigDecimal.valueOf(549.21), customerService.creditFromSavingAcc(0,
                 secondCustomer.getAccounts().get(0).getNumber(), BigDecimal.valueOf(450.79123)));
         assertEquals(BigDecimal.valueOf(1450.79), secondCustomer.getAccounts().get(0).getAmountOfMoney());
-        assertThrows(Exception.class, () -> customerService.creditFromSavingAcc(
+        assertThrows(IllegalArgumentException.class, () -> customerService.creditFromSavingAcc(
                 0,secondCustomer.getAccounts().get(1).getNumber(), BigDecimal.valueOf(100)),
                 "You cannot send money from saving account to saving account");
-        assertThrows(Exception.class, () -> customerService.creditFromSavingAcc(
+        assertThrows(IllegalArgumentException.class, () -> customerService.creditFromSavingAcc(
                 0,secondCustomer.getAccounts().get(2).getNumber(), BigDecimal.valueOf(100)),
                 "You cannot send money from saving account to international account");
 
     }
 
     @Test
-    void testWireFromInternationalAcc() throws Exception{
+    void testWireFromInternationalAcc() throws IllegalArgumentException{
         customerService.requestForNewAccount(3);
         employeeService.acceptRequestsForAccounts(true);
         Customer secondCustomer = createSecondCustomerAndHisAccounts();
-        assertThrows(Exception.class, () -> customerService.creditFromRegularAcc(0,
+        assertThrows(IllegalArgumentException.class, () -> customerService.wireFromInternational(0,
                 secondCustomer.getAccounts().get(2).getNumber(), BigDecimal.valueOf(10000)),
                 "Not enough money on account");
-        assertThrows(Exception.class, () -> customerService.creditFromRegularAcc(0,
+        assertThrows(IllegalArgumentException.class, () -> customerService.wireFromInternational(0,
                 secondCustomer.getAccounts().get(0).getNumber(), BigDecimal.valueOf(10000)),
                 "You can send money only to other international accounts");
         //Amount of money: RoundingMode.DOWN till 2 digits after dot
@@ -142,7 +142,7 @@ public class CustomerServiceJUnit {
     }
 
     @Test
-    void testCheckHistoryOfSpecificAccount() throws Exception {
+    void testCheckHistoryOfSpecificAccount() throws IllegalArgumentException {
         createSecondCustomerAndHisAccounts();
         createFirstCustmAccountsAndDoSomeTransactions();
         assertEquals(rightFormatForHistoryOfSpecificAccount(),
@@ -176,7 +176,7 @@ public class CustomerServiceJUnit {
     }
 
     @Test
-    void testAddingInterestToSavingAccForLongTime() throws Exception{
+    void testAddingInterestToSavingAccForLongTime() throws IllegalArgumentException{
         customerService.requestForNewAccount(2);
         employeeService.acceptRequestsForAccounts(true);
         //We set false date, minus 3 days and 5 hours for current saving acc. General - difference is 77 hours.
@@ -187,7 +187,7 @@ public class CustomerServiceJUnit {
         assertEquals(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
                 ((SavingAccount)currentCustomer.getAccounts().get(0)).getTimeOfLastInterestAdd());
     }
-    Customer createSecondCustomerAndHisAccounts() throws Exception {
+    Customer createSecondCustomerAndHisAccounts() throws IllegalArgumentException {
         Customer secondCustomer = employeeService.createNewCustomer("login2", "password2",
                 "nameTwo","lastNameTwo", LocalDate.of(1996, 8, 24),
                 Country.POLAND);
@@ -201,7 +201,7 @@ public class CustomerServiceJUnit {
         return secondCustomer;
     }
 
-    private void employeeAcceptsAllAccounts() throws Exception {
+    private void employeeAcceptsAllAccounts() throws IllegalArgumentException {
         EmployeeService employeeService = new EmployeeService("loginEmployee", "password");
         while (Bank.getRequestsForAccount().size() != 0) {
             employeeService.acceptRequestsForAccounts(true);
@@ -216,7 +216,7 @@ public class CustomerServiceJUnit {
     }
 
 
-    private void createFirstCustmAccountsAndDoSomeTransactions() throws Exception {
+    private void createFirstCustmAccountsAndDoSomeTransactions() throws IllegalArgumentException {
         Customer customer1 = Bank.getCustomers().get(0);
         Customer customer2 = Bank.getCustomers().get(1);
         CustomerService customerService1 = new CustomerService(customer1.getLogin(),

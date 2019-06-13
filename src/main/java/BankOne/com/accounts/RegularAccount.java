@@ -10,7 +10,7 @@ public class RegularAccount extends Account {
 
     private int creditIdCount;
 
-    public void credit(Account toWhichAccount, BigDecimal howMuch) throws Exception {
+    public void credit(Account toWhichAccount, BigDecimal howMuch) throws IllegalArgumentException {
         if (getAmountOfMoney().compareTo(howMuch) >= 0) {
             setAmountOfMoney(getAmountOfMoney().subtract(howMuch));
             LocalDate dateOfTransaction = LocalDate.now();
@@ -18,7 +18,7 @@ public class RegularAccount extends Account {
             writeCreditToCustomerHistory(toWhichAccount,howMuch);
             creditIdCount++;
             toWhichAccount.debit(howMuch, this.getNumber());
-        } else throw new Exception("NotEnoughMoney");
+        } else throw new IllegalArgumentException("NotEnoughMoney");
     }
 
     private void writeCreditToCustomerHistory(Account toWhichAccount, BigDecimal howMuch){

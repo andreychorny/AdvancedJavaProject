@@ -19,7 +19,7 @@ class EmployeeServiceJUnit {
     static EmployeeService serviceForTest;
 
     @BeforeEach
-    void createEmployeesToWorkWith() throws Exception {
+    void createEmployeesToWorkWith() throws IllegalArgumentException {
         Bank.createNewEmployee("ouroboros", "superqwerty",
                 "Andrii", "Chornyi");
         serviceForTest = new EmployeeService("ouroboros", "superqwerty");
@@ -36,37 +36,37 @@ class EmployeeServiceJUnit {
     @Test
     void testValidationOfNameAndLastName(){
         LocalDate dateOfBirth = LocalDate.of(1997,07,01);
-        assertThrows(Exception.class,() -> serviceForTest.createNewCustomer("johnny","bravos",
+        assertThrows(IllegalArgumentException.class,() -> serviceForTest.createNewCustomer("johnny","bravos",
                 "Name1", "lastName", dateOfBirth, Country.UKRAINE),
                 "Number in name - bad format");
-        assertThrows(Exception.class,() -> serviceForTest.createNewCustomer("johnny","bravos",
+        assertThrows(IllegalArgumentException.class,() -> serviceForTest.createNewCustomer("johnny","bravos",
                 "Name", "lastName!", dateOfBirth, Country.UKRAINE),
                 "Special symbol in lastName - bad format");
-        assertThrows(Exception.class,() -> serviceForTest.createNewCustomer("johnny","bravos",
+        assertThrows(IllegalArgumentException.class,() -> serviceForTest.createNewCustomer("johnny","bravos",
                 "Name","Z", dateOfBirth, Country.UKRAINE), "LastName is too short");
-        assertThrows(Exception.class,() -> serviceForTest.createNewCustomer("johnny","bravos",
+        assertThrows(IllegalArgumentException.class,() -> serviceForTest.createNewCustomer("johnny","bravos",
                 "K","Zack", dateOfBirth, Country.UKRAINE), "Name is too short");
     }
 
     @Test
     void testValidationOfLoginAndPassword(){
         LocalDate dateOfBirth = LocalDate.of(1997,07,01);
-        assertThrows(Exception.class,() -> serviceForTest.createNewCustomer("john!ny","bravos",
+        assertThrows(IllegalArgumentException.class,() -> serviceForTest.createNewCustomer("john!ny","bravos",
                 "Name", "lastName", dateOfBirth, Country.UKRAINE),
                 "Special symbol in loggin - bad format");
-        assertThrows(Exception.class,() -> serviceForTest.createNewCustomer("johnny","bravo",
+        assertThrows(IllegalArgumentException.class,() -> serviceForTest.createNewCustomer("johnny","bravo",
                 "Name", "lastName", dateOfBirth, Country.UKRAINE),
                 "Password too short - bad format");
     }
 
     @Test
     void testCorrectnessOfLoggingSystem(){
-        assertThrows(Exception.class, () -> new EmployeeService("ouroboros", "wrongPassword"),
-                "Logging info doesn't match - Exception");
+        assertThrows(IllegalArgumentException.class, () -> new EmployeeService("ouroboros", "wrongPassword"),
+                "Logging info doesn't match - IllegalArgumentException");
     }
 
     @Test
-    void testCreatingOfNewCustomer() throws Exception {
+    void testCreatingOfNewCustomer() throws IllegalArgumentException {
         String newCustomerLogin = "azorahai";
         String newCustomerPassword = "trueKing002";
         String newCustomerFirstName = "Stannis";
@@ -80,18 +80,18 @@ class EmployeeServiceJUnit {
     }
 
     @Test
-    void testLoginExistExceptionWhileCreatingCustomer() throws Exception {
+    void testLoginExistIllegalArgumentExceptionWhileCreatingCustomer() throws IllegalArgumentException {
         String sameLoginForTwoCustomers = "azorahai";
         serviceForTest.createNewCustomer(sameLoginForTwoCustomers,"zxcvbn", "nameOne",
                 "lastNameOne", LocalDate.of(1975, 9, 11),Country.AMERICA);
-        assertThrows(Exception.class, () -> serviceForTest.createNewCustomer(sameLoginForTwoCustomers,"qwerty",
+        assertThrows(IllegalArgumentException.class, () -> serviceForTest.createNewCustomer(sameLoginForTwoCustomers,"qwerty",
                 "nameTwo","lastNameTwo", LocalDate.of(1999,1,27),
                 Country.ENGLAND));
 
     }
 
     @Test
-    void testViewingDataOfSpecificCustomer() throws Exception {
+    void testViewingDataOfSpecificCustomer() throws IllegalArgumentException {
         LocalDate customerDateOfBirth = LocalDate.of(2000, 11, 27);
         serviceForTest.createNewCustomer("CustLogin", "CustPassword",
                 "CustName", "CustLastName", customerDateOfBirth, Country.POLAND);
@@ -101,7 +101,7 @@ class EmployeeServiceJUnit {
     }
 
     @Test
-    void testAcceptingRequestOfAccount() throws Exception{
+    void testAcceptingRequestOfAccount() throws IllegalArgumentException{
         Customer currentCustomer;
         LocalDate dateOfCustomerBirth = LocalDate.of(1955, 10, 26);
         currentCustomer = serviceForTest.createNewCustomer("loginCustomer", "qwerty",

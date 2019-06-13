@@ -14,7 +14,7 @@ public class SavingAccount extends Account {
 
     private LocalDateTime timeOfLastInterestAdd;
 
-    public void credit(Account toWhichAccount, BigDecimal howMuch) throws Exception {
+    public void credit(Account toWhichAccount, BigDecimal howMuch) throws IllegalArgumentException {
         if (getAmountOfMoney().compareTo(howMuch) >= 0) {
             setAmountOfMoney(getAmountOfMoney().subtract(howMuch));
             LocalDate dateOfTransaction = LocalDate.now();
@@ -22,7 +22,7 @@ public class SavingAccount extends Account {
             writeCreditToHistory(toWhichAccount,howMuch);
             toWhichAccount.debit(howMuch, this.getNumber());
             creditIdCount++;
-        } else throw new Exception("NotEnoughMoney");
+        } else throw new IllegalArgumentException("NotEnoughMoney");
     }
     void writeCreditToHistory(Account toWhichAccount, BigDecimal howMuch){
         getOwnerOfAccount().getHistory().put(getOwnerOfAccount().getLastTransactionsId(),

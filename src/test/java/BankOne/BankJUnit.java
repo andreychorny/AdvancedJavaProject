@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BankJUnit {
 
     @Test
-    void testAddingNewEmployee() throws Exception{
+    void testAddingNewEmployee() throws IllegalArgumentException{
         String newEmployeeOneLogin = "Ouroboros";
         String newEmployeeOnePassword = "qwerty";
         String newEmployeeOneFirstName = "Bob";
@@ -23,31 +23,31 @@ public class BankJUnit {
     }
 
     @Test
-    void testRestrictionOfLogginRepetation() throws Exception{
+    void testRestrictionOfLogginRepetation() throws IllegalArgumentException{
         Bank.createNewEmployee("login1","password1",
                 "nameOne","lastNameTwo");
-        assertThrows(Exception.class,() ->  Bank.createNewEmployee("login1",
+        assertThrows(IllegalArgumentException.class,() ->  Bank.createNewEmployee("login1",
                 "password2", "nameTwo","lastNameTwo"),
-                "Login exist in database - Exception");
+                "Login exist in database - IllegalArgumentException");
     }
 
     @Test
     void testValidationOfNameAndLastName(){
-        assertThrows(Exception.class,() -> Bank.createNewEmployee("johnny","bravos","Name1",
+        assertThrows(IllegalArgumentException.class,() -> Bank.createNewEmployee("johnny","bravos","Name1",
                 "lastName"), "Number in name - bad format");
-        assertThrows(Exception.class,() -> Bank.createNewEmployee("johnny","bravos","Name",
+        assertThrows(IllegalArgumentException.class,() -> Bank.createNewEmployee("johnny","bravos","Name",
                 "lastName!"), "Special symbol in lastName - bad format");
-        assertThrows(Exception.class,() -> Bank.createNewEmployee("johnny","bravos","Name",
+        assertThrows(IllegalArgumentException.class,() -> Bank.createNewEmployee("johnny","bravos","Name",
                 "Z"), "LastName is too short");
-        assertThrows(Exception.class,() -> Bank.createNewEmployee("johnny","bravos","K",
+        assertThrows(IllegalArgumentException.class,() -> Bank.createNewEmployee("johnny","bravos","K",
                 "Zack"), "Name is too short");
     }
 
     @Test
     void testValidationOfLoginAndPassword(){
-        assertThrows(Exception.class,() -> Bank.createNewEmployee("johnny?","bravos","Name",
+        assertThrows(IllegalArgumentException.class,() -> Bank.createNewEmployee("johnny?","bravos","Name",
                 "lastName"), "Special symbol in login - bad format");
-        assertThrows(Exception.class,() -> Bank.createNewEmployee("johnny","bravo","Name",
+        assertThrows(IllegalArgumentException.class,() -> Bank.createNewEmployee("johnny","bravo","Name",
                 "lastName"), "password to short - bad format");
     }
 }

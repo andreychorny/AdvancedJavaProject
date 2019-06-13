@@ -21,25 +21,26 @@ public class EmployeeService {
 
     private static Logger logger = LogManager.getLogger(EmployeeService.class);
 
-    public EmployeeService(String login, String password) throws Exception {
+    public EmployeeService(String login, String password) throws IllegalArgumentException {
         if (Bank.checkIfLoggingInfoIsSuitable(login, password)) {
             currentEmployee = Bank.retrievePersonByLogin(login);
         }else {
-            throw new Exception("WRONG LOGGING INFO!");
+            throw new IllegalArgumentException("WRONG LOGGING INFO!");
         }
     }
 
     public Customer createNewCustomer(String login, String password, String firstName,
-                                      String lastName, LocalDate dateOfBirth, Country country) throws Exception {
+                                      String lastName, LocalDate dateOfBirth, Country country)
+            throws IllegalArgumentException {
         if((!Bank.nameValidation(firstName) || !Bank.nameValidation(lastName))){
             logger.warn("BAD FORMAT OF NAME OR LASTNAME! NAME AND LAST NAME MUST BE AT LEAST 2 SYMBOLS LONG AND " +
                     "DO NOT CONTAIN SPECIAL SYMBOLS!");
-            throw new Exception("WRONG FORMAT OF NAME/LASTNAME!");
+            throw new IllegalArgumentException("WRONG FORMAT OF NAME/LASTNAME!");
         }
         if((!Bank.loginAndPasswordValidation(login)) || (!Bank.loginAndPasswordValidation(password))){
             logger.warn("BAD FORMAT OF LOGIN OR PASSWORD! LOGIN AND PASSWORD MUST BE AT LEAST 6 SYMBOLS LONG AND " +
                     "DO NOT CONTAIN SPECIAL SYMBOLS EXCEPT '_'");
-            throw new Exception("WRONG FORMAT OF LOGIN/PASSWORD!");
+            throw new IllegalArgumentException("WRONG FORMAT OF LOGIN/PASSWORD!");
         }
         if (Bank.checkIfLoginUnique(login)) {
             Customer newCustomer = new Customer(login, password, firstName, lastName,
@@ -48,7 +49,7 @@ public class EmployeeService {
             return newCustomer;
         } else {
             logger.warn("Entered login is not unique!!!");
-            throw new Exception("ENTERED LOGIN IS NOT UNIQUE!!!");
+            throw new IllegalArgumentException("ENTERED LOGIN IS NOT UNIQUE!!!");
         }
     }
 
