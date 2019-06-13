@@ -5,6 +5,7 @@ import BankOne.com.BankData.Country;
 import BankOne.com.BankData.Customer;
 import BankOne.com.TransactionsHistory.LocalSendTransaction;
 import BankOne.com.accounts.Account;
+import BankOne.com.accounts.InternationalAccount;
 import BankOne.com.services.CustomerService;
 import BankOne.com.services.EmployeeService;
 import BankOne.com.services.ReportsService;
@@ -124,9 +125,9 @@ public class ReportsServiceJUnit {
         String regulAcc1 = accountsCust1.get(0).getNumber();
         String savingAcc1 = accountsCust1.get(1).getNumber();
         String interAcc1 = accountsCust1.get(3).getNumber();
+        String interAcc1IBAN = ((InternationalAccount) accountsCust1.get(3)).getIBAN();
         String regulAcc2 = accountsCust1.get(2).getNumber();
         String secCustInterAcc1 = accountsCust2.get(1).getNumber();
-
         String secondCustRegulAcc1 = accountsCust2.get(0).getNumber();
         LocalDate dateToCheck = LocalDate.now();
         String dateOfTransactions = dateToCheck.format(DateTimeFormatter.ISO_DATE);
@@ -141,7 +142,8 @@ public class ReportsServiceJUnit {
                 "ToAccount: " + savingAcc1 + ", amount of money sent: 250.00; from account:" +
                 regulAcc1 + "\n" +
                 "International Out Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
-                "AccountFrom: " + interAcc1 + ", amount of money sent: 550.00; to Account:" + secCustInterAcc1 + "\n" +
+                "AccountFrom: " + interAcc1 + ", amount of money sent: 550.00; to Account:" + secCustInterAcc1 +
+                "; IBAN code: " + interAcc1IBAN +"\n" +
                 "Local Send Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
                 "AccountFrom: " + savingAcc1 + ", amount of money sent: 1150.00; to Account:" + regulAcc2 + "\n" +
                 "Receive Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
@@ -155,7 +157,6 @@ public class ReportsServiceJUnit {
         String savingAcc1 = accountsCust1.get(1).getNumber();
         String regulAcc2 = accountsCust1.get(2).getNumber();
         String secCustInterAcc1 = accountsCust2.get(1).getNumber();
-
         String secondCustRegulAcc1 = accountsCust2.get(0).getNumber();
         LocalDate dateToCheck = LocalDate.now();
         String dateOfTransactions = dateToCheck.format(DateTimeFormatter.ISO_DATE);

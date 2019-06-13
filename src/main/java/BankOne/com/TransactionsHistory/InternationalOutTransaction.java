@@ -27,6 +27,6 @@ public class InternationalOutTransaction extends Transaction {
         return "International Out Transaction id= " + super.id + ", at date:" +
                 super.dateOfTransaction + ":\n" +"AccountFrom: "+
                 internationalAccountOfTransaction.getNumber() + ", amount of money sent: " +
-                deliveredAmount + "; to Account:" + toWhichAccountNumber;
+                deliveredAmount + "; to Account:" + toWhichAccountNumber + "; IBAN code: " + IBAN;
     }
 }
