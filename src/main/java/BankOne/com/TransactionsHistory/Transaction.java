@@ -9,7 +9,7 @@ public abstract class Transaction {
 
     protected final int id;
 
-    private final Account accountOfTransaction;
+    protected final Account accountOfTransaction;
 
     protected final BigDecimal deliveredAmount;
 
@@ -37,4 +37,6 @@ public abstract class Transaction {
     public Account getAccountOfTransaction() {
         return accountOfTransaction;
     }
+
+
 }

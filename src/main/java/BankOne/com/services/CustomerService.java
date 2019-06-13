@@ -15,6 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 
 
 public class CustomerService {
@@ -123,7 +124,7 @@ public class CustomerService {
                 break;
         }
     }
-    
+
 
     public String checkHistoryOfSpecificAccount(int indexOfAccount){
         File file = new File("src/main/resources/", "customerReportHistoryOfAccount.txt");
@@ -142,6 +143,25 @@ public class CustomerService {
             e.printStackTrace();
         }
         return resultOutput;
+    }
+
+    public void checkTransactionsPerSpecificDate(LocalDate dateFrom, LocalDate dateTo){
+        File file = new File("src/main/resources/", "customerReportHistoryBetween2Dates.txt");
+        String resultOutput;
+        resultOutput = "Customer: " + currentCustomer.getFirstName() + " " +
+                currentCustomer.getLastName() + "\nhistory of transactions between " + dateFrom + " and " +
+                dateTo + "\n" ;
+        for (int i : currentCustomer.getHistory().keySet()) {
+            LocalDate dateOfTransaction = currentCustomer.getHistory().get(i).getLocalDateOfTransaction();
+            if(dateOfTransaction.compareTo(dateFrom)>= 0 && (dateOfTransaction.compareTo(dateTo)<=0)){
+                resultOutput += currentCustomer.getHistory().get(i) + "\n";
+            }
+        }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()))) {
+            bw.write(resultOutput);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Customer getCurrentCustomer() {
