@@ -31,4 +31,23 @@ public class BankJUnit {
                 "Login exist in database - Exception");
     }
 
+    @Test
+    void testValidationOfNameAndLastName(){
+        assertThrows(Exception.class,() -> Bank.createNewEmployee("johnny","bravos","Name1",
+                "lastName"), "Number in name - bad format");
+        assertThrows(Exception.class,() -> Bank.createNewEmployee("johnny","bravos","Name",
+                "lastName!"), "Special symbol in lastName - bad format");
+        assertThrows(Exception.class,() -> Bank.createNewEmployee("johnny","bravos","Name",
+                "Z"), "LastName is too short");
+        assertThrows(Exception.class,() -> Bank.createNewEmployee("johnny","bravos","K",
+                "Zack"), "Name is too short");
+    }
+
+    @Test
+    void testValidationOfLoginAndPassword(){
+        assertThrows(Exception.class,() -> Bank.createNewEmployee("johnny?","bravos","Name",
+                "lastName"), "Special symbol in login - bad format");
+        assertThrows(Exception.class,() -> Bank.createNewEmployee("johnny","bravo","Name",
+                "lastName"), "password to short - bad format");
+    }
 }

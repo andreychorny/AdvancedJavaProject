@@ -76,10 +76,10 @@ public class ReportsServiceJUnit {
     }
 
     void createTwoCustomers(EmployeeService employeeService) throws Exception {
-        employeeService.createNewCustomer("login1", "password1", "name1", "lastName1",
-                LocalDate.of(1995, 8, 11), Country.UKRAINE);
-        employeeService.createNewCustomer("login2", "password2", "name2", "lastName2",
-                LocalDate.of(1999, 12, 31), Country.POLAND);
+        employeeService.createNewCustomer("login1", "password1", "nameOne",
+                "lastNameOne",LocalDate.of(1995, 8, 11), Country.UKRAINE);
+        employeeService.createNewCustomer("login2", "password2", "nameTwo",
+                "lastNameTwo",LocalDate.of(1999, 12, 31), Country.POLAND);
     }
 
     void createAccountsAndDoSomeTransactions(EmployeeService employeeService) throws Exception {
@@ -131,7 +131,7 @@ public class ReportsServiceJUnit {
         String secondCustRegulAcc1 = accountsCust2.get(0).getNumber();
         LocalDate dateToCheck = LocalDate.now();
         String dateOfTransactions = dateToCheck.format(DateTimeFormatter.ISO_DATE);
-        return "REPORT ABOUT TRANSACTIONS OF CUSTOMER: name1 lastName1: \n" +
+        return "REPORT ABOUT TRANSACTIONS OF CUSTOMER: nameOne lastNameOne: \n" +
                 "Local Send Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
                 "AccountFrom: " + regulAcc1 + ", amount of money sent: 450.79; to Account:"
                 + secondCustRegulAcc1 + "\n" +
@@ -161,7 +161,7 @@ public class ReportsServiceJUnit {
         LocalDate dateToCheck = LocalDate.now();
         String dateOfTransactions = dateToCheck.format(DateTimeFormatter.ISO_DATE);
         return "REPORT ABOUT TRANSACTIONS OF TYPE: LocalSendTransaction\n" +
-                "Customer: name1 lastName1: \n" +
+                "Customer: nameOne lastNameOne: \n" +
                 "Local Send Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
                 "AccountFrom: " + regulAcc1 + ", amount of money sent: 450.79; to Account:"
                 + secondCustRegulAcc1 + "\n" +
@@ -170,7 +170,7 @@ public class ReportsServiceJUnit {
                 savingAcc1 + "\n" +
                 "Local Send Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
                 "AccountFrom: " + savingAcc1 + ", amount of money sent: 1150.00; to Account:" + regulAcc2 + "\n" +
-                "Customer: name2 lastName2: \n" +
+                "Customer: nameTwo lastNameTwo: \n" +
                 "Local Send Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
                 "AccountFrom: "+ secondCustRegulAcc1 +", amount of money sent: 350.00; to Account:"+secCustInterAcc1+
                 "\n";

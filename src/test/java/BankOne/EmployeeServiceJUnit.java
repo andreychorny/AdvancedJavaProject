@@ -32,6 +32,33 @@ class EmployeeServiceJUnit {
         Bank.getEmployees().clear();
         Bank.getRequestsForAccount().clear();
     }
+
+    @Test
+    void testValidationOfNameAndLastName(){
+        LocalDate dateOfBirth = LocalDate.of(1997,07,01);
+        assertThrows(Exception.class,() -> serviceForTest.createNewCustomer("johnny","bravos",
+                "Name1", "lastName", dateOfBirth, Country.UKRAINE),
+                "Number in name - bad format");
+        assertThrows(Exception.class,() -> serviceForTest.createNewCustomer("johnny","bravos",
+                "Name", "lastName!", dateOfBirth, Country.UKRAINE),
+                "Special symbol in lastName - bad format");
+        assertThrows(Exception.class,() -> serviceForTest.createNewCustomer("johnny","bravos",
+                "Name","Z", dateOfBirth, Country.UKRAINE), "LastName is too short");
+        assertThrows(Exception.class,() -> serviceForTest.createNewCustomer("johnny","bravos",
+                "K","Zack", dateOfBirth, Country.UKRAINE), "Name is too short");
+    }
+
+    @Test
+    void testValidationOfLoginAndPassword(){
+        LocalDate dateOfBirth = LocalDate.of(1997,07,01);
+        assertThrows(Exception.class,() -> serviceForTest.createNewCustomer("john!ny","bravos",
+                "Name", "lastName", dateOfBirth, Country.UKRAINE),
+                "Special symbol in loggin - bad format");
+        assertThrows(Exception.class,() -> serviceForTest.createNewCustomer("johnny","bravo",
+                "Name", "lastName", dateOfBirth, Country.UKRAINE),
+                "Password too short - bad format");
+    }
+
     @Test
     void testCorrectnessOfLoggingSystem(){
         assertThrows(Exception.class, () -> new EmployeeService("ouroboros", "wrongPassword"),
@@ -55,10 +82,11 @@ class EmployeeServiceJUnit {
     @Test
     void testLoginExistExceptionWhileCreatingCustomer() throws Exception {
         String sameLoginForTwoCustomers = "azorahai";
-        serviceForTest.createNewCustomer(sameLoginForTwoCustomers,"zxcvbn", "name1",
-                "lastname1", LocalDate.of(1975, 9, 11),Country.AMERICA);
+        serviceForTest.createNewCustomer(sameLoginForTwoCustomers,"zxcvbn", "nameOne",
+                "lastNameOne", LocalDate.of(1975, 9, 11),Country.AMERICA);
         assertThrows(Exception.class, () -> serviceForTest.createNewCustomer(sameLoginForTwoCustomers,"qwerty",
-                "name2","lastname2", LocalDate.of(1999,1,27),Country.ENGLAND));
+                "nameTwo","lastNameTwo", LocalDate.of(1999,1,27),
+                Country.ENGLAND));
 
     }
 

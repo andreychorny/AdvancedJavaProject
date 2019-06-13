@@ -189,7 +189,7 @@ public class CustomerServiceJUnit {
     }
     Customer createSecondCustomerAndHisAccounts() throws Exception {
         Customer secondCustomer = employeeService.createNewCustomer("login2", "password2",
-                "name2","lastName2", LocalDate.of(1996, 8, 24),
+                "nameTwo","lastNameTwo", LocalDate.of(1996, 8, 24),
                 Country.POLAND);
         CustomerService secondCustomerService = new CustomerService("login2", "password2");
         secondCustomerService.requestForNewAccount(1);
@@ -255,16 +255,16 @@ public class CustomerServiceJUnit {
         String secondCustRegularAccount = Bank.getCustomers().get(1).getAccounts().get(0).getNumber();
         return "Customer: Bob Dylan\n" +
                 "history of Account:"+checkedAccountNumber+":\n" +
-                "Local Send Transaction id= 0, at date:2019-06-13:\n" +
+                "Local Send Transaction id= 0, at date:"+LocalDate.now()+":\n" +
                 "AccountFrom: "+checkedAccountNumber+", amount of money sent: 450.79; to Account:"+
                 secondCustRegularAccount+"\n" +
-                "Local Send Transaction id= 1, at date:2019-06-13:\n" +
+                "Local Send Transaction id= 1, at date:"+LocalDate.now()+":\n" +
                 "AccountFrom: "+checkedAccountNumber+", amount of money sent: 250.00; to Account:"+
                 firstCustSavingAccount+"\n" +
-                "Receive Transaction id= 0, at date:2019-06-13:\n" +
+                "Receive Transaction id= 0, at date:"+LocalDate.now()+":\n" +
                 "ToAccount: "+checkedAccountNumber+", amount of money sent: 1150.00; from account:"+
                 firstCustSavingAccount+"\n" +
-                "Receive Transaction id= 1, at date:2019-06-13:\n" +
+                "Receive Transaction id= 1, at date:"+LocalDate.now()+":\n" +
                 "ToAccount: "+checkedAccountNumber+", amount of money sent: 350.00; from account:"+
                 secondCustRegularAccount+"\n";
     }

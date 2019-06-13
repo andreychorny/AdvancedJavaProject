@@ -35,6 +35,16 @@ public class Bank {
 
     public static Employee createNewEmployee(String login, String password, String firstName,
                                       String lastName) throws Exception {
+        if((!nameValidation(firstName) || !nameValidation(lastName))){
+            logger.warn("BAD FORMAT OF NAME OR LASTNAME! NAME AND LAST NAME MUST BE AT LEAST 2 SYMBOLS LONG AND " +
+                    "DO NOT CONTAIN SPECIAL SYMBOLS!");
+            throw new Exception("WRONG FORMAT OF NAME/LASTNAME!");
+        }
+        if((!loginAndPasswordValidation(login)) || (!loginAndPasswordValidation(password))){
+            logger.warn("BAD FORMAT OF LOGIN OR PASSWORD! LOGIN AND PASSWORD MUST BE AT LEAST 6 SYMBOLS LONG AND " +
+                    "DO NOT CONTAIN SPECIAL SYMBOLS EXCEPT '_'");
+            throw new Exception("WRONG FORMAT OF LOGIN/PASSWORD!");
+        }
         if (Bank.checkIfLoginUnique(login)) {
             Employee newEmployee = new Employee(login, password, firstName, lastName);
             employees.add(newEmployee);
@@ -147,6 +157,21 @@ public class Bank {
             }
         }
     }
+
+    public static boolean nameValidation(String name){
+        if(name.length()<2){
+            return false;
+        }
+        return name.matches( "[A-Za-z]*" );
+    }
+
+    public static boolean loginAndPasswordValidation(String login){
+        if(login.length()<6){
+            return false;
+        }
+        return login.matches( "[A-Za-z0-9_]*" );
+    }
+
     public static List<Customer> getCustomers() {
         return customers;
     }
