@@ -11,13 +11,18 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.List;
+import java.util.TreeSet;
 
 public class ReportsService {
 
-    private List<Customer> customers;
     private static Logger logger = LogManager.getLogger(ReportsService.class);
+    private List<Customer> customers;
 
+
+    public ReportsService() {
+        customers = Bank.getCustomers();
+    }
 
     public String generateReportTransactionOfCustomer(Customer customer) {
         File file = new File("src/main/resources/", "transactionsOfSpecificCustomer.txt");
@@ -70,13 +75,13 @@ public class ReportsService {
         File file = new File("src/main/resources/", "transactionForSpecificType.txt");
         String checkedType = classOfType.getSimpleName();
         String resultOutput;
-        resultOutput = "REPORT ABOUT TRANSACTIONS OF TYPE: " + checkedType +"\n";
+        resultOutput = "REPORT ABOUT TRANSACTIONS OF TYPE: " + checkedType + "\n";
         for (Customer customer : customers) {
             resultOutput += "Customer: " + customer.getFirstName() + " " +
                     customer.getLastName() + ": \n";
             for (Transaction transaction : customer.getHistory().values()) {
                 if (transaction.getClass().getSimpleName().equals(checkedType)) {
-                    resultOutput += transaction +"\n";
+                    resultOutput += transaction + "\n";
                 }
             }
         }
@@ -93,10 +98,6 @@ public class ReportsService {
         for (int i = (customers.size() - 5); i < customers.size(); i++) {
             logger.info(customers.get(i));
         }
-    }
-
-    public ReportsService() {
-        customers = Bank.getCustomers();
     }
 
 }

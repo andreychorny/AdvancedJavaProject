@@ -1,7 +1,5 @@
 package BankOne.com.accounts;
 
-import BankOne.com.BankData.Customer;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 

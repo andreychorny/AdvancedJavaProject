@@ -1,7 +1,6 @@
 package BankOne.com.TransactionsHistory;
 
 import BankOne.com.accounts.Account;
-import BankOne.com.accounts.RegularAccount;
 
 import java.math.BigDecimal;
 
@@ -19,7 +18,7 @@ public class LocalSendTransaction extends Transaction {
     @Override
     public String toString() {
         return "Local Send Transaction id= " + super.id + ", at date:" + super.dateOfTransaction + ":\n" +
-                "AccountFrom: "+ super.getAccountOfTransaction().getNumber() + ", amount of money sent: " +
+                "AccountFrom: " + super.getAccountOfTransaction().getNumber() + ", amount of money sent: " +
                 deliveredAmount + "; to Account:" + toWhichAccountNumber;
     }
 }

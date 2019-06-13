@@ -8,14 +8,10 @@ import java.util.*;
 
 public class Customer extends Person {
 
-    private int internationalIdCount;
-
-    private int lastTransactionsId;
-
-    private int id;
-
     private static int currentLastCustomerId = 0;
-
+    private int internationalIdCount;
+    private int lastTransactionsId;
+    private int id;
     private Country country;
 
     private List<Account> accounts = new ArrayList<>();
@@ -43,16 +39,20 @@ public class Customer extends Person {
         return lastTransactionsId;
     }
 
-    public Map<Integer, Transaction> getHistory() {
-        return history;
-    }
-
     public void setLastTransactionsId(int lastTransactionsId) {
         this.lastTransactionsId = lastTransactionsId;
     }
 
+    public Map<Integer, Transaction> getHistory() {
+        return history;
+    }
+
     public int getInternationalIdCount() {
         return internationalIdCount;
+    }
+
+    public void setInternationalIdCount(int internationalIdCount) {
+        this.internationalIdCount = internationalIdCount;
     }
 
     public List<Account> getAccounts() {
@@ -67,8 +67,7 @@ public class Customer extends Person {
         return dateOfJoiningToBank;
     }
 
-
-    public<A extends Account> void addAccount(A account){
+    public <A extends Account> void addAccount(A account) {
         accounts.add(account);
     }
 
@@ -112,10 +111,6 @@ public class Customer extends Person {
         return Objects.hash(super.hashCode(), getInternationalIdCount(),
                 getLastTransactionsId(), getId(), getAccounts(), getHistory(),
                 getDateOfBirth(), getDateOfJoiningToBank());
-    }
-
-    public void setInternationalIdCount(int internationalIdCount) {
-        this.internationalIdCount = internationalIdCount;
     }
 
     public Country getCountry() {

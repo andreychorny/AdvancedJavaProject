@@ -20,9 +20,8 @@ import java.time.LocalDate;
 
 public class CustomerService {
 
-    private Customer currentCustomer;
-
     private static Logger logger = LogManager.getLogger(CustomerService.class);
+    private Customer currentCustomer;
 
     public CustomerService(String login, String password) throws IllegalArgumentException {
         if (Bank.checkIfLoggingInfoIsSuitable(login, password)) {
@@ -33,7 +32,7 @@ public class CustomerService {
         }
     }
 
-    public String showAllAccounts(){
+    public String showAllAccounts() {
         String allAccountsInfo = "";
         for (Account account : currentCustomer.getAccounts()) {
             if (account instanceof RegularAccount) {
@@ -54,7 +53,7 @@ public class CustomerService {
     }
 
     public BigDecimal creditFromRegularAcc(int indexOfAccount, String deliverToNumber, BigDecimal amountToDeliver)
-            throws IllegalArgumentException{
+            throws IllegalArgumentException {
         RegularAccount accInUse = (RegularAccount) currentCustomer.getAccounts().get(indexOfAccount);
         amountToDeliver = amountToDeliver.setScale(2, RoundingMode.DOWN);
         logger.info("Customer id:" + currentCustomer.getId() + ", " + currentCustomer.getFirstName() + " " +
@@ -64,7 +63,7 @@ public class CustomerService {
         Account accDeliverTo = Bank.findAccount(deliverToNumber);
         if (accDeliverTo != null) {
             accInUse.credit(accDeliverTo, amountToDeliver);
-        }else {
+        } else {
             logger.warn("THERE IS NO SUCH ACCOUNT NUMBER AS " + deliverToNumber + "!!!");
             throw new IllegalArgumentException("NO SUCH ACCOUNT NUMBER");
         }
@@ -83,10 +82,10 @@ public class CustomerService {
         Account accDeliverTo = Bank.findAccount(deliverToNumber);
         if (accDeliverTo != null && (accDeliverTo instanceof RegularAccount)) {
             accInUse.credit(accDeliverTo, amountToDeliver);
-        }else if(accDeliverTo == null){
+        } else if (accDeliverTo == null) {
             logger.warn("THERE IS NO SUCH ACCOUNT NUMBER AS " + deliverToNumber + "!!!");
             throw new IllegalArgumentException("No such account number to send money!");
-        }else if(!(accDeliverTo instanceof RegularAccount)){
+        } else if (!(accDeliverTo instanceof RegularAccount)) {
             logger.warn("YOU CANNOT SEND MONEY FROM SAVING ACCOUNT TO THIS TYPE OF ACCOUNTS!");
             throw new IllegalArgumentException("Wrong type of destination account!");
         }
@@ -99,11 +98,11 @@ public class CustomerService {
         amountToDeliver = amountToDeliver.setScale(2, RoundingMode.DOWN);
         Account accDeliverTo = Bank.findAccount(deliverToNumber);
         if (accDeliverTo != null) {
-            if (!(accDeliverTo instanceof InternationalAccount)){
+            if (!(accDeliverTo instanceof InternationalAccount)) {
                 throw new IllegalArgumentException("You can send money only to another international accounts");
             }
             accInUse.wire(accDeliverTo, amountToDeliver);
-        }else {
+        } else {
             logger.warn("THERE IS NO SUCH ACCOUNT NUMBER AS " + deliverToNumber + "!!!");
             throw new IllegalArgumentException("No such account number to send money!");
         }
@@ -129,14 +128,14 @@ public class CustomerService {
     }
 
 
-    public String checkHistoryOfSpecificAccount(int indexOfAccount){
+    public String checkHistoryOfSpecificAccount(int indexOfAccount) {
         File file = new File("src/main/resources/", "customerReportHistoryOfAccount.txt");
         String resultOutput;
         Account currentAccount = currentCustomer.getAccounts().get(indexOfAccount);
         resultOutput = "Customer: " + currentCustomer.getFirstName() + " " +
-                currentCustomer.getLastName() + "\nhistory of Account:" + currentAccount.getNumber() + ":\n" ;
+                currentCustomer.getLastName() + "\nhistory of Account:" + currentAccount.getNumber() + ":\n";
         for (int i : currentCustomer.getHistory().keySet()) {
-            if(currentCustomer.getHistory().get(i).getAccountOfTransaction().equals(currentAccount)){
+            if (currentCustomer.getHistory().get(i).getAccountOfTransaction().equals(currentAccount)) {
                 resultOutput += currentCustomer.getHistory().get(i) + "\n";
             }
         }
@@ -148,15 +147,15 @@ public class CustomerService {
         return resultOutput;
     }
 
-    public void checkTransactionsPerSpecificDate(LocalDate dateFrom, LocalDate dateTo){
+    public void checkTransactionsPerSpecificDate(LocalDate dateFrom, LocalDate dateTo) {
         File file = new File("src/main/resources/", "customerReportHistoryBetween2Dates.txt");
         String resultOutput;
         resultOutput = "Customer: " + currentCustomer.getFirstName() + " " +
                 currentCustomer.getLastName() + "\nhistory of transactions between " + dateFrom + " and " +
-                dateTo + "\n" ;
+                dateTo + "\n";
         for (int i : currentCustomer.getHistory().keySet()) {
             LocalDate dateOfTransaction = currentCustomer.getHistory().get(i).getLocalDateOfTransaction();
-            if(dateOfTransaction.compareTo(dateFrom)>= 0 && (dateOfTransaction.compareTo(dateTo)<=0)){
+            if (dateOfTransaction.compareTo(dateFrom) >= 0 && (dateOfTransaction.compareTo(dateTo) <= 0)) {
                 resultOutput += currentCustomer.getHistory().get(i) + "\n";
             }
         }

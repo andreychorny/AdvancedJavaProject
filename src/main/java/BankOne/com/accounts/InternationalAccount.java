@@ -6,11 +6,15 @@ import BankOne.com.TransactionsHistory.InternationalOutTransaction;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class InternationalAccount extends Account {
 
     private String IBAN;
+
+    public InternationalAccount(BigDecimal amountOfMoney, String number, Customer ownerOfAccount, String IBAN) {
+        super(amountOfMoney, number, ownerOfAccount);
+        this.IBAN = generateIBAN(IBAN);
+    }
 
     public void wire(Account toWhichAccount, BigDecimal howMuch) throws IllegalArgumentException {
         if (getAmountOfMoney().compareTo(howMuch) >= 0) {
@@ -45,11 +49,6 @@ public class InternationalAccount extends Account {
             return generatedIBAN.toString();
         }
         return generateIBAN(countryIBANCode);
-    }
-
-    public InternationalAccount(BigDecimal amountOfMoney, String number, Customer ownerOfAccount, String IBAN) {
-        super(amountOfMoney, number, ownerOfAccount);
-        this.IBAN = generateIBAN(IBAN);
     }
 
     public String getIBAN() {

@@ -8,23 +8,18 @@ import BankOne.com.accounts.Account;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
-import java.io.OutputStream;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class EmployeeService {
 
-    private Employee currentEmployee;
-
     private static Logger logger = LogManager.getLogger(EmployeeService.class);
+    private Employee currentEmployee;
 
     public EmployeeService(String login, String password) throws IllegalArgumentException {
         if (Bank.checkIfLoggingInfoIsSuitable(login, password)) {
             currentEmployee = Bank.retrievePersonByLogin(login);
-        }else {
+        } else {
             throw new IllegalArgumentException("WRONG LOGGING INFO!");
         }
     }
@@ -32,12 +27,12 @@ public class EmployeeService {
     public Customer createNewCustomer(String login, String password, String firstName,
                                       String lastName, LocalDate dateOfBirth, Country country)
             throws IllegalArgumentException {
-        if((!Bank.nameValidation(firstName) || !Bank.nameValidation(lastName))){
+        if ((!Bank.nameValidation(firstName) || !Bank.nameValidation(lastName))) {
             logger.warn("BAD FORMAT OF NAME OR LASTNAME! NAME AND LAST NAME MUST BE AT LEAST 2 SYMBOLS LONG AND " +
                     "DO NOT CONTAIN SPECIAL SYMBOLS!");
             throw new IllegalArgumentException("WRONG FORMAT OF NAME/LASTNAME!");
         }
-        if((!Bank.loginAndPasswordValidation(login)) || (!Bank.loginAndPasswordValidation(password))){
+        if ((!Bank.loginAndPasswordValidation(login)) || (!Bank.loginAndPasswordValidation(password))) {
             logger.warn("BAD FORMAT OF LOGIN OR PASSWORD! LOGIN AND PASSWORD MUST BE AT LEAST 6 SYMBOLS LONG AND " +
                     "DO NOT CONTAIN SPECIAL SYMBOLS EXCEPT '_'");
             throw new IllegalArgumentException("WRONG FORMAT OF LOGIN/PASSWORD!");
@@ -60,9 +55,9 @@ public class EmployeeService {
     }
 
     //possible realisation of this is strongly depended from front-end
-    public void acceptRequestsForAccounts(boolean decision){
+    public void acceptRequestsForAccounts(boolean decision) {
         List<Account> requests = Bank.getRequestsForAccount();
-        if(requests.size()!=0){
+        if (requests.size() != 0) {
             Account chechingAccount = requests.get(0);
             logger.info("Request from: " + chechingAccount.getOwnerOfAccount().getFirstName() + " " +
                     chechingAccount.getOwnerOfAccount().getLastName() + " with login: " +
@@ -71,7 +66,7 @@ public class EmployeeService {
             logger.info("Do you accept this account?");
 
             //somewhere here should be decision check on front-end
-            if(decision) {
+            if (decision) {
                 chechingAccount.getOwnerOfAccount().addAccount(chechingAccount);
             }
             requests.remove(0);

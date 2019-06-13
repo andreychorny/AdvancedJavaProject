@@ -16,7 +16,7 @@ public abstract class Person {
     public Person(String login, String password, String firstName, String lastName) {
         this.login = login;
         this.password = new char[password.length()];
-        for(int i=0; i<password.length(); i++){
+        for (int i = 0; i < password.length(); i++) {
             this.password[i] = password.charAt(i);
         }
         this.firstName = firstName;

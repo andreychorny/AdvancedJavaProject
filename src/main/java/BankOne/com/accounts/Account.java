@@ -20,6 +20,14 @@ public abstract class Account {
 
     private List<AccountMemento> historyOfAccount = new LinkedList<>();
 
+    Account(BigDecimal amountOfMoney, String number, Customer ownerOfAccount) {
+        this.amountOfMoney = amountOfMoney;
+        this.debitIdCount = 0;
+        this.number = number;
+        this.ownerOfAccount = ownerOfAccount;
+        historyOfAccount.add(new AccountMemento(amountOfMoney, debitIdCount, number, LocalDate.now()));
+    }
+
     void debit(BigDecimal arrivedCash, String numberFromWhichAccount) {
         setAmountOfMoney(getAmountOfMoney().add(arrivedCash));
         LocalDate dateOfTransaction = LocalDate.now();
@@ -37,44 +45,37 @@ public abstract class Account {
                 createNewReceiveTransaction(arrivedCash, numberFromWhichAcc));
         ownerOfAccount.setLastTransactionsId(ownerOfAccount.getLastTransactionsId() + 1);
     }
-    private ReceiveTransaction createNewReceiveTransaction(BigDecimal arrivedCash, String numberFromWhichAcc){
-        return new ReceiveTransaction(debitIdCount, arrivedCash,this, numberFromWhichAcc);
-    }
 
-    Account(BigDecimal amountOfMoney, String number, Customer ownerOfAccount) {
-        this.amountOfMoney = amountOfMoney;
-        this.debitIdCount = 0;
-        this.number = number;
-        this.ownerOfAccount = ownerOfAccount;
-        historyOfAccount.add(new AccountMemento(amountOfMoney, debitIdCount, number, LocalDate.now()));
+    private ReceiveTransaction createNewReceiveTransaction(BigDecimal arrivedCash, String numberFromWhichAcc) {
+        return new ReceiveTransaction(debitIdCount, arrivedCash, this, numberFromWhichAcc);
     }
 
     public BigDecimal getAmountOfMoney() {
         return amountOfMoney;
     }
 
-    public int getDebitIdCount() {
-        return debitIdCount;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public Customer getOwnerOfAccount() {
-        return ownerOfAccount;
-    }
-
     public void setAmountOfMoney(BigDecimal amountOfMoney) {
         this.amountOfMoney = amountOfMoney;
+    }
+
+    public int getDebitIdCount() {
+        return debitIdCount;
     }
 
     public void setDebitIdCount(int debitIdCount) {
         this.debitIdCount = debitIdCount;
     }
 
+    public String getNumber() {
+        return number;
+    }
+
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public Customer getOwnerOfAccount() {
+        return ownerOfAccount;
     }
 
     public void setOwnerOfAccount(Customer ownerOfAccount) {
