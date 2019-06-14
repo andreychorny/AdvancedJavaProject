@@ -29,4 +29,13 @@ public class AccountMemento {
                 ", dateOfChange=" + dateOfChange +
                 '}';
     }
+
+    public String getNumber() {
+        return number;
+    }
+
+
+    public LocalDate getDateOfChange() {
+        return dateOfChange;
+    }
 }

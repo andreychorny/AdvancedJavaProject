@@ -2,10 +2,7 @@ package BankOne.com.services;
 
 import BankOne.com.BankData.Bank;
 import BankOne.com.BankData.Customer;
-import BankOne.com.accounts.Account;
-import BankOne.com.accounts.InternationalAccount;
-import BankOne.com.accounts.RegularAccount;
-import BankOne.com.accounts.SavingAccount;
+import BankOne.com.accounts.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -142,6 +139,31 @@ public class CustomerService {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()))) {
             bw.write(resultOutput);
         } catch (IOException e) {
+            logger.error("IOException in 'checkHistoryOfSpecificAccount'");
+            e.printStackTrace();
+        }
+        return resultOutput;
+    }
+
+    public String showStateOfAccountPerSpecificDate(LocalDate date, int indexOfAccount) {
+        File file = new File("src/main/resources/", "customerReportStateOfAccountPerSpecificDate.txt");
+        String resultOutput;
+        Boolean isMementoFound = false;
+        Account currentAcc = currentCustomer.getAccounts().get(indexOfAccount);
+        resultOutput = "Result for Account:" + currentAcc.getNumber() + " per date:" + date + "\n";
+        for (AccountMemento accMemento : currentAcc.getHistoryOfAccount()) {
+            if (date.compareTo(accMemento.getDateOfChange()) >= 0) {
+                resultOutput += accMemento + "\n";
+                isMementoFound = true;
+            }
+        }
+        if(!isMementoFound){
+            resultOutput += "Account hadn't exist in that time";
+        }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()))) {
+            bw.write(resultOutput);
+        } catch (IOException e) {
+            logger.error("IOException in 'showStateOfAccountPerSpecificDate'");
             e.printStackTrace();
         }
         return resultOutput;

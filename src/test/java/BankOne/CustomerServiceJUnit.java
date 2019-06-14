@@ -3,13 +3,14 @@ package BankOne;
 import BankOne.com.BankData.Bank;
 import BankOne.com.BankData.Country;
 import BankOne.com.BankData.Customer;
-import BankOne.com.accounts.Account;
 import BankOne.com.accounts.InternationalAccount;
 import BankOne.com.accounts.RegularAccount;
 import BankOne.com.accounts.SavingAccount;
 import BankOne.com.services.CustomerService;
 import BankOne.com.services.EmployeeService;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -115,16 +116,16 @@ public class CustomerServiceJUnit {
                 secondCustomer.getAccounts().get(0).getNumber(), BigDecimal.valueOf(450.79123)));
         assertEquals(BigDecimal.valueOf(1450.79), secondCustomer.getAccounts().get(0).getAmountOfMoney());
         assertThrows(IllegalArgumentException.class, () -> customerService.creditFromSavingAcc(
-                0,secondCustomer.getAccounts().get(1).getNumber(), BigDecimal.valueOf(100)),
+                0, secondCustomer.getAccounts().get(1).getNumber(), BigDecimal.valueOf(100)),
                 "You cannot send money from saving account to saving account");
         assertThrows(IllegalArgumentException.class, () -> customerService.creditFromSavingAcc(
-                0,secondCustomer.getAccounts().get(2).getNumber(), BigDecimal.valueOf(100)),
+                0, secondCustomer.getAccounts().get(2).getNumber(), BigDecimal.valueOf(100)),
                 "You cannot send money from saving account to international account");
 
     }
 
     @Test
-    void testWireFromInternationalAcc() throws IllegalArgumentException{
+    void testWireFromInternationalAcc() throws IllegalArgumentException {
         customerService.requestForNewAccount(3);
         employeeService.acceptRequestsForAccounts(true);
         Customer secondCustomer = createSecondCustomerAndHisAccounts();
@@ -158,11 +159,23 @@ public class CustomerServiceJUnit {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        assertEquals(rightFormatForHistoryOfSpecificAccount(),resultFromFile.toString());
+        assertEquals(rightFormatForHistoryOfSpecificAccount(), resultFromFile.toString());
     }
 
     @Test
-    void testAddingInterestToSavingAcc() throws Exception{
+    void testStateOfAccountPerSpecificDate() {
+        createSecondCustomerAndHisAccounts();
+        createFirstCustmAccountsAndDoSomeTransactions();
+        LocalDate dateToCheck = LocalDate.of(2003, 01, 01);
+        assertEquals(rightFormatForNotExistingAccMemento(dateToCheck, 0),
+                customerService.showStateOfAccountPerSpecificDate(dateToCheck, 0));
+        assertEquals(rightFormatForExistingAccMemento(LocalDate.now(),0),
+                customerService.showStateOfAccountPerSpecificDate(LocalDate.now(), 0));
+
+    }
+
+    @Test
+    void testAddingInterestToSavingAcc() throws Exception {
         customerService.requestForNewAccount(2);
         employeeService.acceptRequestsForAccounts(true);
         assertTrue(currentCustomer.getAccounts().get(0) instanceof SavingAccount);
@@ -172,24 +185,25 @@ public class CustomerServiceJUnit {
         assertEquals(BigDecimal.valueOf(1010.00).setScale(2, RoundingMode.DOWN),
                 currentCustomer.getAccounts().get(0).getAmountOfMoney());
         assertEquals(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
-                ((SavingAccount)currentCustomer.getAccounts().get(0)).getTimeOfLastInterestAdd());
+                ((SavingAccount) currentCustomer.getAccounts().get(0)).getTimeOfLastInterestAdd());
     }
 
     @Test
-    void testAddingInterestToSavingAccForLongTime() throws IllegalArgumentException{
+    void testAddingInterestToSavingAccForLongTime() throws IllegalArgumentException {
         customerService.requestForNewAccount(2);
         employeeService.acceptRequestsForAccounts(true);
         //We set false date, minus 3 days and 5 hours for current saving acc. General - difference is 77 hours.
         setFalseDateToSavingAcc();
-        BigDecimal expectedAmountOfMoney = BigDecimal.valueOf(1000 + (1000*0.01*77*60));
+        BigDecimal expectedAmountOfMoney = BigDecimal.valueOf(1000 + (1000 * 0.01 * 77 * 60));
         Bank.calculateInterestsOfCustomerAccs(currentCustomer);
-        assertEquals(expectedAmountOfMoney,currentCustomer.getAccounts().get(0).getAmountOfMoney());
+        assertEquals(expectedAmountOfMoney, currentCustomer.getAccounts().get(0).getAmountOfMoney());
         assertEquals(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
-                ((SavingAccount)currentCustomer.getAccounts().get(0)).getTimeOfLastInterestAdd());
+                ((SavingAccount) currentCustomer.getAccounts().get(0)).getTimeOfLastInterestAdd());
     }
+
     Customer createSecondCustomerAndHisAccounts() throws IllegalArgumentException {
         Customer secondCustomer = employeeService.createNewCustomer("login2", "password2",
-                "nameTwo","lastNameTwo", LocalDate.of(1996, 8, 24),
+                "nameTwo", "lastNameTwo", LocalDate.of(1996, 8, 24),
                 Country.POLAND);
         CustomerService secondCustomerService = new CustomerService("login2", "password2");
         secondCustomerService.requestForNewAccount(1);
@@ -249,30 +263,46 @@ public class CustomerServiceJUnit {
 
     }
 
-    private String rightFormatForHistoryOfSpecificAccount(){
+    private String rightFormatForHistoryOfSpecificAccount() {
         String checkedAccountNumber = currentCustomer.getAccounts().get(0).getNumber();
         String firstCustSavingAccount = currentCustomer.getAccounts().get(1).getNumber();
         String secondCustRegularAccount = Bank.getCustomers().get(1).getAccounts().get(0).getNumber();
         return "Customer: Bob Dylan\n" +
-                "history of Account:"+checkedAccountNumber+":\n" +
-                "Local Send Transaction id= 0, at date:"+LocalDate.now()+":\n" +
-                "AccountFrom: "+checkedAccountNumber+", amount of money sent: 450.79; to Account:"+
-                secondCustRegularAccount+"\n" +
-                "Local Send Transaction id= 1, at date:"+LocalDate.now()+":\n" +
-                "AccountFrom: "+checkedAccountNumber+", amount of money sent: 250.00; to Account:"+
-                firstCustSavingAccount+"\n" +
-                "Receive Transaction id= 0, at date:"+LocalDate.now()+":\n" +
-                "ToAccount: "+checkedAccountNumber+", amount of money sent: 1150.00; from account:"+
-                firstCustSavingAccount+"\n" +
-                "Receive Transaction id= 1, at date:"+LocalDate.now()+":\n" +
-                "ToAccount: "+checkedAccountNumber+", amount of money sent: 350.00; from account:"+
-                secondCustRegularAccount+"\n";
+                "history of Account:" + checkedAccountNumber + ":\n" +
+                "Local Send Transaction id= 0, at date:" + LocalDate.now() + ":\n" +
+                "AccountFrom: " + checkedAccountNumber + ", amount of money sent: 450.79; to Account:" +
+                secondCustRegularAccount + "\n" +
+                "Local Send Transaction id= 1, at date:" + LocalDate.now() + ":\n" +
+                "AccountFrom: " + checkedAccountNumber + ", amount of money sent: 250.00; to Account:" +
+                firstCustSavingAccount + "\n" +
+                "Receive Transaction id= 0, at date:" + LocalDate.now() + ":\n" +
+                "ToAccount: " + checkedAccountNumber + ", amount of money sent: 1150.00; from account:" +
+                firstCustSavingAccount + "\n" +
+                "Receive Transaction id= 1, at date:" + LocalDate.now() + ":\n" +
+                "ToAccount: " + checkedAccountNumber + ", amount of money sent: 350.00; from account:" +
+                secondCustRegularAccount + "\n";
     }
 
-    private void setFalseDateToSavingAcc(){
+    private void setFalseDateToSavingAcc() {
         LocalDateTime falseDateTimeForAcc = LocalDateTime.now().minusDays(3);
         falseDateTimeForAcc = falseDateTimeForAcc.minusHours(5);
         falseDateTimeForAcc = falseDateTimeForAcc.truncatedTo(ChronoUnit.MINUTES);
-        ((SavingAccount)currentCustomer.getAccounts().get(0)).setTimeOfLastInterestAdd(falseDateTimeForAcc);
+        ((SavingAccount) currentCustomer.getAccounts().get(0)).setTimeOfLastInterestAdd(falseDateTimeForAcc);
+    }
+
+    private String rightFormatForNotExistingAccMemento(LocalDate date, int indexOfAcc) {
+        String accNumber = currentCustomer.getAccounts().get(0).getNumber();
+        return "Result for Account:" + accNumber + " per date:" + date + "\n" +
+                "Account hadn't exist in that time";
+    }
+
+    private String rightFormatForExistingAccMemento(LocalDate date, int indexOfAcc) {
+        String accNumber = currentCustomer.getAccounts().get(0).getNumber();
+        return "Result for Account:" + accNumber + " per date:" + date + "\n" +
+                "AccountMemento{number='" + accNumber + "', amountOfMoney=1000, dateOfChange=" + date + "}\n" +
+                "AccountMemento{number='" + accNumber + "', amountOfMoney=549.21, dateOfChange=" + date + "}\n" +
+                "AccountMemento{number='" + accNumber + "', amountOfMoney=299.21, dateOfChange=" + date + "}\n" +
+                "AccountMemento{number='" + accNumber + "', amountOfMoney=1449.21, dateOfChange=" + date + "}\n" +
+                "AccountMemento{number='" + accNumber + "', amountOfMoney=1799.21, dateOfChange=" + date + "}\n";
     }
 }
