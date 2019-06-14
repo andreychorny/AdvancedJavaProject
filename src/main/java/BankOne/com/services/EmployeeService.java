@@ -20,6 +20,7 @@ public class EmployeeService {
         if (Bank.checkIfLoggingInfoIsSuitable(login, password)) {
             currentEmployee = Bank.retrievePersonByLogin(login);
         } else {
+            logger.warn("You entered wrong logging info. Check your password and login again");
             throw new IllegalArgumentException("WRONG LOGGING INFO!");
         }
     }

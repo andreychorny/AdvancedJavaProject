@@ -25,6 +25,7 @@ public class CustomerService {
             currentCustomer = Bank.retrievePersonByLogin(login);
             Bank.calculateInterestsOfCustomerAccs(currentCustomer);
         } else {
+            logger.warn("You put wrong logging info. check your password and login again");
             throw new IllegalArgumentException("WRONG LOGGING INFO!");
         }
     }
@@ -139,8 +140,7 @@ public class CustomerService {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()))) {
             bw.write(resultOutput);
         } catch (IOException e) {
-            logger.error("IOException in 'checkHistoryOfSpecificAccount'");
-            e.printStackTrace();
+            logger.error(e);
         }
         return resultOutput;
     }
@@ -184,7 +184,7 @@ public class CustomerService {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()))) {
             bw.write(resultOutput);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
     }
 

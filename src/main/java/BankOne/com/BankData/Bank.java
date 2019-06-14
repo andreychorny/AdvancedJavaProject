@@ -50,7 +50,7 @@ public class Bank {
             employees.add(newEmployee);
             return newEmployee;
         } else {
-            logger.warn("ENTERED LOGIN IS NOT UNIQUE!");
+            logger.warn("ENTERED LOGIN" + login +" IS NOT UNIQUE!");
             throw new IllegalArgumentException("LOGIN IS NOT UNIQUE!!!");
         }
     }
@@ -116,7 +116,10 @@ public class Bank {
             generatedNumber.append((int) (Math.random() * 10));
         }
         String result = generatedNumber.toString();
-        if (!Bank.checkIfNumberUnique(result)) result = createRandomNumberForAcc(customer);
+        if (!Bank.checkIfNumberUnique(result)) {
+            logger.warn("We created existing random number for acc, do a recursive call of method");
+            result = createRandomNumberForAcc(customer);
+        }
         return result;
     }
 
