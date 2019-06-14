@@ -66,10 +66,4 @@ public abstract class Person {
                 Objects.equals(getLastName(), person.getLastName());
     }
 
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(getLogin(), getFirstName(), getLastName());
-        result = 31 * result + Arrays.hashCode(getPassword());
-        return result;
-    }
 }
