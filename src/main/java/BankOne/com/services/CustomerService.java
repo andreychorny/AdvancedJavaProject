@@ -169,7 +169,7 @@ public class CustomerService {
         return resultOutput;
     }
 
-    public void checkTransactionsPerSpecificDate(LocalDate dateFrom, LocalDate dateTo) {
+    public String checkTransactionsPerSpecificDate(LocalDate dateFrom, LocalDate dateTo) {
         File file = new File("src/main/resources/", "customerReportHistoryBetween2Dates.txt");
         String resultOutput;
         resultOutput = "Customer: " + currentCustomer.getFirstName() + " " +
@@ -186,6 +186,7 @@ public class CustomerService {
         } catch (IOException e) {
             logger.error(e);
         }
+        return resultOutput;
     }
 
     public Customer getCurrentCustomer() {

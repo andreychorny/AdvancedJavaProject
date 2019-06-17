@@ -148,7 +148,6 @@ public class CustomerServiceJUnit {
         createFirstCustmAccountsAndDoSomeTransactions();
         assertEquals(rightFormatForHistoryOfSpecificAccount(),
                 customerService.checkHistoryOfSpecificAccount(0));
-
         File file = new File("src/main/resources/", "customerReportHistoryOfAccount.txt");
         StringBuffer resultFromFile = new StringBuffer();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file.getAbsoluteFile()))) {
@@ -169,7 +168,7 @@ public class CustomerServiceJUnit {
         LocalDate dateToCheck = LocalDate.of(2003, 01, 01);
         assertEquals(rightFormatForNotExistingAccMemento(dateToCheck, 0),
                 customerService.showStateOfAccountPerSpecificDate(dateToCheck, 0));
-        assertEquals(rightFormatForExistingAccMemento(LocalDate.now(),0),
+        assertEquals(rightFormatForExistingAccMemento(LocalDate.now(), 0),
                 customerService.showStateOfAccountPerSpecificDate(LocalDate.now(), 0));
 
     }
@@ -181,7 +180,6 @@ public class CustomerServiceJUnit {
         assertTrue(currentCustomer.getAccounts().get(0) instanceof SavingAccount);
         TimeUnit.MINUTES.sleep(1);
         Bank.calculateInterestsOfCustomerAccs(currentCustomer);
-
         assertEquals(BigDecimal.valueOf(1010.00).setScale(2, RoundingMode.DOWN),
                 currentCustomer.getAccounts().get(0).getAmountOfMoney());
         assertEquals(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
@@ -199,6 +197,15 @@ public class CustomerServiceJUnit {
         assertEquals(expectedAmountOfMoney, currentCustomer.getAccounts().get(0).getAmountOfMoney());
         assertEquals(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
                 ((SavingAccount) currentCustomer.getAccounts().get(0)).getTimeOfLastInterestAdd());
+    }
+
+    @Test
+    void testCheckTransactionForSpecificDate() {
+        createSecondCustomerAndHisAccounts();
+        createFirstCustmAccountsAndDoSomeTransactions();
+        assertEquals(rightFormatForSpecificDateOutput(),
+                customerService.checkTransactionsPerSpecificDate(LocalDate.now().minusDays(50),
+                        LocalDate.now()));
     }
 
     Customer createSecondCustomerAndHisAccounts() throws IllegalArgumentException {
@@ -261,6 +268,13 @@ public class CustomerServiceJUnit {
         customerService2.creditFromRegularAcc(0,
                 customer1.getAccounts().get(0).getNumber(), BigDecimal.valueOf(350));
 
+        //change dates of several transactions for 'specific date' test
+        customer1.getHistory().get(0).setDateOfTransaction(LocalDate.now().minusDays(100));
+        customer1.getHistory().get(1).setDateOfTransaction(LocalDate.now().minusDays(75));
+        customer1.getHistory().get(2).setDateOfTransaction(LocalDate.now().minusDays(75));
+        customer1.getHistory().get(3).setDateOfTransaction(LocalDate.now().minusDays(35));
+
+
     }
 
     private String rightFormatForHistoryOfSpecificAccount() {
@@ -269,10 +283,10 @@ public class CustomerServiceJUnit {
         String secondCustRegularAccount = Bank.getCustomers().get(1).getAccounts().get(0).getNumber();
         return "Customer: Bob Dylan\n" +
                 "history of Account:" + checkedAccountNumber + ":\n" +
-                "Local Send Transaction id= 0, at date:" + LocalDate.now() + ":\n" +
+                "Local Send Transaction id= 0, at date:" + LocalDate.now().minusDays(100) + ":\n" +
                 "AccountFrom: " + checkedAccountNumber + ", amount of money sent: 450.79; to Account:" +
                 secondCustRegularAccount + "\n" +
-                "Local Send Transaction id= 1, at date:" + LocalDate.now() + ":\n" +
+                "Local Send Transaction id= 1, at date:" + LocalDate.now().minusDays(75) + ":\n" +
                 "AccountFrom: " + checkedAccountNumber + ", amount of money sent: 250.00; to Account:" +
                 firstCustSavingAccount + "\n" +
                 "Receive Transaction id= 0, at date:" + LocalDate.now() + ":\n" +
@@ -304,5 +318,31 @@ public class CustomerServiceJUnit {
                 "AccountMemento{number='" + accNumber + "', amountOfMoney=299.21, dateOfChange=" + date + "}\n" +
                 "AccountMemento{number='" + accNumber + "', amountOfMoney=1449.21, dateOfChange=" + date + "}\n" +
                 "AccountMemento{number='" + accNumber + "', amountOfMoney=1799.21, dateOfChange=" + date + "}\n";
+    }
+
+    private String rightFormatForSpecificDateOutput() {
+        LocalDate dateFrom = LocalDate.now().minusDays(50);
+        LocalDate dateNow = LocalDate.now();
+        String custOneRegAcc1Number = currentCustomer.getAccounts().get(0).getNumber();
+        String custOneSavAcc1Number = currentCustomer.getAccounts().get(1).getNumber();
+        String custOneIntAcc1Number = currentCustomer.getAccounts().get(2).getNumber();
+        String custOneIntAcc1IBAN = ((InternationalAccount) currentCustomer.getAccounts().get(2)).getIBAN();
+        String custTwoRegAcc1Number = Bank.getCustomers().get(1).getAccounts().get(0).getNumber();
+        String custTwoIntAcc1Number = Bank.getCustomers().get(1).getAccounts().get(2).getNumber();
+        return "Customer: Bob Dylan\n" +
+                "history of transactions between " + dateFrom + " and " + dateNow + "\n" +
+                "International Out Transaction id= 0, at date:" + dateNow.minusDays(35) + ":\n" +
+                "AccountFrom: " + custOneIntAcc1Number + ", amount of money sent: 550.00; " +
+                "to Account:" + custTwoIntAcc1Number + "; IBAN code: " + custOneIntAcc1IBAN + "\n" +
+                "Local Send Transaction id= 0, at date:2019-06-17:\n" +
+                "AccountFrom: " + custOneSavAcc1Number + ", amount of money sent: 1150.00; " +
+                "to Account:" + custOneRegAcc1Number + "\n" +
+                "Receive Transaction id= 0, at date:" + dateNow + ":\n" +
+                "ToAccount: " + custOneRegAcc1Number + ", amount of money sent: 1150.00; " +
+                "from account:" + custOneSavAcc1Number + "\n" +
+                "Receive Transaction id= 1, at date:" + dateNow + ":\n" +
+                "ToAccount: " + custOneRegAcc1Number + ", amount of money sent: 350.00; from account:" +
+                custTwoRegAcc1Number + "\n";
+
     }
 }

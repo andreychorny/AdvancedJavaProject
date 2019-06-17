@@ -9,11 +9,11 @@ public abstract class Transaction {
 
     protected final int id;
 
-    protected final Account accountOfTransaction;
+    private final Account accountOfTransaction;
 
-    protected final BigDecimal deliveredAmount;
+    private final BigDecimal deliveredAmount;
 
-    protected final LocalDate dateOfTransaction;
+    private LocalDate dateOfTransaction;
 
     public Transaction(int id, Account accountOfTransaction, BigDecimal deliveredAmount) {
         this.id = id;
@@ -38,5 +38,7 @@ public abstract class Transaction {
         return accountOfTransaction;
     }
 
-
+    public void setDateOfTransaction(LocalDate dateOfTransaction) {
+        this.dateOfTransaction = dateOfTransaction;
+    }
 }
