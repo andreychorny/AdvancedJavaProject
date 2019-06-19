@@ -40,15 +40,17 @@ public class ReportsService {
         return resultOutput;
     }
 
-    public void generateReportTenBiggestTransaction() {
-        logger.info("REPORT ABOUT TEN BIGGEST TRANSACTIONS:");
+    public String generateReportTenBiggestTransaction() {
+        File file = new File("src/main/resources/", "tenBiggestTransactions.txt");
+        String resultOutput;
+        resultOutput = "REPORT ABOUT TEN BIGGEST TRANSACTIONS:\n";
         TreeSet<Transaction> biggestTransactions = new TreeSet<>((Transaction t1, Transaction t2) ->
                 t1.getDeliveredAmount().compareTo(t2.getDeliveredAmount()));
         for (Customer customer : customers) {
             for (Transaction currentTransaction : customer.getHistory().values()) {
                 if (biggestTransactions.size() < 10) {
                     biggestTransactions.add(currentTransaction);
-                    logger.info(currentTransaction);
+                    resultOutput += currentTransaction + "\n";
                 } else {
                     if (currentTransaction.getDeliveredAmount().
                             compareTo(biggestTransactions.first().getDeliveredAmount()) > 0) {
@@ -58,6 +60,12 @@ public class ReportsService {
                 }
             }
         }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()))) {
+            bw.write(resultOutput);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        return resultOutput;
     }
 
     public String generateReportTransactionForSpecificDate(LocalDate date) {

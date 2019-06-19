@@ -77,6 +77,12 @@ public class ReportsServiceJUnit {
         reportsService.generateReportFiveLastCustomers();
     }
 
+    //Test without asserts, ask how to do test for reports
+    @Test
+    void testReportTenBiggestTransactions(){
+        reportsService.generateReportTenBiggestTransaction();
+    }
+
     EmployeeService createEmployeeAndHisService() throws IllegalArgumentException {
         Bank.createNewEmployee("ouroboros", "superqwerty",
                 "Andrii", "Chornyi");

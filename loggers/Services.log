@@ -1,30 +1,30 @@
-[INFO ] 2019-06-20 01:04:25.110 [main] EmployeeService - Request from: nameOne lastNameOne with login: login1
-[INFO ] 2019-06-20 01:04:25.124 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
-[INFO ] 2019-06-20 01:04:25.124 [main] EmployeeService - Do you accept this account?
-[INFO ] 2019-06-20 01:04:25.125 [main] EmployeeService - Request from: nameOne lastNameOne with login: login1
-[INFO ] 2019-06-20 01:04:25.126 [main] EmployeeService - Requested account of type BankOne.com.accounts.SavingAccount
-[INFO ] 2019-06-20 01:04:25.126 [main] EmployeeService - Do you accept this account?
-[INFO ] 2019-06-20 01:04:25.126 [main] EmployeeService - Request from: nameOne lastNameOne with login: login1
-[INFO ] 2019-06-20 01:04:25.128 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
-[INFO ] 2019-06-20 01:04:25.128 [main] EmployeeService - Do you accept this account?
-[INFO ] 2019-06-20 01:04:25.128 [main] EmployeeService - Request from: nameOne lastNameOne with login: login1
-[INFO ] 2019-06-20 01:04:25.129 [main] EmployeeService - Requested account of type BankOne.com.accounts.InternationalAccount
-[INFO ] 2019-06-20 01:04:25.129 [main] EmployeeService - Do you accept this account?
-[INFO ] 2019-06-20 01:04:25.129 [main] EmployeeService - Request from: nameTwo lastNameTwo with login: login2
-[INFO ] 2019-06-20 01:04:25.130 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
-[INFO ] 2019-06-20 01:04:25.130 [main] EmployeeService - Do you accept this account?
-[INFO ] 2019-06-20 01:04:25.130 [main] EmployeeService - Request from: nameTwo lastNameTwo with login: login2
-[INFO ] 2019-06-20 01:04:25.130 [main] EmployeeService - Requested account of type BankOne.com.accounts.InternationalAccount
-[INFO ] 2019-06-20 01:04:25.130 [main] EmployeeService - Do you accept this account?
-[INFO ] 2019-06-20 01:04:25.132 [main] CustomerService - Customer id:0, nameOne lastNameOne
- sends funds from RegularAccount:BC-00000-185 to Account:BC-00001-123
+[INFO ] 2019-06-20 01:09:39.401 [main] EmployeeService - Request from: nameOne lastNameOne with login: login1
+[INFO ] 2019-06-20 01:09:39.461 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
+[INFO ] 2019-06-20 01:09:39.462 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-20 01:09:39.462 [main] EmployeeService - Request from: nameOne lastNameOne with login: login1
+[INFO ] 2019-06-20 01:09:39.462 [main] EmployeeService - Requested account of type BankOne.com.accounts.SavingAccount
+[INFO ] 2019-06-20 01:09:39.463 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-20 01:09:39.463 [main] EmployeeService - Request from: nameOne lastNameOne with login: login1
+[INFO ] 2019-06-20 01:09:39.465 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
+[INFO ] 2019-06-20 01:09:39.468 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-20 01:09:39.469 [main] EmployeeService - Request from: nameOne lastNameOne with login: login1
+[INFO ] 2019-06-20 01:09:39.470 [main] EmployeeService - Requested account of type BankOne.com.accounts.InternationalAccount
+[INFO ] 2019-06-20 01:09:39.470 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-20 01:09:39.471 [main] EmployeeService - Request from: nameTwo lastNameTwo with login: login2
+[INFO ] 2019-06-20 01:09:39.471 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
+[INFO ] 2019-06-20 01:09:39.471 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-20 01:09:39.471 [main] EmployeeService - Request from: nameTwo lastNameTwo with login: login2
+[INFO ] 2019-06-20 01:09:39.472 [main] EmployeeService - Requested account of type BankOne.com.accounts.InternationalAccount
+[INFO ] 2019-06-20 01:09:39.472 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-20 01:09:39.472 [main] CustomerService - Customer id:0, nameOne lastNameOne
+ sends funds from RegularAccount:BC-00000-397 to Account:BC-00001-776
  in amount of 450.79$
-[INFO ] 2019-06-20 01:04:25.134 [main] CustomerService - Customer id:0, nameOne lastNameOne
- sends funds from RegularAccount:BC-00000-185 to Account:BC-00000-487
+[INFO ] 2019-06-20 01:09:39.475 [main] CustomerService - Customer id:0, nameOne lastNameOne
+ sends funds from RegularAccount:BC-00000-397 to Account:BC-00000-856
  in amount of 250.00$
-[INFO ] 2019-06-20 01:04:25.136 [main] CustomerService - Customer id:0, nameOne lastNameOne
- sends funds from SavingAccount:BC-00000-487 to Account:BC-00000-703
+[INFO ] 2019-06-20 01:09:39.476 [main] CustomerService - Customer id:0, nameOne lastNameOne
+ sends funds from SavingAccount:BC-00000-856 to Account:BC-00000-777
  in amount of 1150.00$
-[INFO ] 2019-06-20 01:04:25.136 [main] CustomerService - Customer id:1, nameTwo lastNameTwo
- sends funds from RegularAccount:BC-00001-123 to Account:BC-00001-220
+[INFO ] 2019-06-20 01:09:39.478 [main] CustomerService - Customer id:1, nameTwo lastNameTwo
+ sends funds from RegularAccount:BC-00001-776 to Account:BC-00001-418
  in amount of 350.00$
