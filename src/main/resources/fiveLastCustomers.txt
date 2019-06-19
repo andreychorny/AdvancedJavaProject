@@ -1,0 +1,43 @@
+REPORT ABOUT 5 LAST CUSTOMERS:
+Customer{
+login= login2
+ firstName= nameTwo,
+ lastName= lastNameTwo,
+ dateOfBirth= 1999-12-31,
+ dateOfJoiningToBank= 2019-06-20,
+ accounts:
+0). BankOne.com.accounts.RegularAccount: BC-00001-123
+1). BankOne.com.accounts.InternationalAccount: BC-00001-220
+}
+Customer{
+login= AzorAhai
+ firstName= Stannis,
+ lastName= Baratheon,
+ dateOfBirth= 1957-11-23,
+ dateOfJoiningToBank= 2019-06-20,
+ accounts:
+}
+Customer{
+login= BobDylan
+ firstName= Bob,
+ lastName= Dylan,
+ dateOfBirth= 1988-01-02,
+ dateOfJoiningToBank= 2019-06-20,
+ accounts:
+}
+Customer{
+login= ZZZcccZZZ
+ firstName= AAddAD,
+ lastName= DASD,
+ dateOfBirth= 1975-08-15,
+ dateOfJoiningToBank= 2019-06-20,
+ accounts:
+}
+Customer{
+login= DishonoredKnight
+ firstName= Kyle,
+ lastName= Aranofski,
+ dateOfBirth= 1968-05-18,
+ dateOfJoiningToBank= 2019-06-20,
+ accounts:
+}

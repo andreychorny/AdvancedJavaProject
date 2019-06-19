@@ -20,8 +20,8 @@ public class InternationalOutTransaction extends Transaction {
     @Override
     public String toString() {
         return "International Out Transaction id= " + super.id + ", at date:" +
-                super.dateOfTransaction + ":\n" + "AccountFrom: " +
+                super.getDateOfTransaction() + ":\n" + "AccountFrom: " +
                 super.getAccountOfTransaction().getNumber() + ", amount of money sent: " +
-                deliveredAmount + "; to Account:" + toWhichAccountNumber + "; IBAN code: " + IBAN;
+                super.getDeliveredAmount() + "; to Account:" + toWhichAccountNumber + "; IBAN code: " + IBAN;
     }
 }

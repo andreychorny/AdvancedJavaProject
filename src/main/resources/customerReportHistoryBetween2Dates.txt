@@ -1,10 +1,10 @@
 Customer: Bob Dylan
-history of transactions between 2019-04-28 and 2019-06-17
-International Out Transaction id= 0, at date:2019-05-13:
-AccountFrom: BC-00008-374, amount of money sent: 550.00; to Account:BC-00009-143; IBAN code: US11-70274268
-Local Send Transaction id= 0, at date:2019-06-17:
-AccountFrom: BC-00008-222, amount of money sent: 1150.00; to Account:BC-00008-716
-Receive Transaction id= 0, at date:2019-06-17:
-ToAccount: BC-00008-716, amount of money sent: 1150.00; from account:BC-00008-222
-Receive Transaction id= 1, at date:2019-06-17:
-ToAccount: BC-00008-716, amount of money sent: 350.00; from account:BC-00009-217
+history of transactions between 2019-05-01 and 2019-06-20
+International Out Transaction id= 0, at date:2019-05-16:
+AccountFrom: BC-00008-989, amount of money sent: 550.00; to Account:BC-00009-861; IBAN code: US11-91103001
+Local Send Transaction id= 0, at date:2019-06-20:
+AccountFrom: BC-00008-025, amount of money sent: 1150.00; to Account:BC-00008-165
+Receive Transaction id= 0, at date:2019-06-20:
+ToAccount: BC-00008-165, amount of money sent: 1150.00; from account:BC-00008-025
+Receive Transaction id= 1, at date:2019-06-20:
+ToAccount: BC-00008-165, amount of money sent: 350.00; from account:BC-00009-409

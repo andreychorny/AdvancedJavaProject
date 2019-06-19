@@ -35,40 +35,49 @@ public class ReportsService {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()))) {
             bw.write(resultOutput);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         return resultOutput;
     }
 
-    void generateReportTenBiggestTransaction(Customer customer) {
+    public void generateReportTenBiggestTransaction() {
         logger.info("REPORT ABOUT TEN BIGGEST TRANSACTIONS:");
         TreeSet<Transaction> biggestTransactions = new TreeSet<>((Transaction t1, Transaction t2) ->
                 t1.getDeliveredAmount().compareTo(t2.getDeliveredAmount()));
-        for (Transaction currentTransaction : customer.getHistory().values()) {
-            if (biggestTransactions.size() < 10) {
-                biggestTransactions.add(currentTransaction);
-                logger.info(currentTransaction);
-            } else {
-                if (currentTransaction.getDeliveredAmount().
-                        compareTo(biggestTransactions.first().getDeliveredAmount()) > 0) {
-                    biggestTransactions.pollFirst();
+        for (Customer customer : customers) {
+            for (Transaction currentTransaction : customer.getHistory().values()) {
+                if (biggestTransactions.size() < 10) {
                     biggestTransactions.add(currentTransaction);
+                    logger.info(currentTransaction);
+                } else {
+                    if (currentTransaction.getDeliveredAmount().
+                            compareTo(biggestTransactions.first().getDeliveredAmount()) > 0) {
+                        biggestTransactions.pollFirst();
+                        biggestTransactions.add(currentTransaction);
+                    }
                 }
             }
         }
     }
 
-    void generateReportTransactionForSpecificDate(LocalDate date) {
-        logger.info("REPORT ABOUT TRANSACTIONS OF DATE: " + date);
+    public String generateReportTransactionForSpecificDate(LocalDate date) {
+        File file = new File("src/main/resources/", "transactionsForSpecificDate.txt");
+        String resultOutput;
+        resultOutput ="REPORT ABOUT TRANSACTIONS OF DATE: " + date + "\n";
         for (Customer customer : customers) {
-            logger.info("Customer: " + customer.getFirstName() + " " +
-                    customer.getLastName() + ": ");
+            resultOutput += "Customer: " + customer.getFirstName() + " " + customer.getLastName() + ": \n";
             for (Transaction transaction : customer.getHistory().values()) {
                 if (transaction.getLocalDateOfTransaction().equals(date)) {
-                    logger.info(transaction);
+                    resultOutput += transaction + "\n";
                 }
             }
         }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()))) {
+            bw.write(resultOutput);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        return resultOutput;
     }
 
     public String generateReportTransactionForSpecificType(Class<? extends Transaction> classOfType) {
@@ -93,11 +102,19 @@ public class ReportsService {
         return resultOutput;
     }
 
-    void generateReportFiveLastCustomers() {
-        logger.info("REPORT ABOUT 5 LAST CUSTOMERS: ");
+    public String generateReportFiveLastCustomers() {
+        File file = new File("src/main/resources/", "fiveLastCustomers.txt");
+        String resultOutput;
+        resultOutput = "REPORT ABOUT 5 LAST CUSTOMERS:\n";
         for (int i = (customers.size() - 5); i < customers.size(); i++) {
-            logger.info(customers.get(i));
+            resultOutput += customers.get(i) + "\n";
         }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()))) {
+            bw.write(resultOutput);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return resultOutput;
     }
 
 }

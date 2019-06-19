@@ -19,11 +19,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ReportsServiceJUnit {
 
@@ -32,7 +30,7 @@ public class ReportsServiceJUnit {
     @BeforeEach
     void createAllDataToPresent() throws IllegalArgumentException {
         EmployeeService employeeService = createEmployeeAndHisService();
-        createTwoCustomers(employeeService);
+        createSixCustomers(employeeService);
         createAccountsAndDoSomeTransactions(employeeService);
         reportsService = new ReportsService();
     }
@@ -63,11 +61,21 @@ public class ReportsServiceJUnit {
 
     @Test
     void testGenerateReportTransactionForSpecificType() {
-        assertEquals(rightFormatForReportOutputAboutSpecificTypeTrancs(Bank.getCustomers().get(0),
-                Bank.getCustomers().get(1)),
+        assertEquals(rightFormatForReportOutputAboutSpecificTypeTrancs(),
                 reportsService.generateReportTransactionForSpecificType(LocalSendTransaction.class));
     }
 
+    @Test
+    void testReportTransactionForSpecificDate() {
+        assertEquals(rightFormatForReportOfSpecificDate(),
+                reportsService.generateReportTransactionForSpecificDate(LocalDate.now().minusDays(100)));
+    }
+
+    //Test without asserts, ask how to do test for reports
+    @Test
+    void testReportFiveLastCustomers() {
+        reportsService.generateReportFiveLastCustomers();
+    }
 
     EmployeeService createEmployeeAndHisService() throws IllegalArgumentException {
         Bank.createNewEmployee("ouroboros", "superqwerty",
@@ -75,11 +83,19 @@ public class ReportsServiceJUnit {
         return new EmployeeService("ouroboros", "superqwerty");
     }
 
-    void createTwoCustomers(EmployeeService employeeService) throws IllegalArgumentException {
+    void createSixCustomers(EmployeeService employeeService) throws IllegalArgumentException {
         employeeService.createNewCustomer("login1", "password1", "nameOne",
-                "lastNameOne",LocalDate.of(1995, 8, 11), Country.UKRAINE);
+                "lastNameOne", LocalDate.of(1995, 8, 11), Country.UKRAINE);
         employeeService.createNewCustomer("login2", "password2", "nameTwo",
-                "lastNameTwo",LocalDate.of(1999, 12, 31), Country.POLAND);
+                "lastNameTwo", LocalDate.of(1999, 12, 31), Country.POLAND);
+        employeeService.createNewCustomer("AzorAhai", "TrueKing54", "Stannis",
+                "Baratheon", LocalDate.of(1957, 11, 23), Country.AMERICA);
+        employeeService.createNewCustomer("BobDylan", "wrumMmMm", "Bob",
+                "Dylan", LocalDate.of(1988, 1, 2), Country.AMERICA);
+        employeeService.createNewCustomer("ZZZcccZZZ", "AAaaaDDD", "AAddAD",
+                "DASD", LocalDate.of(1975, 8, 15), Country.ENGLAND);
+        employeeService.createNewCustomer("DishonoredKnight", "Vaserman", "Kyle",
+                "Aranofski", LocalDate.of(1968, 5, 18), Country.GERMANY);
     }
 
     void createAccountsAndDoSomeTransactions(EmployeeService employeeService) throws IllegalArgumentException {
@@ -117,6 +133,14 @@ public class ReportsServiceJUnit {
         customerService2.creditFromRegularAcc(0,
                 customer2.getAccounts().get(1).getNumber(), BigDecimal.valueOf(350));
 
+        //change dates of several transactions for 'specific date' test
+        customer1.getHistory().get(0).setDateOfTransaction(LocalDate.now().minusDays(100));
+        customer2.getHistory().get(0).setDateOfTransaction(LocalDate.now().minusDays(100));
+        customer1.getHistory().get(1).setDateOfTransaction(LocalDate.now().minusDays(75));
+        customer1.getHistory().get(2).setDateOfTransaction(LocalDate.now().minusDays(75));
+        customer1.getHistory().get(3).setDateOfTransaction(LocalDate.now().minusDays(35));
+        customer2.getHistory().get(1).setDateOfTransaction(LocalDate.now().minusDays(35));
+
     }
 
     private String rightFormatOfTransactionsOfCustomerOne(Customer customer1, Customer customer2) {
@@ -130,49 +154,62 @@ public class ReportsServiceJUnit {
         String secCustInterAcc1 = accountsCust2.get(1).getNumber();
         String secondCustRegulAcc1 = accountsCust2.get(0).getNumber();
         LocalDate dateToCheck = LocalDate.now();
-        String dateOfTransactions = dateToCheck.format(DateTimeFormatter.ISO_DATE);
         return "REPORT ABOUT TRANSACTIONS OF CUSTOMER: nameOne lastNameOne: \n" +
-                "Local Send Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
+                "Local Send Transaction id= 0, at date:" + dateToCheck.minusDays(100) + ":\n" +
                 "AccountFrom: " + regulAcc1 + ", amount of money sent: 450.79; to Account:"
                 + secondCustRegulAcc1 + "\n" +
-                "Local Send Transaction id= 1, at date:" + dateOfTransactions + ":\n" +
+                "Local Send Transaction id= 1, at date:" + dateToCheck.minusDays(75) + ":\n" +
                 "AccountFrom: " + regulAcc1 + ", amount of money sent: 250.00; to Account:" +
                 savingAcc1 + "\n" +
-                "Receive Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
+                "Receive Transaction id= 0, at date:" + dateToCheck.minusDays(75) + ":\n" +
                 "ToAccount: " + savingAcc1 + ", amount of money sent: 250.00; from account:" +
                 regulAcc1 + "\n" +
-                "International Out Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
+                "International Out Transaction id= 0, at date:" + dateToCheck.minusDays(35) + ":\n" +
                 "AccountFrom: " + interAcc1 + ", amount of money sent: 550.00; to Account:" + secCustInterAcc1 +
-                "; IBAN code: " + interAcc1IBAN +"\n" +
-                "Local Send Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
+                "; IBAN code: " + interAcc1IBAN + "\n" +
+                "Local Send Transaction id= 0, at date:" + dateToCheck + ":\n" +
                 "AccountFrom: " + savingAcc1 + ", amount of money sent: 1150.00; to Account:" + regulAcc2 + "\n" +
-                "Receive Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
+                "Receive Transaction id= 0, at date:" + dateToCheck + ":\n" +
                 "ToAccount: " + regulAcc2 + ", amount of money sent: 1150.00; from account:" + savingAcc1 + "\n";
     }
 
-    private String rightFormatForReportOutputAboutSpecificTypeTrancs(Customer customer1, Customer customer2) {
-        List<Account> accountsCust1 = customer1.getAccounts();
-        List<Account> accountsCust2 = customer2.getAccounts();
+    private String rightFormatForReportOutputAboutSpecificTypeTrancs() {
+        List<Account> accountsCust1 = Bank.getCustomers().get(0).getAccounts();
+        List<Account> accountsCust2 = Bank.getCustomers().get(1).getAccounts();
         String regulAcc1 = accountsCust1.get(0).getNumber();
         String savingAcc1 = accountsCust1.get(1).getNumber();
         String regulAcc2 = accountsCust1.get(2).getNumber();
         String secCustInterAcc1 = accountsCust2.get(1).getNumber();
         String secondCustRegulAcc1 = accountsCust2.get(0).getNumber();
         LocalDate dateToCheck = LocalDate.now();
-        String dateOfTransactions = dateToCheck.format(DateTimeFormatter.ISO_DATE);
         return "REPORT ABOUT TRANSACTIONS OF TYPE: LocalSendTransaction\n" +
                 "Customer: nameOne lastNameOne: \n" +
-                "Local Send Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
+                "Local Send Transaction id= 0, at date:" + dateToCheck.minusDays(100) + ":\n" +
                 "AccountFrom: " + regulAcc1 + ", amount of money sent: 450.79; to Account:"
                 + secondCustRegulAcc1 + "\n" +
-                "Local Send Transaction id= 1, at date:" + dateOfTransactions + ":\n" +
+                "Local Send Transaction id= 1, at date:" + dateToCheck.minusDays(75) + ":\n" +
                 "AccountFrom: " + regulAcc1 + ", amount of money sent: 250.00; to Account:" +
                 savingAcc1 + "\n" +
-                "Local Send Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
+                "Local Send Transaction id= 0, at date:" + dateToCheck + ":\n" +
                 "AccountFrom: " + savingAcc1 + ", amount of money sent: 1150.00; to Account:" + regulAcc2 + "\n" +
                 "Customer: nameTwo lastNameTwo: \n" +
-                "Local Send Transaction id= 0, at date:" + dateOfTransactions + ":\n" +
-                "AccountFrom: "+ secondCustRegulAcc1 +", amount of money sent: 350.00; to Account:"+secCustInterAcc1+
+                "Local Send Transaction id= 0, at date:" + dateToCheck + ":\n" +
+                "AccountFrom: " + secondCustRegulAcc1 + ", amount of money sent: 350.00; to Account:" + secCustInterAcc1 +
                 "\n";
+    }
+
+    private String rightFormatForReportOfSpecificDate() {
+        List<Account> accountsCust1 = Bank.getCustomers().get(0).getAccounts();
+        List<Account> accountsCust2 = Bank.getCustomers().get(1).getAccounts();
+        String regulAcc1 = accountsCust1.get(0).getNumber();
+        String secondCustRegulAcc1 = accountsCust2.get(0).getNumber();
+        LocalDate date100DaysAgo = LocalDate.now().minusDays(100);
+        return "REPORT ABOUT TRANSACTIONS OF DATE: " + date100DaysAgo + "\n" +
+                "Customer: nameOne lastNameOne: \n" +
+                "Local Send Transaction id= 0, at date:" + date100DaysAgo + ":\n" +
+                "AccountFrom: " + regulAcc1 + ", amount of money sent: 450.79; to Account:" + secondCustRegulAcc1 + "\n" +
+                "Customer: nameTwo lastNameTwo: \n" +
+                "Receive Transaction id= 0, at date:" + date100DaysAgo + ":\n" +
+                "ToAccount: " + secondCustRegulAcc1 + ", amount of money sent: 450.79; from account:" + regulAcc1 + "\n";
     }
 }

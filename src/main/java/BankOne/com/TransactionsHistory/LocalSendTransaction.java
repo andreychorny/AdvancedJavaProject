@@ -17,8 +17,8 @@ public class LocalSendTransaction extends Transaction {
 
     @Override
     public String toString() {
-        return "Local Send Transaction id= " + super.id + ", at date:" + super.dateOfTransaction + ":\n" +
+        return "Local Send Transaction id= " + super.id + ", at date:" + super.getDateOfTransaction() + ":\n" +
                 "AccountFrom: " + super.getAccountOfTransaction().getNumber() + ", amount of money sent: " +
-                deliveredAmount + "; to Account:" + toWhichAccountNumber;
+                super.getDeliveredAmount() + "; to Account:" + toWhichAccountNumber;
     }
 }

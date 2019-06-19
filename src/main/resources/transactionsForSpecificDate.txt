@@ -1,0 +1,7 @@
+REPORT ABOUT TRANSACTIONS OF DATE: 2019-03-12
+Customer: nameOne lastNameOne: 
+Local Send Transaction id= 0, at date:2019-03-12:
+AccountFrom: BC-00022-000, amount of money sent: 450.79; to Account:BC-00023-489
+Customer: nameTwo lastNameTwo: 
+Receive Transaction id= 0, at date:2019-03-12:
+ToAccount: BC-00023-489, amount of money sent: 450.79; from account:BC-00022-000

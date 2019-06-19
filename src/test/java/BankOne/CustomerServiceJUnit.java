@@ -270,10 +270,11 @@ public class CustomerServiceJUnit {
 
         //change dates of several transactions for 'specific date' test
         customer1.getHistory().get(0).setDateOfTransaction(LocalDate.now().minusDays(100));
+        customer2.getHistory().get(0).setDateOfTransaction(LocalDate.now().minusDays(100));
         customer1.getHistory().get(1).setDateOfTransaction(LocalDate.now().minusDays(75));
         customer1.getHistory().get(2).setDateOfTransaction(LocalDate.now().minusDays(75));
         customer1.getHistory().get(3).setDateOfTransaction(LocalDate.now().minusDays(35));
-
+        customer2.getHistory().get(1).setDateOfTransaction(LocalDate.now().minusDays(35));
 
     }
 
@@ -334,7 +335,7 @@ public class CustomerServiceJUnit {
                 "International Out Transaction id= 0, at date:" + dateNow.minusDays(35) + ":\n" +
                 "AccountFrom: " + custOneIntAcc1Number + ", amount of money sent: 550.00; " +
                 "to Account:" + custTwoIntAcc1Number + "; IBAN code: " + custOneIntAcc1IBAN + "\n" +
-                "Local Send Transaction id= 0, at date:2019-06-17:\n" +
+                "Local Send Transaction id= 0, at date:"+dateNow+":\n" +
                 "AccountFrom: " + custOneSavAcc1Number + ", amount of money sent: 1150.00; " +
                 "to Account:" + custOneRegAcc1Number + "\n" +
                 "Receive Transaction id= 0, at date:" + dateNow + ":\n" +

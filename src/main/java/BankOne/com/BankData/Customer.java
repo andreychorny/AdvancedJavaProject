@@ -84,7 +84,7 @@ public class Customer extends Person {
                 " lastName= " + getLastName() + ",\n" +
                 " dateOfBirth= " + dateOfBirth + ",\n" +
                 " dateOfJoiningToBank= " + dateOfJoiningToBank + ",\n" +
-                " accounts:" + accountsInfo +
+                " accounts:\n" + accountsInfo +
                 '}';
     }
 

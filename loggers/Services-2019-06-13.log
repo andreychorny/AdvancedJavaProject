@@ -1,30 +1,30 @@
-[INFO ] 2019-06-17 23:04:41.664 [main] EmployeeService - Request from: nameTwo lastNameTwo with login: login2
-[INFO ] 2019-06-17 23:04:41.696 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
-[INFO ] 2019-06-17 23:04:41.696 [main] EmployeeService - Do you accept this account?
-[INFO ] 2019-06-17 23:04:41.696 [main] EmployeeService - Request from: nameTwo lastNameTwo with login: login2
-[INFO ] 2019-06-17 23:04:41.697 [main] EmployeeService - Requested account of type BankOne.com.accounts.SavingAccount
-[INFO ] 2019-06-17 23:04:41.697 [main] EmployeeService - Do you accept this account?
-[INFO ] 2019-06-17 23:04:41.698 [main] EmployeeService - Request from: nameTwo lastNameTwo with login: login2
-[INFO ] 2019-06-17 23:04:41.698 [main] EmployeeService - Requested account of type BankOne.com.accounts.InternationalAccount
-[INFO ] 2019-06-17 23:04:41.698 [main] EmployeeService - Do you accept this account?
-[INFO ] 2019-06-17 23:04:41.700 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
-[INFO ] 2019-06-17 23:04:41.700 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
-[INFO ] 2019-06-17 23:04:41.701 [main] EmployeeService - Do you accept this account?
-[INFO ] 2019-06-17 23:04:41.701 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
-[INFO ] 2019-06-17 23:04:41.701 [main] EmployeeService - Requested account of type BankOne.com.accounts.SavingAccount
-[INFO ] 2019-06-17 23:04:41.701 [main] EmployeeService - Do you accept this account?
-[INFO ] 2019-06-17 23:04:41.701 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
-[INFO ] 2019-06-17 23:04:41.702 [main] EmployeeService - Requested account of type BankOne.com.accounts.InternationalAccount
-[INFO ] 2019-06-17 23:04:41.702 [main] EmployeeService - Do you accept this account?
-[INFO ] 2019-06-17 23:04:41.702 [main] CustomerService - Customer id:0, Bob Dylan
- sends funds from RegularAccount:BC-00000-715 to Account:BC-00001-595
+[INFO ] 2019-06-20 01:03:50.097 [main] EmployeeService - Request from: nameOne lastNameOne with login: login1
+[INFO ] 2019-06-20 01:03:50.123 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
+[INFO ] 2019-06-20 01:03:50.124 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-20 01:03:50.126 [main] EmployeeService - Request from: nameOne lastNameOne with login: login1
+[INFO ] 2019-06-20 01:03:50.126 [main] EmployeeService - Requested account of type BankOne.com.accounts.SavingAccount
+[INFO ] 2019-06-20 01:03:50.127 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-20 01:03:50.127 [main] EmployeeService - Request from: nameOne lastNameOne with login: login1
+[INFO ] 2019-06-20 01:03:50.127 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
+[INFO ] 2019-06-20 01:03:50.128 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-20 01:03:50.128 [main] EmployeeService - Request from: nameOne lastNameOne with login: login1
+[INFO ] 2019-06-20 01:03:50.128 [main] EmployeeService - Requested account of type BankOne.com.accounts.InternationalAccount
+[INFO ] 2019-06-20 01:03:50.128 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-20 01:03:50.129 [main] EmployeeService - Request from: nameTwo lastNameTwo with login: login2
+[INFO ] 2019-06-20 01:03:50.129 [main] EmployeeService - Requested account of type BankOne.com.accounts.RegularAccount
+[INFO ] 2019-06-20 01:03:50.129 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-20 01:03:50.129 [main] EmployeeService - Request from: nameTwo lastNameTwo with login: login2
+[INFO ] 2019-06-20 01:03:50.130 [main] EmployeeService - Requested account of type BankOne.com.accounts.InternationalAccount
+[INFO ] 2019-06-20 01:03:50.130 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-20 01:03:50.131 [main] CustomerService - Customer id:0, nameOne lastNameOne
+ sends funds from RegularAccount:BC-00000-596 to Account:BC-00001-255
  in amount of 450.79$
-[INFO ] 2019-06-17 23:04:41.706 [main] CustomerService - Customer id:0, Bob Dylan
- sends funds from RegularAccount:BC-00000-715 to Account:BC-00000-858
+[INFO ] 2019-06-20 01:03:50.133 [main] CustomerService - Customer id:0, nameOne lastNameOne
+ sends funds from RegularAccount:BC-00000-596 to Account:BC-00000-698
  in amount of 250.00$
-[INFO ] 2019-06-17 23:04:41.707 [main] CustomerService - Customer id:0, Bob Dylan
- sends funds from SavingAccount:BC-00000-858 to Account:BC-00000-715
+[INFO ] 2019-06-20 01:03:50.135 [main] CustomerService - Customer id:0, nameOne lastNameOne
+ sends funds from SavingAccount:BC-00000-698 to Account:BC-00000-433
  in amount of 1150.00$
-[INFO ] 2019-06-17 23:04:41.715 [main] CustomerService - Customer id:1, nameTwo lastNameTwo
- sends funds from RegularAccount:BC-00001-595 to Account:BC-00000-715
+[INFO ] 2019-06-20 01:03:50.136 [main] CustomerService - Customer id:1, nameTwo lastNameTwo
+ sends funds from RegularAccount:BC-00001-255 to Account:BC-00001-740
  in amount of 350.00$
