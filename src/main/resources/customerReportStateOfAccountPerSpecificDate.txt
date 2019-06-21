@@ -1,6 +1,6 @@
-Result for Account:BC-00002-296 per date:2019-06-20
-AccountMemento{number='BC-00002-296', amountOfMoney=1000, dateOfChange=2019-06-20}
-AccountMemento{number='BC-00002-296', amountOfMoney=549.21, dateOfChange=2019-06-20}
-AccountMemento{number='BC-00002-296', amountOfMoney=299.21, dateOfChange=2019-06-20}
-AccountMemento{number='BC-00002-296', amountOfMoney=1449.21, dateOfChange=2019-06-20}
-AccountMemento{number='BC-00002-296', amountOfMoney=1799.21, dateOfChange=2019-06-20}
+Result for Account:BC-00002-196 per date:2019-06-21
+AccountMemento{number='BC-00002-196', amountOfMoney=1000, dateOfChange=2019-06-21}
+AccountMemento{number='BC-00002-196', amountOfMoney=549.21, dateOfChange=2019-06-21}
+AccountMemento{number='BC-00002-196', amountOfMoney=299.21, dateOfChange=2019-06-21}
+AccountMemento{number='BC-00002-196', amountOfMoney=1449.21, dateOfChange=2019-06-21}
+AccountMemento{number='BC-00002-196', amountOfMoney=1799.21, dateOfChange=2019-06-21}

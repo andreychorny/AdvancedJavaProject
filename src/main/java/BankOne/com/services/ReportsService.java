@@ -71,12 +71,14 @@ public class ReportsService {
     public String generateReportTransactionForSpecificDate(LocalDate date) {
         File file = new File("src/main/resources/", "transactionsForSpecificDate.txt");
         String resultOutput;
-        resultOutput ="REPORT ABOUT TRANSACTIONS OF DATE: " + date + "\n";
+        resultOutput = "REPORT ABOUT TRANSACTIONS OF DATE: " + date + "\n";
         for (Customer customer : customers) {
-            resultOutput += "Customer: " + customer.getFirstName() + " " + customer.getLastName() + ": \n";
-            for (Transaction transaction : customer.getHistory().values()) {
-                if (transaction.getLocalDateOfTransaction().equals(date)) {
-                    resultOutput += transaction + "\n";
+            if (!customer.getAccounts().isEmpty()) {
+                resultOutput += "Customer: " + customer.getFirstName() + " " + customer.getLastName() + ": \n";
+                for (Transaction transaction : customer.getHistory().values()) {
+                    if (transaction.getLocalDateOfTransaction().equals(date)) {
+                        resultOutput += transaction + "\n";
+                    }
                 }
             }
         }
@@ -94,11 +96,13 @@ public class ReportsService {
         String resultOutput;
         resultOutput = "REPORT ABOUT TRANSACTIONS OF TYPE: " + checkedType + "\n";
         for (Customer customer : customers) {
-            resultOutput += "Customer: " + customer.getFirstName() + " " +
-                    customer.getLastName() + ": \n";
-            for (Transaction transaction : customer.getHistory().values()) {
-                if (transaction.getClass().getSimpleName().equals(checkedType)) {
-                    resultOutput += transaction + "\n";
+            if (!customer.getAccounts().isEmpty()) {
+                resultOutput += "Customer: " + customer.getFirstName() + " " +
+                        customer.getLastName() + ": \n";
+                for (Transaction transaction : customer.getHistory().values()) {
+                    if (transaction.getClass().getSimpleName().equals(checkedType)) {
+                        resultOutput += transaction + "\n";
+                    }
                 }
             }
         }

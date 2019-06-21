@@ -132,6 +132,6 @@ class EmployeeServiceJUnit {
         return "Customer{\nlogin= CustLogin\n firstName= CustName,\n" +
                 " lastName= CustLastName,\n dateOfBirth= 2000-11-27,\n dateOfJoiningToBank= "+dateJoinToBankAsString+
         ",\n" +
-                " accounts:}";
+                " accounts:\n}";
     }
 }

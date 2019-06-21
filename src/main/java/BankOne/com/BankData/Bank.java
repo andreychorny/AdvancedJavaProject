@@ -35,12 +35,12 @@ public class Bank {
 
     public static Employee createNewEmployee(String login, String password, String firstName,
                                              String lastName) throws IllegalArgumentException {
-        if ((!nameValidation(firstName) || !nameValidation(lastName))) {
+        if ((!nameValidationCorrect(firstName) || !nameValidationCorrect(lastName))) {
             logger.warn("BAD FORMAT OF NAME OR LASTNAME! NAME AND LAST NAME MUST BE AT LEAST 2 SYMBOLS LONG AND " +
                     "DO NOT CONTAIN SPECIAL SYMBOLS!");
             throw new IllegalArgumentException("WRONG FORMAT OF NAME/LASTNAME!");
         }
-        if ((!loginAndPasswordValidation(login)) || (!loginAndPasswordValidation(password))) {
+        if ((!logAndPassValidationCorrect(login)) || (!logAndPassValidationCorrect(password))) {
             logger.warn("BAD FORMAT OF LOGIN OR PASSWORD! LOGIN AND PASSWORD MUST BE AT LEAST 6 SYMBOLS LONG AND " +
                     "DO NOT CONTAIN SPECIAL SYMBOLS EXCEPT '_'");
             throw new IllegalArgumentException("WRONG FORMAT OF LOGIN/PASSWORD!");
@@ -148,14 +148,14 @@ public class Bank {
         }
     }
 
-    public static boolean nameValidation(String name) {
+    public static boolean nameValidationCorrect(String name) {
         if (name.length() < 2) {
             return false;
         }
         return name.matches("[A-Za-z]*");
     }
 
-    public static boolean loginAndPasswordValidation(String login) {
+    public static boolean logAndPassValidationCorrect(String login) {
         if (login.length() < 6) {
             return false;
         }

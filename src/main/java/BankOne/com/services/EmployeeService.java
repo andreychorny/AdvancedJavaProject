@@ -28,12 +28,12 @@ public class EmployeeService {
     public Customer createNewCustomer(String login, String password, String firstName,
                                       String lastName, LocalDate dateOfBirth, Country country)
             throws IllegalArgumentException {
-        if ((!Bank.nameValidation(firstName) || !Bank.nameValidation(lastName))) {
+        if ((!Bank.nameValidationCorrect(firstName) || !Bank.nameValidationCorrect(lastName))) {
             logger.warn("BAD FORMAT OF NAME OR LASTNAME! NAME AND LAST NAME MUST BE AT LEAST 2 SYMBOLS LONG AND " +
                     "DO NOT CONTAIN SPECIAL SYMBOLS!");
             throw new IllegalArgumentException("WRONG FORMAT OF NAME/LASTNAME!");
         }
-        if ((!Bank.loginAndPasswordValidation(login)) || (!Bank.loginAndPasswordValidation(password))) {
+        if ((!Bank.logAndPassValidationCorrect(login)) || (!Bank.logAndPassValidationCorrect(password))) {
             logger.warn("BAD FORMAT OF LOGIN OR PASSWORD! LOGIN AND PASSWORD MUST BE AT LEAST 6 SYMBOLS LONG AND " +
                     "DO NOT CONTAIN SPECIAL SYMBOLS EXCEPT '_'");
             throw new IllegalArgumentException("WRONG FORMAT OF LOGIN/PASSWORD!");
