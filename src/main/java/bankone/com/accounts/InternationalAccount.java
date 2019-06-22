@@ -1,8 +1,8 @@
-package BankOne.com.accounts;
+package bankone.com.accounts;
 
-import BankOne.com.BankData.Bank;
-import BankOne.com.BankData.Customer;
-import BankOne.com.TransactionsHistory.InternationalOutTransaction;
+import bankone.com.bankdata.Bank;
+import bankone.com.bankdata.Customer;
+import bankone.com.transactionshistory.InternationalOutTransaction;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

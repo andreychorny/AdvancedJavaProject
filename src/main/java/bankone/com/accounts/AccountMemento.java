@@ -1,4 +1,4 @@
-package BankOne.com.accounts;
+package bankone.com.accounts;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

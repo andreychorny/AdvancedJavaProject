@@ -1,14 +1,14 @@
-package BankOne;
+package bankone;
 
-import BankOne.com.BankData.Bank;
-import BankOne.com.BankData.Country;
-import BankOne.com.BankData.Customer;
-import BankOne.com.TransactionsHistory.LocalSendTransaction;
-import BankOne.com.accounts.Account;
-import BankOne.com.accounts.InternationalAccount;
-import BankOne.com.services.CustomerService;
-import BankOne.com.services.EmployeeService;
-import BankOne.com.services.ReportsService;
+import bankone.com.bankdata.Bank;
+import bankone.com.bankdata.Country;
+import bankone.com.bankdata.Customer;
+import bankone.com.transactionshistory.LocalSendTransaction;
+import bankone.com.accounts.Account;
+import bankone.com.accounts.InternationalAccount;
+import bankone.com.services.CustomerService;
+import bankone.com.services.EmployeeService;
+import bankone.com.services.ReportsService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

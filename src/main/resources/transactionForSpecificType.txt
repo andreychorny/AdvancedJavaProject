@@ -1,11 +1,11 @@
 REPORT ABOUT TRANSACTIONS OF TYPE: LocalSendTransaction
 Customer: nameOne lastNameOne: 
 Local Send Transaction id= 0, at date:2019-03-14:
-AccountFrom: BC-00040-343, amount of money sent: 450.79; to Account:BC-00041-006
+AccountFrom: BC-00040-650, amount of money sent: 450.79; to Account:BC-00041-826
 Local Send Transaction id= 1, at date:2019-04-08:
-AccountFrom: BC-00040-343, amount of money sent: 250.00; to Account:BC-00040-539
+AccountFrom: BC-00040-650, amount of money sent: 250.00; to Account:BC-00040-351
 Local Send Transaction id= 0, at date:2019-06-22:
-AccountFrom: BC-00040-539, amount of money sent: 1150.00; to Account:BC-00040-933
+AccountFrom: BC-00040-351, amount of money sent: 1150.00; to Account:BC-00040-724
 Customer: nameTwo lastNameTwo: 
 Local Send Transaction id= 0, at date:2019-06-22:
-AccountFrom: BC-00041-006, amount of money sent: 350.00; to Account:BC-00041-045
+AccountFrom: BC-00041-826, amount of money sent: 350.00; to Account:BC-00041-288

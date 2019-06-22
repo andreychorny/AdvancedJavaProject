@@ -1,7 +1,7 @@
-package BankOne;
+package bankone;
 
-import BankOne.com.BankData.Bank;
-import BankOne.com.BankData.Employee;
+import bankone.com.bankdata.Bank;
+import bankone.com.bankdata.Employee;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,8 +1,8 @@
-package BankOne.com.services;
+package bankone.com.services;
 
-import BankOne.com.BankData.Bank;
-import BankOne.com.BankData.Customer;
-import BankOne.com.accounts.*;
+import bankone.com.bankdata.Bank;
+import bankone.com.bankdata.Customer;
+import bankone.com.accounts.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

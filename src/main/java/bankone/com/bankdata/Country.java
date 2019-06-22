@@ -1,4 +1,4 @@
-package BankOne.com.BankData;
+package bankone.com.bankdata;
 
 public enum Country {
 

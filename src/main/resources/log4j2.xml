@@ -31,13 +31,13 @@
 
     </Appenders>
     <Loggers>
-        <Logger name="BankOne.com.BankData" level="debug" additivity="true">
+        <Logger name="bankone.com.bankdata" level="debug" additivity="true">
             <appender-ref ref="fileBankLogger" level="debug" />
         </Logger>
         <Root level="debug" additivity="false">
             <appender-ref ref="console" />
         </Root>
-        <Logger name="BankOne.com.services" level="debug" additivity="true">
+        <Logger name="bankone.com.services" level="debug" additivity="true">
             <appender-ref ref="fileServicesLogger" level="debug" />
         </Logger>
     </Loggers>

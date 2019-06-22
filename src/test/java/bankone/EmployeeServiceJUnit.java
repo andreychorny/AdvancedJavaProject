@@ -1,12 +1,12 @@
-package BankOne;
+package bankone;
 
-import BankOne.com.BankData.Bank;
-import BankOne.com.BankData.Country;
-import BankOne.com.BankData.Customer;
-import BankOne.com.accounts.InternationalAccount;
-import BankOne.com.accounts.RegularAccount;
-import BankOne.com.services.CustomerService;
-import BankOne.com.services.EmployeeService;
+import bankone.com.bankdata.Bank;
+import bankone.com.bankdata.Country;
+import bankone.com.bankdata.Customer;
+import bankone.com.accounts.InternationalAccount;
+import bankone.com.accounts.RegularAccount;
+import bankone.com.services.CustomerService;
+import bankone.com.services.EmployeeService;
 import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;

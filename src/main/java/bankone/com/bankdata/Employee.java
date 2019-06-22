@@ -1,4 +1,4 @@
-package BankOne.com.BankData;
+package bankone.com.bankdata;
 
 import java.util.Arrays;
 import java.util.Objects;

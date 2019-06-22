@@ -1,6 +1,6 @@
-package BankOne.com.TransactionsHistory;
+package bankone.com.transactionshistory;
 
-import BankOne.com.accounts.Account;
+import bankone.com.accounts.Account;
 
 import java.math.BigDecimal;
 

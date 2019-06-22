@@ -1,13 +1,13 @@
 REPORT ABOUT TRANSACTIONS OF CUSTOMER: nameOne lastNameOne: 
 Local Send Transaction id= 0, at date:2019-03-14:
-AccountFrom: BC-00046-074, amount of money sent: 450.79; to Account:BC-00047-706
+AccountFrom: BC-00046-282, amount of money sent: 450.79; to Account:BC-00047-610
 Local Send Transaction id= 1, at date:2019-04-08:
-AccountFrom: BC-00046-074, amount of money sent: 250.00; to Account:BC-00046-235
+AccountFrom: BC-00046-282, amount of money sent: 250.00; to Account:BC-00046-410
 Receive Transaction id= 0, at date:2019-04-08:
-ToAccount: BC-00046-235, amount of money sent: 250.00; from account:BC-00046-074
+ToAccount: BC-00046-410, amount of money sent: 250.00; from account:BC-00046-282
 International Out Transaction id= 0, at date:2019-05-18:
-AccountFrom: BC-00046-280, amount of money sent: 550.00; to Account:BC-00047-989; IBAN code: UA85-76288703
+AccountFrom: BC-00046-766, amount of money sent: 550.00; to Account:BC-00047-913; IBAN code: UA85-81936284
 Local Send Transaction id= 0, at date:2019-06-22:
-AccountFrom: BC-00046-235, amount of money sent: 1150.00; to Account:BC-00046-562
+AccountFrom: BC-00046-410, amount of money sent: 1150.00; to Account:BC-00046-665
 Receive Transaction id= 0, at date:2019-06-22:
-ToAccount: BC-00046-562, amount of money sent: 1150.00; from account:BC-00046-235
+ToAccount: BC-00046-665, amount of money sent: 1150.00; from account:BC-00046-410

@@ -1,7 +1,7 @@
-package BankOne.com.accounts;
+package bankone.com.accounts;
 
-import BankOne.com.BankData.Customer;
-import BankOne.com.TransactionsHistory.ReceiveTransaction;
+import bankone.com.bankdata.Customer;
+import bankone.com.transactionshistory.ReceiveTransaction;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

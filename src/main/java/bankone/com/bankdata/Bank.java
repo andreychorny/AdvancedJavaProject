@@ -1,8 +1,8 @@
-package BankOne.com.BankData;
+package bankone.com.bankdata;
 
-import BankOne.com.accounts.Account;
-import BankOne.com.accounts.InternationalAccount;
-import BankOne.com.accounts.SavingAccount;
+import bankone.com.accounts.Account;
+import bankone.com.accounts.InternationalAccount;
+import bankone.com.accounts.SavingAccount;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
