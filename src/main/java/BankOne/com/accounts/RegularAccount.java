@@ -28,9 +28,9 @@ public class RegularAccount extends Account {
     }
 
     private void writeCreditToCustomerHistory(Account toWhichAccount, BigDecimal howMuch) {
-        getOwnerOfAccount().getHistory().put(getOwnerOfAccount().getLastTransactionsId(),
+        int amountOfTransactionsOfCustomer = getOwnerOfAccount().getHistory().size();
+        getOwnerOfAccount().getHistory().put(amountOfTransactionsOfCustomer,
                 createNewLocalSendTransaction(howMuch, toWhichAccount));
-        getOwnerOfAccount().setLastTransactionsId(getOwnerOfAccount().getLastTransactionsId() + 1);
     }
 
     LocalSendTransaction createNewLocalSendTransaction(BigDecimal howMuch, Account toWhichAccount) {

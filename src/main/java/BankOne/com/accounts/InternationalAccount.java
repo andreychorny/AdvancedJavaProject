@@ -27,10 +27,10 @@ public class InternationalAccount extends Account {
     }
 
     void writeWireToCustomerHistory(LocalDate dateOfTransaction, BigDecimal howMuch, Account toWhichAccount) {
-        getOwnerOfAccount().getHistory().put(getOwnerOfAccount().getLastTransactionsId(),
+        int amountOfTransactionsOfCustomer = getOwnerOfAccount().getHistory().size();
+        getOwnerOfAccount().getHistory().put(amountOfTransactionsOfCustomer,
                 createNewInternationalOutTransaction(dateOfTransaction, howMuch, toWhichAccount));
         getOwnerOfAccount().setInternationalIdCount(getOwnerOfAccount().getInternationalIdCount() + 1);
-        getOwnerOfAccount().setLastTransactionsId(getOwnerOfAccount().getLastTransactionsId() + 1);
     }
 
     private InternationalOutTransaction createNewInternationalOutTransaction(LocalDate dateOfTransaction,

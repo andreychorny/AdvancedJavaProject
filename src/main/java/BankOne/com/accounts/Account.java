@@ -41,9 +41,9 @@ public abstract class Account {
     }
 
     void writeDebitToCustomerHistory(LocalDate dateOfTransaction, BigDecimal arrivedCash, String numberFromWhichAcc) {
-        ownerOfAccount.getHistory().put(ownerOfAccount.getLastTransactionsId(),
+        int amountOfTransactionsOfCustomer = getOwnerOfAccount().getHistory().size();
+        getOwnerOfAccount().getHistory().put(amountOfTransactionsOfCustomer,
                 createNewReceiveTransaction(arrivedCash, numberFromWhichAcc));
-        ownerOfAccount.setLastTransactionsId(ownerOfAccount.getLastTransactionsId() + 1);
     }
 
     private ReceiveTransaction createNewReceiveTransaction(BigDecimal arrivedCash, String numberFromWhichAcc) {

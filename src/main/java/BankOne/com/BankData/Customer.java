@@ -10,7 +10,6 @@ public class Customer extends Person {
 
     private static int currentLastCustomerId = 0;
     private int internationalIdCount;
-    private int lastTransactionsId;
     private int id;
     private Country country;
 
@@ -28,19 +27,9 @@ public class Customer extends Person {
         this.dateOfBirth = dateOfBirth;
         this.dateOfJoiningToBank = dateOfJoiningToBank;
         this.country = country;
-        lastTransactionsId = 0;
         internationalIdCount = 0;
         id = currentLastCustomerId;
         currentLastCustomerId += 1;
-    }
-
-
-    public int getLastTransactionsId() {
-        return lastTransactionsId;
-    }
-
-    public void setLastTransactionsId(int lastTransactionsId) {
-        this.lastTransactionsId = lastTransactionsId;
     }
 
     public Map<Integer, Transaction> getHistory() {
@@ -99,7 +88,7 @@ public class Customer extends Person {
         if (!super.equals(o)) return false;
         Customer customer = (Customer) o;
         return getInternationalIdCount() == customer.getInternationalIdCount() &&
-                getLastTransactionsId() == customer.getLastTransactionsId() &&
+                getCountry() == customer.getCountry() &&
                 Objects.equals(getAccounts(), customer.getAccounts()) &&
                 Objects.equals(getHistory(), customer.getHistory()) &&
                 Objects.equals(getDateOfBirth(), customer.getDateOfBirth()) &&
@@ -108,9 +97,8 @@ public class Customer extends Person {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getInternationalIdCount(),
-                getLastTransactionsId(), getId(), getAccounts(), getHistory(),
-                getDateOfBirth(), getDateOfJoiningToBank());
+        return Objects.hash(getInternationalIdCount(), getCountry(), getAccounts(),
+                getHistory(), getDateOfBirth(), getDateOfJoiningToBank());
     }
 
     public Country getCountry() {

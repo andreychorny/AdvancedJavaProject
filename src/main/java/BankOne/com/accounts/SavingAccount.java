@@ -34,9 +34,9 @@ public class SavingAccount extends Account {
     }
 
     void writeCreditToHistory(Account toWhichAccount, BigDecimal howMuch) {
-        getOwnerOfAccount().getHistory().put(getOwnerOfAccount().getLastTransactionsId(),
+        int amountOfTransactionsOfCustomer = getOwnerOfAccount().getHistory().size();
+        getOwnerOfAccount().getHistory().put(amountOfTransactionsOfCustomer,
                 createNewLocalOutTransaction(howMuch, toWhichAccount));
-        getOwnerOfAccount().setLastTransactionsId(getOwnerOfAccount().getLastTransactionsId() + 1);
     }
 
     LocalSendTransaction createNewLocalOutTransaction(BigDecimal howMuch, Account toWhichAccount) {

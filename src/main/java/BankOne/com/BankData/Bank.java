@@ -174,16 +174,4 @@ public class Bank {
         return employees;
     }
 
-    void outputAllAccounts() {
-        for (Customer customer : customers) {
-            System.out.println("Customer: " + customer.getFirstName() + " " + customer.getLastName() + ":");
-            for (Account account : customer.getAccounts()) {
-                Class accClass = account.getClass();
-                String nameOfClass = accClass.toString();
-                nameOfClass = nameOfClass.substring(nameOfClass.lastIndexOf(".") + 1);
-                System.out.println(nameOfClass + ": " + account.getNumber());
-                System.out.println("amount of money: " + account.getAmountOfMoney());
-            }
-        }
-    }
 }
