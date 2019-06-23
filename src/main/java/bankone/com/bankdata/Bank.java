@@ -1,7 +1,6 @@
 package bankone.com.bankdata;
 
 import bankone.com.accounts.Account;
-import bankone.com.accounts.InternationalAccount;
 import bankone.com.accounts.SavingAccount;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,20 +10,23 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import static bankone.com.bankdata.BankUtil.*;
 
 public class Bank {
 
-    static Logger logger = LogManager.getLogger(Bank.class);
+    private static Logger logger = LogManager.getLogger(Bank.class);
 
-    private static List<Customer> customers = new ArrayList<>();
+    private static Bank bankInstance;
 
-    private static List<Employee> employees = new ArrayList<>();
+    private List<Customer> customers;
 
-    private static List<Account> requestsForAccount = new ArrayList<>();
+    private List<Employee> employees;
 
-    public static Account findAccount(String number) {
+    private List<Account> requestsForAccount;
+
+    public Account findAccount(String number) {
         for (Customer customer : customers) {
             for (Account account : customer.getAccounts()) {
                 if (account.getNumber().equals(number)) return account;
@@ -33,8 +35,24 @@ public class Bank {
         return null;
     }
 
-    public static Employee createNewEmployee(String login, String password, String firstName,
-                                             String lastName) throws IllegalArgumentException {
+    private Bank() {
+        customers = new ArrayList<>();
+
+        employees = new ArrayList<>();
+
+        requestsForAccount = new ArrayList<>();
+    }
+
+    public synchronized static Bank getInstance() {
+        if (bankInstance == null) {
+            bankInstance = new Bank();
+        }
+        return bankInstance;
+    }
+
+
+    public Employee createNewEmployee(String login, String password, String firstName,
+                                      String lastName) throws IllegalArgumentException {
         if ((!nameValidationCorrect(firstName) || !nameValidationCorrect(lastName))) {
             logger.warn("BAD FORMAT OF NAME OR LASTNAME! NAME AND LAST NAME MUST BE AT LEAST 2 SYMBOLS LONG AND " +
                     "DO NOT CONTAIN SPECIAL SYMBOLS!");
@@ -45,58 +63,24 @@ public class Bank {
                     "DO NOT CONTAIN SPECIAL SYMBOLS EXCEPT '_'");
             throw new IllegalArgumentException("WRONG FORMAT OF LOGIN/PASSWORD!");
         }
-        if (Bank.checkIfLoginUnique(login)) {
+        if (checkIfLoginUnique(login)) {
             Employee newEmployee = new Employee(login, password, firstName, lastName);
             employees.add(newEmployee);
             return newEmployee;
         } else {
-            logger.warn("ENTERED LOGIN" + login +" IS NOT UNIQUE!");
+            logger.warn("ENTERED LOGIN" + login + " IS NOT UNIQUE!");
             throw new IllegalArgumentException("LOGIN IS NOT UNIQUE!!!");
         }
     }
 
-    public static boolean checkIfNumberUnique(String number) {
-        for (Customer customer : customers) {
-            for (Account account : customer.getAccounts()) {
-                if (account.getNumber().equals(number)) return false;
-            }
-        }
-        return true;
-    }
-
-    public static boolean checkIfLoginUnique(String login) {
-        for (Customer customer : customers) {
-            if (customer.getLogin().equals(login)) return false;
-        }
-        for (Employee employee : employees) {
-            if (employee.getLogin().equals(login)) return false;
-        }
-        return true;
-    }
-
-    public static <T extends Person> boolean checkIfLoggingInfoIsSuitable(String login,
-                                                                          String passwordString) {
-        char[] password = passwordString.toCharArray();
-        for (Customer customer : customers) {
-            if (customer.getLogin().equals(login) && Arrays.equals(customer.getPassword(), password)) {
-                return true;
-            }
-        }
-        for (Employee employee : employees) {
-            if (employee.getLogin().equals(login) && Arrays.equals(employee.getPassword(), password)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     public static <T extends Person> T retrievePersonByLogin(String login) {
-        for (Customer customer : customers) {
+        for (Customer customer : getInstance().customers) {
             if (customer.getLogin().equals(login)) {
                 return (T) customer;
             }
         }
-        for (Employee employee : employees) {
+        for (Employee employee : getInstance().employees) {
             if (employee.getLogin().equals(login)) {
                 return (T) employee;
             }
@@ -104,7 +88,7 @@ public class Bank {
         return null;
     }
 
-    public static String createRandomNumberForAcc(Customer customer) {
+    public String createRandomNumberForAcc(Customer customer) {
         StringBuffer generatedNumber = new StringBuffer();
         //"BC" is a Bank Code
         generatedNumber.append("BC-");
@@ -116,24 +100,14 @@ public class Bank {
             generatedNumber.append((int) (Math.random() * 10));
         }
         String result = generatedNumber.toString();
-        if (!Bank.checkIfNumberUnique(result)) {
+        if (!checkIfAccNumberUnique(result)) {
             logger.warn("We created existing random number for acc, do a recursive call of method");
             result = createRandomNumberForAcc(customer);
         }
         return result;
     }
 
-    public static boolean checkIfIBANIsUnique(String IBANToCheck) {
-        for (Customer customer : customers) {
-            for (Account account : customer.getAccounts()) {
-                if ((account instanceof InternationalAccount) &&
-                        ((InternationalAccount) account).getIBAN().equals(IBANToCheck)) return false;
-            }
-        }
-        return true;
-    }
-
-    public static void calculateInterestsOfCustomerAccs(Customer customer) {
+    public void calculateInterestsOfCustomerAccs(Customer customer) {
         for (Account account : customer.getAccounts()) {
             if (account instanceof SavingAccount) {
                 LocalDateTime dateOfNow = LocalDateTime.now();
@@ -148,30 +122,16 @@ public class Bank {
         }
     }
 
-    public static boolean nameValidationCorrect(String name) {
-        if (name.length() < 2) {
-            return false;
-        }
-        return name.matches("[A-Za-z]*");
-    }
-
-    public static boolean logAndPassValidationCorrect(String login) {
-        if (login.length() < 6) {
-            return false;
-        }
-        return login.matches("[A-Za-z0-9_]*");
-    }
-
-    public static List<Customer> getCustomers() {
+    public List<Customer> getCustomers() {
         return customers;
     }
 
-    public static List<Account> getRequestsForAccount() {
-        return requestsForAccount;
+    public List<Employee> getEmployees() {
+        return employees;
     }
 
-    public static List<Employee> getEmployees() {
-        return employees;
+    public List<Account> getRequestsForAccount() {
+        return requestsForAccount;
     }
 
 }

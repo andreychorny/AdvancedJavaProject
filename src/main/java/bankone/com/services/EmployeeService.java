@@ -1,9 +1,6 @@
 package bankone.com.services;
 
-import bankone.com.bankdata.Bank;
-import bankone.com.bankdata.Country;
-import bankone.com.bankdata.Customer;
-import bankone.com.bankdata.Employee;
+import bankone.com.bankdata.*;
 import bankone.com.accounts.Account;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,10 +12,11 @@ public class EmployeeService {
 
     private static Logger logger = LogManager.getLogger(EmployeeService.class);
     private Employee currentEmployee;
-
+    private Bank bank;
     public EmployeeService(String login, String password) throws IllegalArgumentException {
-        if (Bank.checkIfLoggingInfoIsSuitable(login, password)) {
-            currentEmployee = Bank.retrievePersonByLogin(login);
+        if (BankUtil.checkIfLoggingInfoIsSuitable(login, password)) {
+            bank = Bank.getInstance();
+            currentEmployee = bank.retrievePersonByLogin(login);
         } else {
             logger.warn("You entered wrong logging info. Check your password and login again");
             throw new IllegalArgumentException("WRONG LOGGING INFO!");
@@ -28,20 +26,20 @@ public class EmployeeService {
     public Customer createNewCustomer(String login, String password, String firstName,
                                       String lastName, LocalDate dateOfBirth, Country country)
             throws IllegalArgumentException {
-        if ((!Bank.nameValidationCorrect(firstName) || !Bank.nameValidationCorrect(lastName))) {
+        if ((!BankUtil.nameValidationCorrect(firstName) || !BankUtil.nameValidationCorrect(lastName))) {
             logger.warn("BAD FORMAT OF NAME OR LASTNAME! NAME AND LAST NAME MUST BE AT LEAST 2 SYMBOLS LONG AND " +
                     "DO NOT CONTAIN SPECIAL SYMBOLS!");
             throw new IllegalArgumentException("WRONG FORMAT OF NAME/LASTNAME!");
         }
-        if ((!Bank.logAndPassValidationCorrect(login)) || (!Bank.logAndPassValidationCorrect(password))) {
+        if ((!BankUtil.logAndPassValidationCorrect(login)) || (!BankUtil.logAndPassValidationCorrect(password))) {
             logger.warn("BAD FORMAT OF LOGIN OR PASSWORD! LOGIN AND PASSWORD MUST BE AT LEAST 6 SYMBOLS LONG AND " +
                     "DO NOT CONTAIN SPECIAL SYMBOLS EXCEPT '_'");
             throw new IllegalArgumentException("WRONG FORMAT OF LOGIN/PASSWORD!");
         }
-        if (Bank.checkIfLoginUnique(login)) {
+        if (BankUtil.checkIfLoginUnique(login)) {
             Customer newCustomer = new Customer(login, password, firstName, lastName,
                     dateOfBirth, LocalDate.now(), country);
-            Bank.getCustomers().add(newCustomer);
+            bank.getCustomers().add(newCustomer);
             return newCustomer;
         } else {
             logger.warn("Entered login is not unique!!!");
@@ -57,7 +55,7 @@ public class EmployeeService {
 
     //possible realisation of this is strongly depended from front-end
     public void acceptRequestsForAccounts(boolean decision) {
-        List<Account> requests = Bank.getRequestsForAccount();
+        List<Account> requests = bank.getRequestsForAccount();
         if (requests.size() != 0) {
             Account chechingAccount = requests.get(0);
             logger.info("Request from: " + chechingAccount.getOwnerOfAccount().getFirstName() + " " +

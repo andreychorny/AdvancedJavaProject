@@ -25,10 +25,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ReportsServiceJUnit {
 
-    ReportsService reportsService;
+    private ReportsService reportsService;
+    private Bank bank;
 
     @BeforeEach
     void createAllDataToPresent() throws IllegalArgumentException {
+        bank = Bank.getInstance();
         EmployeeService employeeService = createEmployeeAndHisService();
         createSixCustomers(employeeService);
         createAccountsAndDoSomeTransactions(employeeService);
@@ -37,14 +39,14 @@ public class ReportsServiceJUnit {
 
     @AfterEach
     void cleanseAllData() {
-        Bank.getCustomers().clear();
-        Bank.getEmployees().clear();
-        Bank.getRequestsForAccount().clear();
+        bank.getCustomers().clear();
+        bank.getEmployees().clear();
+        bank.getRequestsForAccount().clear();
     }
 
     @Test
     void testGenerateReportAboutCustomer() {
-        reportsService.generateReportTransactionOfCustomer(Bank.getCustomers().get(0));
+        reportsService.generateReportTransactionOfCustomer(bank.getCustomers().get(0));
         File file = new File("src/main/resources/", "transactionsOfSpecificCustomer.txt");
         StringBuffer resultFromFile = new StringBuffer();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file.getAbsoluteFile()))) {
@@ -55,7 +57,7 @@ public class ReportsServiceJUnit {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        assertEquals(rightFormatOfTransactionsOfCustomerOne(Bank.getCustomers().get(0), Bank.getCustomers().get(1)),
+        assertEquals(rightFormatOfTransactionsOfCustomerOne(bank.getCustomers().get(0), bank.getCustomers().get(1)),
                 resultFromFile.toString());
     }
 
@@ -84,7 +86,7 @@ public class ReportsServiceJUnit {
     }
 
     EmployeeService createEmployeeAndHisService() throws IllegalArgumentException {
-        Bank.createNewEmployee("ouroboros", "superqwerty",
+        bank.createNewEmployee("ouroboros", "superqwerty",
                 "Andrii", "Chornyi");
         return new EmployeeService("ouroboros", "superqwerty");
     }
@@ -105,8 +107,8 @@ public class ReportsServiceJUnit {
     }
 
     void createAccountsAndDoSomeTransactions(EmployeeService employeeService) throws IllegalArgumentException {
-        Customer customer1 = Bank.getCustomers().get(0);
-        Customer customer2 = Bank.getCustomers().get(1);
+        Customer customer1 = bank.getCustomers().get(0);
+        Customer customer2 = bank.getCustomers().get(1);
         CustomerService customerService1 = new CustomerService(customer1.getLogin(),
                 new String(customer1.getPassword()));
         CustomerService customerService2 = new CustomerService(customer2.getLogin(),
@@ -119,7 +121,7 @@ public class ReportsServiceJUnit {
         //customer2 has 2 accounts: 1 regular and 1 international
         customerService2.requestForNewAccount(1);
         customerService2.requestForNewAccount(3);
-        while (!Bank.getRequestsForAccount().isEmpty()) {
+        while (!bank.getRequestsForAccount().isEmpty()) {
             employeeService.acceptRequestsForAccounts(true);
         }
         //Such transactions of customer1:
@@ -180,8 +182,8 @@ public class ReportsServiceJUnit {
     }
 
     private String rightFormatForReportOutputAboutSpecificTypeTrancs() {
-        List<Account> accountsCust1 = Bank.getCustomers().get(0).getAccounts();
-        List<Account> accountsCust2 = Bank.getCustomers().get(1).getAccounts();
+        List<Account> accountsCust1 = bank.getCustomers().get(0).getAccounts();
+        List<Account> accountsCust2 = bank.getCustomers().get(1).getAccounts();
         String regulAcc1 = accountsCust1.get(0).getNumber();
         String savingAcc1 = accountsCust1.get(1).getNumber();
         String regulAcc2 = accountsCust1.get(2).getNumber();
@@ -205,8 +207,8 @@ public class ReportsServiceJUnit {
     }
 
     private String rightFormatForReportOfSpecificDate() {
-        List<Account> accountsCust1 = Bank.getCustomers().get(0).getAccounts();
-        List<Account> accountsCust2 = Bank.getCustomers().get(1).getAccounts();
+        List<Account> accountsCust1 = bank.getCustomers().get(0).getAccounts();
+        List<Account> accountsCust2 = bank.getCustomers().get(1).getAccounts();
         String regulAcc1 = accountsCust1.get(0).getNumber();
         String secondCustRegulAcc1 = accountsCust2.get(0).getNumber();
         LocalDate date100DaysAgo = LocalDate.now().minusDays(100);

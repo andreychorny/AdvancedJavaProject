@@ -58,14 +58,6 @@ public abstract class Account {
         this.amountOfMoney = amountOfMoney;
     }
 
-    public int getDebitIdCount() {
-        return debitIdCount;
-    }
-
-    public void setDebitIdCount(int debitIdCount) {
-        this.debitIdCount = debitIdCount;
-    }
-
     public String getNumber() {
         return number;
     }
@@ -78,18 +70,9 @@ public abstract class Account {
         return ownerOfAccount;
     }
 
-    public void setOwnerOfAccount(Customer ownerOfAccount) {
-        this.ownerOfAccount = ownerOfAccount;
-    }
-
     public List<AccountMemento> getHistoryOfAccount() {
         return historyOfAccount;
     }
-
-    public void setHistoryOfAccount(List<AccountMemento> historyOfAccount) {
-        this.historyOfAccount = historyOfAccount;
-    }
-
 
     @Override
     public String toString() {

@@ -18,10 +18,12 @@ public class ReportsService {
 
     private static Logger logger = LogManager.getLogger(ReportsService.class);
     private List<Customer> customers;
-
+    private Bank bank;
 
     public ReportsService() {
-        customers = Bank.getCustomers();
+
+        bank = Bank.getInstance();
+        customers = bank.getCustomers();
     }
 
     public String generateReportTransactionOfCustomer(Customer customer) {

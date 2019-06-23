@@ -16,11 +16,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeServiceJUnit {
 
-    static EmployeeService serviceForTest;
+    private EmployeeService serviceForTest;
+    private Bank bank;
 
     @BeforeEach
     void createEmployeesToWorkWith() throws IllegalArgumentException {
-        Bank.createNewEmployee("ouroboros", "superqwerty",
+        bank = Bank.getInstance();
+        bank.createNewEmployee("ouroboros", "superqwerty",
                 "Andrii", "Chornyi");
         serviceForTest = new EmployeeService("ouroboros", "superqwerty");
         assertNotNull(serviceForTest);
@@ -28,9 +30,9 @@ class EmployeeServiceJUnit {
 
     @AfterEach
     void cleanseAllData(){
-        Bank.getCustomers().clear();
-        Bank.getEmployees().clear();
-        Bank.getRequestsForAccount().clear();
+        bank.getCustomers().clear();
+        bank.getEmployees().clear();
+        bank.getRequestsForAccount().clear();
     }
 
     @Test
@@ -96,7 +98,7 @@ class EmployeeServiceJUnit {
         serviceForTest.createNewCustomer("CustLogin", "CustPassword",
                 "CustName", "CustLastName", customerDateOfBirth, Country.POLAND);
         String outputedCustomerInfo = serviceForTest.viewDataOfClient(
-                Bank.retrievePersonByLogin("CustLogin"));
+                bank.retrievePersonByLogin("CustLogin"));
         assertEquals(rightFormatOfKeepingCustomerInfo(), outputedCustomerInfo);
     }
 
@@ -111,26 +113,26 @@ class EmployeeServiceJUnit {
         customerService.requestForNewAccount(1);
         customerService.requestForNewAccount(2);
         customerService.requestForNewAccount(3);
-        assertEquals(3,Bank.getRequestsForAccount().size());
+        assertEquals(3,bank.getRequestsForAccount().size());
         assertEquals(0,currentCustomer.getAccounts().size());
         serviceForTest.acceptRequestsForAccounts(true);
         assertEquals(1,currentCustomer.getAccounts().size());
-        assertEquals(2,Bank.getRequestsForAccount().size());
+        assertEquals(2,bank.getRequestsForAccount().size());
         serviceForTest.acceptRequestsForAccounts(false);
         assertEquals(1,currentCustomer.getAccounts().size());
-        assertEquals(1,Bank.getRequestsForAccount().size());
+        assertEquals(1,bank.getRequestsForAccount().size());
         serviceForTest.acceptRequestsForAccounts(true);
         assertEquals(2,currentCustomer.getAccounts().size());
-        assertEquals(0,Bank.getRequestsForAccount().size());
+        assertEquals(0,bank.getRequestsForAccount().size());
         assertEquals(RegularAccount.class,currentCustomer.getAccounts().get(0).getClass());
         assertEquals(InternationalAccount.class,currentCustomer.getAccounts().get(1).getClass());
     }
 
     private String rightFormatOfKeepingCustomerInfo() {
         LocalDate dateToCheck = LocalDate.now();
-        String dateJoinToBankAsString = dateToCheck.format(DateTimeFormatter.ISO_DATE);
+        String dateJoinTobankAsString = dateToCheck.format(DateTimeFormatter.ISO_DATE);
         return "Customer{\nlogin= CustLogin\n firstName= CustName,\n" +
-                " lastName= CustLastName,\n dateOfBirth= 2000-11-27,\n dateOfJoiningToBank= "+dateJoinToBankAsString+
+                " lastName= CustLastName,\n dateOfBirth= 2000-11-27,\n dateOfJoiningToBank= "+dateJoinTobankAsString+
         ",\n" +
                 " accounts:\n}";
     }

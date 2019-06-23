@@ -1,6 +1,7 @@
 package bankone.com.services;
 
 import bankone.com.bankdata.Bank;
+import bankone.com.bankdata.BankUtil;
 import bankone.com.bankdata.Customer;
 import bankone.com.accounts.*;
 import org.apache.logging.log4j.LogManager;
@@ -19,11 +20,13 @@ public class CustomerService {
 
     private static Logger logger = LogManager.getLogger(CustomerService.class);
     private Customer currentCustomer;
+    private Bank bank;
 
     public CustomerService(String login, String password) throws IllegalArgumentException {
-        if (Bank.checkIfLoggingInfoIsSuitable(login, password)) {
-            currentCustomer = Bank.retrievePersonByLogin(login);
-            Bank.calculateInterestsOfCustomerAccs(currentCustomer);
+        if (BankUtil.checkIfLoggingInfoIsSuitable(login, password)) {
+            bank = Bank.getInstance();
+            currentCustomer = bank.retrievePersonByLogin(login);
+            bank.calculateInterestsOfCustomerAccs(currentCustomer);
         } else {
             logger.warn("You put wrong logging info. check your password and login again");
             throw new IllegalArgumentException("WRONG LOGGING INFO!");
@@ -58,7 +61,7 @@ public class CustomerService {
                 currentCustomer.getLastName() + "\n sends funds from RegularAccount:" +
                 currentCustomer.getAccounts().get(indexOfAccount).getNumber() + " to Account:" + deliverToNumber
                 + "\n in amount of " + amountToDeliver.toString() + "$");
-        Account accDeliverTo = Bank.findAccount(deliverToNumber);
+        Account accDeliverTo = bank.findAccount(deliverToNumber);
         if (accDeliverTo != null) {
             accInUse.credit(accDeliverTo, amountToDeliver);
         } else {
@@ -70,14 +73,14 @@ public class CustomerService {
 
     public BigDecimal creditFromSavingAcc(int indexOfAccount, String deliverToNumber, BigDecimal amountToDeliver)
             throws IllegalArgumentException {
-        Bank.calculateInterestsOfCustomerAccs(currentCustomer);
+        bank.calculateInterestsOfCustomerAccs(currentCustomer);
         SavingAccount accInUse = (SavingAccount) currentCustomer.getAccounts().get(indexOfAccount);
         amountToDeliver = amountToDeliver.setScale(2, RoundingMode.DOWN);
         logger.info("Customer id:" + currentCustomer.getId() + ", " + currentCustomer.getFirstName() + " " +
                 currentCustomer.getLastName() + "\n sends funds from SavingAccount:" +
                 currentCustomer.getAccounts().get(indexOfAccount).getNumber() + " to Account:" + deliverToNumber
                 + "\n in amount of " + amountToDeliver.toString() + "$");
-        Account accDeliverTo = Bank.findAccount(deliverToNumber);
+        Account accDeliverTo = bank.findAccount(deliverToNumber);
         if (accDeliverTo != null && (accDeliverTo instanceof RegularAccount)) {
             accInUse.credit(accDeliverTo, amountToDeliver);
         } else if (accDeliverTo == null) {
@@ -94,7 +97,7 @@ public class CustomerService {
             throws IllegalArgumentException {
         InternationalAccount accInUse = (InternationalAccount) currentCustomer.getAccounts().get(indexOfAccount);
         amountToDeliver = amountToDeliver.setScale(2, RoundingMode.DOWN);
-        Account accDeliverTo = Bank.findAccount(deliverToNumber);
+        Account accDeliverTo = bank.findAccount(deliverToNumber);
         if (accDeliverTo != null) {
             if (!(accDeliverTo instanceof InternationalAccount)) {
                 throw new IllegalArgumentException("You can send money only to another international accounts");
@@ -110,16 +113,16 @@ public class CustomerService {
     public void requestForNewAccount(int numberOfAccountType) {
         switch (numberOfAccountType) {
             case 1:
-                Bank.getRequestsForAccount().add(new RegularAccount(new BigDecimal(1000),
-                        Bank.createRandomNumberForAcc(currentCustomer), currentCustomer));
+                bank.getRequestsForAccount().add(new RegularAccount(new BigDecimal(1000),
+                        bank.createRandomNumberForAcc(currentCustomer), currentCustomer));
                 break;
             case 2:
-                Bank.getRequestsForAccount().add(new SavingAccount(new BigDecimal(1000),
-                        Bank.createRandomNumberForAcc(currentCustomer), currentCustomer));
+                bank.getRequestsForAccount().add(new SavingAccount(new BigDecimal(1000),
+                        bank.createRandomNumberForAcc(currentCustomer), currentCustomer));
                 break;
             case 3:
-                Bank.getRequestsForAccount().add(new InternationalAccount(new BigDecimal(1000),
-                        Bank.createRandomNumberForAcc(currentCustomer), currentCustomer,
+                bank.getRequestsForAccount().add(new InternationalAccount(new BigDecimal(1000),
+                        bank.createRandomNumberForAcc(currentCustomer), currentCustomer,
                         currentCustomer.getCountry().getCountryIBAN()));
                 break;
         }

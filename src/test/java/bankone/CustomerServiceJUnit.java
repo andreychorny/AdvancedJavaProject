@@ -30,10 +30,12 @@ public class CustomerServiceJUnit {
     private CustomerService customerService;
     private Customer currentCustomer;
     private EmployeeService employeeService;
+    private Bank bank;
 
     @BeforeEach
     void createCustomerToWorkWith() throws IllegalArgumentException {
-        Bank.createNewEmployee("loginEmployee", "password", "Employee", "Employee");
+        bank = Bank.getInstance();
+        bank.createNewEmployee("loginEmployee", "password", "Employee", "Employee");
         employeeService = new EmployeeService("loginEmployee", "password");
         LocalDate dateOfCustomerBirth = LocalDate.of(1955, 10, 26);
         currentCustomer = employeeService.createNewCustomer("loginCustomer", "qwerty",
@@ -44,9 +46,9 @@ public class CustomerServiceJUnit {
 
     @AfterEach
     void cleanseAllData() throws IllegalArgumentException {
-        Bank.getCustomers().clear();
-        Bank.getEmployees().clear();
-        Bank.getRequestsForAccount().clear();
+        bank.getCustomers().clear();
+        bank.getEmployees().clear();
+        bank.getRequestsForAccount().clear();
     }
 
     @Test
@@ -60,20 +62,20 @@ public class CustomerServiceJUnit {
 
     @Test
     void testRequestForNewAccount() throws IllegalArgumentException {
-        assertEquals(0, Bank.getRequestsForAccount().size());
+        assertEquals(0, bank.getRequestsForAccount().size());
         customerService.requestForNewAccount(1);
         customerService.requestForNewAccount(2);
         customerService.requestForNewAccount(3);
-        assertEquals(3, Bank.getRequestsForAccount().size());
-        assertTrue(Bank.getRequestsForAccount().get(0) instanceof RegularAccount);
-        assertTrue(Bank.getRequestsForAccount().get(1) instanceof SavingAccount);
-        assertTrue(Bank.getRequestsForAccount().get(2) instanceof InternationalAccount);
+        assertEquals(3, bank.getRequestsForAccount().size());
+        assertTrue(bank.getRequestsForAccount().get(0) instanceof RegularAccount);
+        assertTrue(bank.getRequestsForAccount().get(1) instanceof SavingAccount);
+        assertTrue(bank.getRequestsForAccount().get(2) instanceof InternationalAccount);
         //Customer applied request, but account doesn't attached to him yet
         assertEquals(0, currentCustomer.getAccounts().size());
         //But possible account itself already knows to which user it belongs to
-        assertEquals(currentCustomer, Bank.getRequestsForAccount().get(0).getOwnerOfAccount());
-        assertEquals(currentCustomer, Bank.getRequestsForAccount().get(1).getOwnerOfAccount());
-        assertEquals(currentCustomer, Bank.getRequestsForAccount().get(2).getOwnerOfAccount());
+        assertEquals(currentCustomer, bank.getRequestsForAccount().get(0).getOwnerOfAccount());
+        assertEquals(currentCustomer, bank.getRequestsForAccount().get(1).getOwnerOfAccount());
+        assertEquals(currentCustomer, bank.getRequestsForAccount().get(2).getOwnerOfAccount());
     }
 
     @Test
@@ -179,7 +181,7 @@ public class CustomerServiceJUnit {
         employeeService.acceptRequestsForAccounts(true);
         assertTrue(currentCustomer.getAccounts().get(0) instanceof SavingAccount);
         TimeUnit.MINUTES.sleep(1);
-        Bank.calculateInterestsOfCustomerAccs(currentCustomer);
+        bank.calculateInterestsOfCustomerAccs(currentCustomer);
         assertEquals(BigDecimal.valueOf(1010.00).setScale(2, RoundingMode.DOWN),
                 currentCustomer.getAccounts().get(0).getAmountOfMoney());
         assertEquals(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
@@ -193,7 +195,7 @@ public class CustomerServiceJUnit {
         //We set false date, minus 3 days and 5 hours for current saving acc. General - difference is 77 hours.
         setFalseDateToSavingAcc();
         BigDecimal expectedAmountOfMoney = BigDecimal.valueOf(1000 + (1000 * 0.01 * 77 * 60));
-        Bank.calculateInterestsOfCustomerAccs(currentCustomer);
+        bank.calculateInterestsOfCustomerAccs(currentCustomer);
         assertEquals(expectedAmountOfMoney, currentCustomer.getAccounts().get(0).getAmountOfMoney());
         assertEquals(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
                 ((SavingAccount) currentCustomer.getAccounts().get(0)).getTimeOfLastInterestAdd());
@@ -224,7 +226,7 @@ public class CustomerServiceJUnit {
 
     private void employeeAcceptsAllAccounts() throws IllegalArgumentException {
         EmployeeService employeeService = new EmployeeService("loginEmployee", "password");
-        while (Bank.getRequestsForAccount().size() != 0) {
+        while (bank.getRequestsForAccount().size() != 0) {
             employeeService.acceptRequestsForAccounts(true);
         }
     }
@@ -238,8 +240,8 @@ public class CustomerServiceJUnit {
 
 
     private void createFirstCustmAccountsAndDoSomeTransactions() throws IllegalArgumentException {
-        Customer customer1 = Bank.getCustomers().get(0);
-        Customer customer2 = Bank.getCustomers().get(1);
+        Customer customer1 = bank.getCustomers().get(0);
+        Customer customer2 = bank.getCustomers().get(1);
         CustomerService customerService1 = new CustomerService(customer1.getLogin(),
                 new String(customer1.getPassword()));
         CustomerService customerService2 = new CustomerService(customer2.getLogin(),
@@ -248,7 +250,7 @@ public class CustomerServiceJUnit {
         customerService1.requestForNewAccount(1);
         customerService1.requestForNewAccount(2);
         customerService1.requestForNewAccount(3);
-        while (!Bank.getRequestsForAccount().isEmpty()) {
+        while (!bank.getRequestsForAccount().isEmpty()) {
             employeeService.acceptRequestsForAccounts(true);
         }
         //Such transactions of customer1:
@@ -281,7 +283,7 @@ public class CustomerServiceJUnit {
     private String rightFormatForHistoryOfSpecificAccount() {
         String checkedAccountNumber = currentCustomer.getAccounts().get(0).getNumber();
         String firstCustSavingAccount = currentCustomer.getAccounts().get(1).getNumber();
-        String secondCustRegularAccount = Bank.getCustomers().get(1).getAccounts().get(0).getNumber();
+        String secondCustRegularAccount = bank.getCustomers().get(1).getAccounts().get(0).getNumber();
         return "Customer: Bob Dylan\n" +
                 "history of Account:" + checkedAccountNumber + ":\n" +
                 "Local Send Transaction id= 0, at date:" + LocalDate.now().minusDays(100) + ":\n" +
@@ -328,8 +330,8 @@ public class CustomerServiceJUnit {
         String custOneSavAcc1Number = currentCustomer.getAccounts().get(1).getNumber();
         String custOneIntAcc1Number = currentCustomer.getAccounts().get(2).getNumber();
         String custOneIntAcc1IBAN = ((InternationalAccount) currentCustomer.getAccounts().get(2)).getIBAN();
-        String custTwoRegAcc1Number = Bank.getCustomers().get(1).getAccounts().get(0).getNumber();
-        String custTwoIntAcc1Number = Bank.getCustomers().get(1).getAccounts().get(2).getNumber();
+        String custTwoRegAcc1Number = bank.getCustomers().get(1).getAccounts().get(0).getNumber();
+        String custTwoIntAcc1Number = bank.getCustomers().get(1).getAccounts().get(2).getNumber();
         return "Customer: Bob Dylan\n" +
                 "history of transactions between " + dateFrom + " and " + dateNow + "\n" +
                 "International Out Transaction id= 0, at date:" + dateNow.minusDays(35) + ":\n" +

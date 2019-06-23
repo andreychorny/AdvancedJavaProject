@@ -1,6 +1,7 @@
 package bankone.com.accounts;
 
 import bankone.com.bankdata.Bank;
+import bankone.com.bankdata.BankUtil;
 import bankone.com.bankdata.Customer;
 import bankone.com.transactionshistory.InternationalOutTransaction;
 
@@ -45,7 +46,7 @@ public class InternationalAccount extends Account {
         for (int i = 0; i < 8; i++) {
             generatedIBAN.append((int) (Math.random() * 10));
         }
-        if (Bank.checkIfIBANIsUnique(generatedIBAN.toString())) {
+        if (BankUtil.checkIfIBANIsUnique(generatedIBAN.toString())) {
             return generatedIBAN.toString();
         }
         return generateIBAN(countryIBANCode);
