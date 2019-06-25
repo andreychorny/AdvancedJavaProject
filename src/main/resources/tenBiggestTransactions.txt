@@ -1,21 +1,21 @@
 REPORT ABOUT TEN BIGGEST TRANSACTIONS:
-Local Send Transaction id= 0, at date:2019-03-15:
-AccountFrom: BC-00022-060, amount of money sent: 450.79; to Account:BC-00023-634
-Local Send Transaction id= 1, at date:2019-04-09:
-AccountFrom: BC-00022-060, amount of money sent: 250.00; to Account:BC-00022-070
-Receive Transaction id= 0, at date:2019-04-09:
-ToAccount: BC-00022-070, amount of money sent: 250.00; from account:BC-00022-060
-International Out Transaction id= 0, at date:2019-05-19:
-AccountFrom: BC-00022-437, amount of money sent: 550.00; to Account:BC-00023-417; IBAN code: UA85-90215734
-Local Send Transaction id= 0, at date:2019-06-23:
-AccountFrom: BC-00022-070, amount of money sent: 1150.00; to Account:BC-00022-347
-Receive Transaction id= 0, at date:2019-06-23:
-ToAccount: BC-00022-347, amount of money sent: 1150.00; from account:BC-00022-070
-Receive Transaction id= 0, at date:2019-03-15:
-ToAccount: BC-00023-634, amount of money sent: 450.79; from account:BC-00022-060
-Receive Transaction id= 0, at date:2019-05-19:
-ToAccount: BC-00023-417, amount of money sent: 550.00; from account:BC-00022-437
-Local Send Transaction id= 0, at date:2019-06-23:
-AccountFrom: BC-00023-634, amount of money sent: 350.00; to Account:BC-00023-417
-Receive Transaction id= 1, at date:2019-06-23:
-ToAccount: BC-00023-417, amount of money sent: 350.00; from account:BC-00023-634
+Local Send Transaction id= 0, at date:2019-03-18:
+AccountFrom: BC-00022-531, amount of money sent: 450.79; to Account:BC-00023-565
+Local Send Transaction id= 1, at date:2019-04-12:
+AccountFrom: BC-00022-531, amount of money sent: 250.00; to Account:BC-00022-001
+Receive Transaction id= 0, at date:2019-04-12:
+ToAccount: BC-00022-001, amount of money sent: 250.00; from account:BC-00022-531
+International Out Transaction id= 0, at date:2019-05-22:
+AccountFrom: BC-00022-431, amount of money sent: 550.00; to Account:BC-00023-237; IBAN code: UA85-81254408
+Local Send Transaction id= 0, at date:2019-06-26:
+AccountFrom: BC-00022-001, amount of money sent: 1150.00; to Account:BC-00022-897
+Receive Transaction id= 0, at date:2019-06-26:
+ToAccount: BC-00022-897, amount of money sent: 1150.00; from account:BC-00022-001
+Receive Transaction id= 0, at date:2019-03-18:
+ToAccount: BC-00023-565, amount of money sent: 450.79; from account:BC-00022-531
+Receive Transaction id= 0, at date:2019-05-22:
+ToAccount: BC-00023-237, amount of money sent: 550.00; from account:BC-00022-431
+Local Send Transaction id= 0, at date:2019-06-26:
+AccountFrom: BC-00023-565, amount of money sent: 350.00; to Account:BC-00023-237
+Receive Transaction id= 1, at date:2019-06-26:
+ToAccount: BC-00023-237, amount of money sent: 350.00; from account:BC-00023-565
