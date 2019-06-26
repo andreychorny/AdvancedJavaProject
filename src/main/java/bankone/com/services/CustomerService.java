@@ -167,7 +167,7 @@ public class CustomerService {
             bw.write(resultOutput);
         } catch (IOException e) {
             logger.error("IOException in 'showStateOfAccountPerSpecificDate'");
-            e.printStackTrace();
+            logger.error(e);
         }
         return resultOutput;
     }

@@ -8,6 +8,8 @@ import bankone.com.accounts.RegularAccount;
 import bankone.com.accounts.SavingAccount;
 import bankone.com.services.CustomerService;
 import bankone.com.services.EmployeeService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +33,8 @@ public class CustomerServiceJUnit {
     private Customer currentCustomer;
     private EmployeeService employeeService;
     private Bank bank;
+    private static Logger logger = LogManager.getLogger(CustomerServiceJUnit.class);
+
 
     @BeforeEach
     void createCustomerToWorkWith() throws IllegalArgumentException {
@@ -158,7 +162,7 @@ public class CustomerServiceJUnit {
                 resultFromFile.append(line).append("\n");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         assertEquals(rightFormatForHistoryOfSpecificAccount(), resultFromFile.toString());
     }

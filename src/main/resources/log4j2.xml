@@ -15,6 +15,16 @@
             </Policies>
         </RollingFile>
 
+        <RollingFile name="tests" fileName="${basePath}/tests.log"
+                     filePattern="${basePath}/ReportServiceJUnit-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+
         <RollingFile name="fileServicesLogger" fileName="${basePath}/Services.log"
                      filePattern="${basePath}/Services-%d{yyyy-MM-dd}.log">
             <PatternLayout>
@@ -39,6 +49,9 @@
         </Root>
         <Logger name="bankone.com.services" level="debug" additivity="true">
             <appender-ref ref="fileServicesLogger" level="debug" />
+        </Logger>
+        <Logger name="test.java.bankone" level="debug" additivity="true">
+            <appender-ref ref="tests" level="debug" />
         </Logger>
     </Loggers>
 </Configuration>

@@ -4,58 +4,60 @@ import bankone.com.bankdata.Bank;
 import bankone.com.bankdata.Employee;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BankJUnit {
 
     private Bank bank;
-    
+
     @BeforeEach
-    void setUpbank(){
+    void setUpbank() {
         bank = Bank.getInstance();
     }
-    
+
     @Test
-    void testAddingNewEmployee() throws IllegalArgumentException{
+    void testAddingNewEmployee() throws IllegalArgumentException {
         String newEmployeeOneLogin = "Ouroboros";
-        String newEmployeeOnePassword = "qwerty";
+        char[] newEmployeeOneSecret = "qwerty".toCharArray();
         String newEmployeeOneFirstName = "Bob";
         String newEmployeeOneLastName = "McFly";
-        Employee employeeOne = new Employee(newEmployeeOneLogin,newEmployeeOnePassword,
-                newEmployeeOneFirstName,newEmployeeOneLastName);
+        Employee employeeOne = new Employee(newEmployeeOneLogin, String.valueOf(newEmployeeOneSecret),
+                newEmployeeOneFirstName, newEmployeeOneLastName);
 
-        assertEquals(employeeOne, bank.createNewEmployee(newEmployeeOneLogin,newEmployeeOnePassword,
-                newEmployeeOneFirstName,newEmployeeOneLastName));
+        assertEquals(employeeOne, bank.createNewEmployee(newEmployeeOneLogin, String.valueOf(newEmployeeOneSecret),
+                newEmployeeOneFirstName, newEmployeeOneLastName));
 
-        assertEquals(bank.retrievePersonByLogin("Ouroboros").getClass(),Employee.class);
+        assertEquals(bank.retrievePersonByLogin("Ouroboros").getClass(), Employee.class);
     }
 
     @Test
-    void testRestrictionOfLogginRepetation() throws IllegalArgumentException{
-        bank.createNewEmployee("login1","password1",
-                "nameOne","lastNameTwo");
-        assertThrows(IllegalArgumentException.class,() ->  bank.createNewEmployee("login1",
-                "password2", "nameTwo","lastNameTwo"),
+    void testRestrictionOfLogginRepetation() throws IllegalArgumentException {
+        bank.createNewEmployee("login1", "password1",
+                "nameOne", "lastNameTwo");
+        assertThrows(IllegalArgumentException.class, () -> bank.createNewEmployee("login1",
+                "password2", "nameTwo", "lastNameTwo"),
                 "Login exist in database - IllegalArgumentException");
     }
 
     @Test
-    void testValidationOfNameAndLastName(){
-        assertThrows(IllegalArgumentException.class,() -> bank.createNewEmployee("johnny","bravos",
-                "Name1","lastName"), "Number in name - bad format");
-        assertThrows(IllegalArgumentException.class,() -> bank.createNewEmployee("johnny","bravos",
-                "Name","lastName!"), "Special symbol in lastName - bad format");
-        assertThrows(IllegalArgumentException.class,() -> bank.createNewEmployee("johnny","bravos",
-                "Name","Z"), "LastName is too short");
-        assertThrows(IllegalArgumentException.class,() -> bank.createNewEmployee("johnny","bravos",
-                "K","Zack"), "Name is too short");
+    void testValidationOfNameAndLastName() {
+        assertThrows(IllegalArgumentException.class, () -> bank.createNewEmployee("johnny", "bravos",
+                "Name1", "lastName"), "Number in name - bad format");
+        assertThrows(IllegalArgumentException.class, () -> bank.createNewEmployee("johnny", "bravos",
+                "Name", "lastName!"), "Special symbol in lastName - bad format");
+        assertThrows(IllegalArgumentException.class, () -> bank.createNewEmployee("johnny", "bravos",
+                "Name", "Z"), "LastName is too short");
+        assertThrows(IllegalArgumentException.class, () -> bank.createNewEmployee("johnny", "bravos",
+                "K", "Zack"), "Name is too short");
     }
 
     @Test
-    void testValidationOfLoginAndPassword(){
-        assertThrows(IllegalArgumentException.class,() -> bank.createNewEmployee("johnny?","bravos","Name",
+    void testValidationOfLoginAndPassword() {
+        assertThrows(IllegalArgumentException.class, () -> bank.createNewEmployee("johnny?", "bravos", "Name",
                 "lastName"), "Special symbol in login - bad format");
-        assertThrows(IllegalArgumentException.class,() -> bank.createNewEmployee("johnny","bravo","Name",
+        assertThrows(IllegalArgumentException.class, () -> bank.createNewEmployee("johnny", "bravo", "Name",
                 "lastName"), "password to short - bad format");
     }
 }

@@ -111,7 +111,7 @@ public class ReportsService {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()))) {
             bw.write(resultOutput);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         return resultOutput;
     }
@@ -126,7 +126,7 @@ public class ReportsService {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()))) {
             bw.write(resultOutput);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         return resultOutput;
     }

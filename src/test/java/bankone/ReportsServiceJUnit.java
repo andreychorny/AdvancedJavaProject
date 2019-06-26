@@ -9,6 +9,8 @@ import bankone.com.accounts.InternationalAccount;
 import bankone.com.services.CustomerService;
 import bankone.com.services.EmployeeService;
 import bankone.com.services.ReportsService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,6 +29,7 @@ public class ReportsServiceJUnit {
 
     private ReportsService reportsService;
     private Bank bank;
+    private static Logger logger = LogManager.getLogger(ReportsServiceJUnit.class);
 
     @BeforeEach
     void createAllDataToPresent() throws IllegalArgumentException {
@@ -55,7 +58,7 @@ public class ReportsServiceJUnit {
                 resultFromFile.append(line).append("\n");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         assertEquals(rightFormatOfTransactionsOfCustomerOne(bank.getCustomers().get(0), bank.getCustomers().get(1)),
                 resultFromFile.toString());

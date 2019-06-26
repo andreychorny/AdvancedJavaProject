@@ -70,14 +70,14 @@ class EmployeeServiceJUnit {
     @Test
     void testCreatingOfNewCustomer() throws IllegalArgumentException {
         String newCustomerLogin = "azorahai";
-        String newCustomerPassword = "trueKing002";
+        char[] newCustomerSecret = "trueKing002".toCharArray();
         String newCustomerFirstName = "Stannis";
         String newCustomerLastName = "Baratheon";
         LocalDate newCustomerDateOfBirth = LocalDate.of(1935, 11, 27);
-        Customer newCustomer = new Customer(newCustomerLogin, newCustomerPassword, newCustomerFirstName,
+        Customer newCustomer = new Customer(newCustomerLogin, String.valueOf(newCustomerSecret), newCustomerFirstName,
                 newCustomerLastName, newCustomerDateOfBirth, LocalDate.now(), Country.UKRAINE);
         assertEquals(newCustomer, serviceForTest.createNewCustomer(newCustomerLogin,
-                newCustomerPassword, newCustomerFirstName, newCustomerLastName,
+                String.valueOf(newCustomerSecret), newCustomerFirstName, newCustomerLastName,
                 newCustomerDateOfBirth, Country.UKRAINE));
     }
 
