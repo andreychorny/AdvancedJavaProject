@@ -20,4 +20,8 @@ public class Employee extends Person {
                 Objects.equals(getLastName(), employee.getLastName());
     }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }
