@@ -9,14 +9,11 @@ public class AccountMemento {
 
     private final BigDecimal amountOfMoney;
 
-    private final Integer debitIdCount;
-
     private final LocalDate dateOfChange;
 
-    public AccountMemento(BigDecimal amountOfMoney, int debitIdCount, String number,
+    public AccountMemento(BigDecimal amountOfMoney, String number,
                           LocalDate dateOfChange) {
         this.amountOfMoney = amountOfMoney;
-        this.debitIdCount = debitIdCount;
         this.number = number;
         this.dateOfChange = dateOfChange;
     }

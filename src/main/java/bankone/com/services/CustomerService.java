@@ -36,24 +36,24 @@ public class CustomerService {
     }
 
     public String showAllAccounts() {
-        String allAccountsInfo = "";
+        StringBuilder allAccountsInfo = new StringBuilder();
         final String BALANCE = "  balance:";
         for (Account account : currentCustomer.getAccounts()) {
             if (account instanceof RegularAccount) {
-                allAccountsInfo += currentCustomer.getAccounts().indexOf(account) + ": Regular:" +
-                        account.getNumber() + BALANCE + account.getAmountOfMoney() + "\n";
+                allAccountsInfo.append(currentCustomer.getAccounts().indexOf(account) + ": Regular:" +
+                        account.getNumber() + BALANCE + account.getAmountOfMoney() + "\n");
             }
             if (account instanceof SavingAccount) {
-                allAccountsInfo += currentCustomer.getAccounts().indexOf(account) + ": Saving:" +
-                        account.getNumber() + BALANCE + account.getAmountOfMoney() + "\n";
+                allAccountsInfo.append(currentCustomer.getAccounts().indexOf(account) + ": Saving:" +
+                        account.getNumber() + BALANCE + account.getAmountOfMoney() + "\n");
             }
             if (account instanceof InternationalAccount) {
-                allAccountsInfo += currentCustomer.getAccounts().indexOf(account) + ": International:" +
-                        account.getNumber() + BALANCE + account.getAmountOfMoney() + "\n";
+                allAccountsInfo.append(currentCustomer.getAccounts().indexOf(account) + ": International:" +
+                        account.getNumber() + BALANCE + account.getAmountOfMoney() + "\n");
             }
         }
-        logger.info(allAccountsInfo);
-        return allAccountsInfo;
+        logger.info(allAccountsInfo.toString());
+        return allAccountsInfo.toString();
     }
 
     public BigDecimal creditFromRegularAcc(int indexOfAccount, String deliverToNumber, BigDecimal amountToDeliver)
@@ -157,26 +157,26 @@ public class CustomerService {
 
     public String showStateOfAccountPerSpecificDate(LocalDate date, int indexOfAccount) {
         File file = new File(PARRENT_LOCATION, "customerReportStateOfAccountPerSpecificDate.txt");
-        String resultOutput;
+        StringBuilder resultOutput = new StringBuilder();
         Boolean isMementoFound = false;
         Account currentAcc = currentCustomer.getAccounts().get(indexOfAccount);
-        resultOutput = "Result for Account:" + currentAcc.getNumber() + " per date:" + date + "\n";
+        resultOutput.append("Result for Account:" + currentAcc.getNumber() + " per date:" + date + "\n");
         for (AccountMemento accMemento : currentAcc.getHistoryOfAccount()) {
             if (date.compareTo(accMemento.getDateOfChange()) >= 0) {
-                resultOutput += accMemento + "\n";
+                resultOutput.append(accMemento + "\n");
                 isMementoFound = true;
             }
         }
         if (!isMementoFound) {
-            resultOutput += "Account hadn't exist in that time";
+            resultOutput.append("Account hadn't exist in that time");
         }
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()))) {
-            bw.write(resultOutput);
+            bw.write(resultOutput.toString());
         } catch (IOException e) {
             logger.error("IOException in 'showStateOfAccountPerSpecificDate'");
             logger.error(e);
         }
-        return resultOutput;
+        return resultOutput.toString();
     }
 
     public String checkTransactionsPerSpecificDate(LocalDate dateFrom, LocalDate dateTo) {

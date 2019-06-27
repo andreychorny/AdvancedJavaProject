@@ -25,7 +25,7 @@ public abstract class Account {
         this.debitIdCount = 0;
         this.number = number;
         this.ownerOfAccount = ownerOfAccount;
-        historyOfAccount.add(new AccountMemento(amountOfMoney, debitIdCount, number, LocalDate.now()));
+        historyOfAccount.add(new AccountMemento(amountOfMoney, number, LocalDate.now()));
     }
 
     void debit(BigDecimal arrivedCash, String numberFromWhichAccount) {
@@ -37,7 +37,7 @@ public abstract class Account {
     }
 
     void createNewMemento(LocalDate dateOfTransaction) {
-        historyOfAccount.add(new AccountMemento(amountOfMoney, debitIdCount, number, dateOfTransaction));
+        historyOfAccount.add(new AccountMemento(amountOfMoney, number, dateOfTransaction));
     }
 
     void writeDebitToCustomerHistory(BigDecimal arrivedCash, String numberFromWhichAcc) {

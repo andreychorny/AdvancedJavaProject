@@ -1,6 +1,5 @@
 package bankone.com.accounts;
 
-import bankone.com.bankdata.Bank;
 import bankone.com.bankdata.BankUtil;
 import bankone.com.bankdata.Customer;
 import bankone.com.transactionshistory.InternationalOutTransaction;
@@ -22,26 +21,26 @@ public class InternationalAccount extends Account {
             setAmountOfMoney(getAmountOfMoney().subtract(howMuch));
             LocalDate dateOfTransaction = LocalDate.now();
             createNewMemento(dateOfTransaction);
-            writeWireToCustomerHistory(dateOfTransaction, howMuch, toWhichAccount);
+            writeWireToCustomerHistory(howMuch, toWhichAccount);
             toWhichAccount.debit(howMuch, this.getNumber());
         } else throw new IllegalArgumentException("NotEnoughMoney");
     }
 
-    void writeWireToCustomerHistory(LocalDate dateOfTransaction, BigDecimal howMuch, Account toWhichAccount) {
+    void writeWireToCustomerHistory(BigDecimal howMuch, Account toWhichAccount) {
         int amountOfTransactionsOfCustomer = getOwnerOfAccount().getHistory().size();
         getOwnerOfAccount().getHistory().put(amountOfTransactionsOfCustomer,
-                createNewInternationalOutTransaction(dateOfTransaction, howMuch, toWhichAccount));
+                createNewInternationalOutTransaction(howMuch, toWhichAccount));
         getOwnerOfAccount().setInternationalIdCount(getOwnerOfAccount().getInternationalIdCount() + 1);
     }
 
-    private InternationalOutTransaction createNewInternationalOutTransaction(LocalDate dateOfTransaction,
-                                                                             BigDecimal howMuch, Account toWhichAccount) {
+    private InternationalOutTransaction createNewInternationalOutTransaction(BigDecimal howMuch,
+                                                                             Account toWhichAccount) {
         return new InternationalOutTransaction(getOwnerOfAccount().getInternationalIdCount(),
                 howMuch, this, toWhichAccount.getNumber(), IBAN);
     }
 
     private String generateIBAN(String countryIBANCode) {
-        StringBuffer generatedIBAN = new StringBuffer();
+        StringBuilder generatedIBAN = new StringBuilder();
         generatedIBAN.append(countryIBANCode + "-");
         for (int i = 0; i < 8; i++) {
             generatedIBAN.append((int) (Math.random() * 10));
