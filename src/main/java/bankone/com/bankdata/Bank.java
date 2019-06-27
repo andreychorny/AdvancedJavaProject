@@ -74,7 +74,7 @@ public class Bank {
     }
 
 
-    public static <T extends Person> T retrievePersonByLogin(String login) {
+    public <T extends Person> T retrievePersonByLogin(String login) {
         for (Customer customer : getInstance().customers) {
             if (customer.getLogin().equals(login)) {
                 return (T) customer;

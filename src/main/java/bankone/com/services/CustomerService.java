@@ -1,9 +1,9 @@
 package bankone.com.services;
 
+import bankone.com.accounts.*;
 import bankone.com.bankdata.Bank;
 import bankone.com.bankdata.BankUtil;
 import bankone.com.bankdata.Customer;
-import bankone.com.accounts.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,6 +21,8 @@ public class CustomerService {
     private static Logger logger = LogManager.getLogger(CustomerService.class);
     private Customer currentCustomer;
     private Bank bank;
+    private static final String NO_SUCH_ACCOUNT = "THERE IS NO SUCH ACCOUNT NUMBER AS ";
+    private static final String PARRENT_LOCATION = "src/main/resources/";
 
     public CustomerService(String login, String password) throws IllegalArgumentException {
         if (BankUtil.checkIfLoggingInfoIsSuitable(login, password)) {
@@ -35,18 +37,19 @@ public class CustomerService {
 
     public String showAllAccounts() {
         String allAccountsInfo = "";
+        final String BALANCE = " balance:";
         for (Account account : currentCustomer.getAccounts()) {
             if (account instanceof RegularAccount) {
                 allAccountsInfo += currentCustomer.getAccounts().indexOf(account) + ": Regular:" +
-                        account.getNumber() + "  balance:" + account.getAmountOfMoney() + "\n";
+                        account.getNumber() + BALANCE + account.getAmountOfMoney() + "\n";
             }
             if (account instanceof SavingAccount) {
                 allAccountsInfo += currentCustomer.getAccounts().indexOf(account) + ": Saving:" +
-                        account.getNumber() + "  balance:" + account.getAmountOfMoney() + "\n";
+                        account.getNumber() + BALANCE + account.getAmountOfMoney() + "\n";
             }
             if (account instanceof InternationalAccount) {
                 allAccountsInfo += currentCustomer.getAccounts().indexOf(account) + ": International:" +
-                        account.getNumber() + "  balance:" + account.getAmountOfMoney() + "\n";
+                        account.getNumber() + BALANCE + account.getAmountOfMoney() + "\n";
             }
         }
         logger.info(allAccountsInfo);
@@ -65,7 +68,7 @@ public class CustomerService {
         if (accDeliverTo != null) {
             accInUse.credit(accDeliverTo, amountToDeliver);
         } else {
-            logger.warn("THERE IS NO SUCH ACCOUNT NUMBER AS " + deliverToNumber + "!!!");
+            logger.warn(NO_SUCH_ACCOUNT + deliverToNumber + "!!!");
             throw new IllegalArgumentException("NO SUCH ACCOUNT NUMBER");
         }
         return accInUse.getAmountOfMoney();
@@ -81,10 +84,10 @@ public class CustomerService {
                 currentCustomer.getAccounts().get(indexOfAccount).getNumber() + " to Account:" + deliverToNumber
                 + "\n in amount of " + amountToDeliver.toString() + "$");
         Account accDeliverTo = bank.findAccount(deliverToNumber);
-        if (accDeliverTo != null && (accDeliverTo instanceof RegularAccount)) {
+        if (accDeliverTo instanceof RegularAccount) {
             accInUse.credit(accDeliverTo, amountToDeliver);
         } else if (accDeliverTo == null) {
-            logger.warn("THERE IS NO SUCH ACCOUNT NUMBER AS " + deliverToNumber + "!!!");
+            logger.warn(NO_SUCH_ACCOUNT + deliverToNumber + "!!!");
             throw new IllegalArgumentException("No such account number to send money!");
         } else if (!(accDeliverTo instanceof RegularAccount)) {
             logger.warn("YOU CANNOT SEND MONEY FROM SAVING ACCOUNT TO THIS TYPE OF ACCOUNTS!");
@@ -104,13 +107,13 @@ public class CustomerService {
             }
             accInUse.wire(accDeliverTo, amountToDeliver);
         } else {
-            logger.warn("THERE IS NO SUCH ACCOUNT NUMBER AS " + deliverToNumber + "!!!");
+            logger.warn(NO_SUCH_ACCOUNT + deliverToNumber + "!!!");
             throw new IllegalArgumentException("No such account number to send money!");
         }
         return accInUse.getAmountOfMoney();
     }
 
-    public void requestForNewAccount(int numberOfAccountType) {
+    public void requestForNewAccount(int numberOfAccountType) throws IllegalAccessException {
         switch (numberOfAccountType) {
             case 1:
                 bank.getRequestsForAccount().add(new RegularAccount(new BigDecimal(1000),
@@ -125,12 +128,16 @@ public class CustomerService {
                         bank.createRandomNumberForAcc(currentCustomer), currentCustomer,
                         currentCustomer.getCountry().getCountryIBAN()));
                 break;
+            default: {
+                logger.error("Such type of requested account doesn't exist");
+                throw new IllegalAccessException("No such type of account");
+            }
         }
     }
 
 
     public String checkHistoryOfSpecificAccount(int indexOfAccount) {
-        File file = new File("src/main/resources/", "customerReportHistoryOfAccount.txt");
+        File file = new File(PARRENT_LOCATION, "customerReportHistoryOfAccount.txt");
         String resultOutput;
         Account currentAccount = currentCustomer.getAccounts().get(indexOfAccount);
         resultOutput = "Customer: " + currentCustomer.getFirstName() + " " +
@@ -149,7 +156,7 @@ public class CustomerService {
     }
 
     public String showStateOfAccountPerSpecificDate(LocalDate date, int indexOfAccount) {
-        File file = new File("src/main/resources/", "customerReportStateOfAccountPerSpecificDate.txt");
+        File file = new File(PARRENT_LOCATION, "customerReportStateOfAccountPerSpecificDate.txt");
         String resultOutput;
         Boolean isMementoFound = false;
         Account currentAcc = currentCustomer.getAccounts().get(indexOfAccount);
@@ -160,7 +167,7 @@ public class CustomerService {
                 isMementoFound = true;
             }
         }
-        if(!isMementoFound){
+        if (!isMementoFound) {
             resultOutput += "Account hadn't exist in that time";
         }
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()))) {
@@ -173,7 +180,7 @@ public class CustomerService {
     }
 
     public String checkTransactionsPerSpecificDate(LocalDate dateFrom, LocalDate dateTo) {
-        File file = new File("src/main/resources/", "customerReportHistoryBetween2Dates.txt");
+        File file = new File(PARRENT_LOCATION, "customerReportHistoryBetween2Dates.txt");
         String resultOutput;
         resultOutput = "Customer: " + currentCustomer.getFirstName() + " " +
                 currentCustomer.getLastName() + "\nhistory of transactions between " + dateFrom + " and " +
