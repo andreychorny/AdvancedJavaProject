@@ -1,17 +1,26 @@
-[INFO ] 2019-06-27 22:05:34.237 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
-[INFO ] 2019-06-27 22:05:34.309 [main] EmployeeService - Requested account of type bankone.com.accounts.RegularAccount
-[INFO ] 2019-06-27 22:05:34.309 [main] EmployeeService - Do you accept this account?
-[INFO ] 2019-06-27 22:05:34.310 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
-[INFO ] 2019-06-27 22:05:34.311 [main] EmployeeService - Requested account of type bankone.com.accounts.SavingAccount
-[INFO ] 2019-06-27 22:05:34.311 [main] EmployeeService - Do you accept this account?
-[INFO ] 2019-06-27 22:05:34.311 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
-[INFO ] 2019-06-27 22:05:34.313 [main] EmployeeService - Requested account of type bankone.com.accounts.InternationalAccount
-[INFO ] 2019-06-27 22:05:34.313 [main] EmployeeService - Do you accept this account?
-[INFO ] 2019-06-27 22:05:34.313 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
-[INFO ] 2019-06-27 22:05:34.313 [main] EmployeeService - Requested account of type bankone.com.accounts.RegularAccount
-[INFO ] 2019-06-27 22:05:34.313 [main] EmployeeService - Do you accept this account?
-[INFO ] 2019-06-27 22:05:34.322 [main] CustomerService - 0: Regular:BC-00000-584  balance:1000
-1: Saving:BC-00000-634  balance:1000
-2: International:BC-00000-665  balance:1000
-3: Regular:BC-00000-735  balance:1000
-
+[WARN ] 2019-06-27 22:14:34.046 [main] EmployeeService - You entered wrong logging info. Check your password and login again
+[WARN ] 2019-06-27 22:14:34.079 [main] EmployeeService - BAD FORMAT OF LOGIN OR PASSWORD! LOGIN AND PASSWORD MUST BE AT LEAST 6 SYMBOLS LONG AND DO NOT CONTAIN SPECIAL SYMBOLS EXCEPT '_'
+[WARN ] 2019-06-27 22:14:34.079 [main] EmployeeService - BAD FORMAT OF LOGIN OR PASSWORD! LOGIN AND PASSWORD MUST BE AT LEAST 6 SYMBOLS LONG AND DO NOT CONTAIN SPECIAL SYMBOLS EXCEPT '_'
+[INFO ] 2019-06-27 22:14:34.081 [main] EmployeeService - Retrieving data of customer:
+[INFO ] 2019-06-27 22:14:34.082 [main] EmployeeService - Customer{
+login= CustLogin
+ firstName= CustName,
+ lastName= CustLastName,
+ dateOfBirth= 2000-11-27,
+ dateOfJoiningToBank= 2019-06-27,
+ accounts:
+}
+[INFO ] 2019-06-27 22:14:34.162 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-27 22:14:34.162 [main] EmployeeService - Requested account of type bankone.com.accounts.RegularAccount
+[INFO ] 2019-06-27 22:14:34.162 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-27 22:14:34.162 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-27 22:14:34.162 [main] EmployeeService - Requested account of type bankone.com.accounts.SavingAccount
+[INFO ] 2019-06-27 22:14:34.162 [main] EmployeeService - Do you accept this account?
+[INFO ] 2019-06-27 22:14:34.163 [main] EmployeeService - Request from: Bob Dylan with login: loginCustomer
+[INFO ] 2019-06-27 22:14:34.163 [main] EmployeeService - Requested account of type bankone.com.accounts.InternationalAccount
+[INFO ] 2019-06-27 22:14:34.163 [main] EmployeeService - Do you accept this account?
+[WARN ] 2019-06-27 22:14:34.165 [main] EmployeeService - Entered login is not unique!!!
+[WARN ] 2019-06-27 22:14:34.169 [main] EmployeeService - BAD FORMAT OF NAME OR LASTNAME! NAME AND LAST NAME MUST BE AT LEAST 2 SYMBOLS LONG AND DO NOT CONTAIN SPECIAL SYMBOLS!
+[WARN ] 2019-06-27 22:14:34.170 [main] EmployeeService - BAD FORMAT OF NAME OR LASTNAME! NAME AND LAST NAME MUST BE AT LEAST 2 SYMBOLS LONG AND DO NOT CONTAIN SPECIAL SYMBOLS!
+[WARN ] 2019-06-27 22:14:34.171 [main] EmployeeService - BAD FORMAT OF NAME OR LASTNAME! NAME AND LAST NAME MUST BE AT LEAST 2 SYMBOLS LONG AND DO NOT CONTAIN SPECIAL SYMBOLS!
+[WARN ] 2019-06-27 22:14:34.173 [main] EmployeeService - BAD FORMAT OF NAME OR LASTNAME! NAME AND LAST NAME MUST BE AT LEAST 2 SYMBOLS LONG AND DO NOT CONTAIN SPECIAL SYMBOLS!

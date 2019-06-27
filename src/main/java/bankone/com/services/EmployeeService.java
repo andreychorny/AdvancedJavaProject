@@ -11,12 +11,12 @@ import java.util.List;
 public class EmployeeService {
 
     private static Logger logger = LogManager.getLogger(EmployeeService.class);
-    private Employee currentEmployee;
+//    private Employee currentEmployee;  unused legacy code, use if need pointer on working employee in service
     private Bank bank;
     public EmployeeService(String login, String password) throws IllegalArgumentException {
         if (BankUtil.checkIfLoggingInfoIsSuitable(login, password)) {
             bank = Bank.getInstance();
-            currentEmployee = bank.retrievePersonByLogin(login);
+//            currentEmployee = bank.retrievePersonByLogin(login);   unused legacy code
         } else {
             logger.warn("You entered wrong logging info. Check your password and login again");
             throw new IllegalArgumentException("WRONG LOGGING INFO!");
@@ -56,7 +56,7 @@ public class EmployeeService {
     //possible realisation of this is strongly depended from front-end
     public void acceptRequestsForAccounts(boolean decision) {
         List<Account> requests = bank.getRequestsForAccount();
-        if (requests.size() != 0) {
+        if (!requests.isEmpty()) {
             Account chechingAccount = requests.get(0);
             logger.info("Request from: " + chechingAccount.getOwnerOfAccount().getFirstName() + " " +
                     chechingAccount.getOwnerOfAccount().getLastName() + " with login: " +
