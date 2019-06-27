@@ -1,10 +1,10 @@
 Customer: Bob Dylan
-history of Account:BC-00014-542:
-Local Send Transaction id= 0, at date:2019-03-18:
-AccountFrom: BC-00014-542, amount of money sent: 450.79; to Account:BC-00015-317
-Local Send Transaction id= 1, at date:2019-04-12:
-AccountFrom: BC-00014-542, amount of money sent: 250.00; to Account:BC-00014-561
-Receive Transaction id= 0, at date:2019-06-26:
-ToAccount: BC-00014-542, amount of money sent: 1150.00; from account:BC-00014-561
-Receive Transaction id= 1, at date:2019-06-26:
-ToAccount: BC-00014-542, amount of money sent: 350.00; from account:BC-00015-317
+history of Account:BC-00014-887:
+Local Send Transaction id= 0, at date:2019-03-19:
+AccountFrom: BC-00014-887, amount of money sent: 450.79; to Account:BC-00015-327
+Local Send Transaction id= 1, at date:2019-04-13:
+AccountFrom: BC-00014-887, amount of money sent: 250.00; to Account:BC-00014-346
+Receive Transaction id= 0, at date:2019-06-27:
+ToAccount: BC-00014-887, amount of money sent: 1150.00; from account:BC-00014-346
+Receive Transaction id= 1, at date:2019-06-27:
+ToAccount: BC-00014-887, amount of money sent: 350.00; from account:BC-00015-327

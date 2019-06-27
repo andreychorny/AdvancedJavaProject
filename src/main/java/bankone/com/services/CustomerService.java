@@ -37,7 +37,7 @@ public class CustomerService {
 
     public String showAllAccounts() {
         String allAccountsInfo = "";
-        final String BALANCE = " balance:";
+        final String BALANCE = "  balance:";
         for (Account account : currentCustomer.getAccounts()) {
             if (account instanceof RegularAccount) {
                 allAccountsInfo += currentCustomer.getAccounts().indexOf(account) + ": Regular:" +
@@ -113,7 +113,7 @@ public class CustomerService {
         return accInUse.getAmountOfMoney();
     }
 
-    public void requestForNewAccount(int numberOfAccountType) throws IllegalAccessException {
+    public void requestForNewAccount(int numberOfAccountType) throws IllegalArgumentException {
         switch (numberOfAccountType) {
             case 1:
                 bank.getRequestsForAccount().add(new RegularAccount(new BigDecimal(1000),
@@ -130,7 +130,7 @@ public class CustomerService {
                 break;
             default: {
                 logger.error("Such type of requested account doesn't exist");
-                throw new IllegalAccessException("No such type of account");
+                throw new IllegalArgumentException("No such type of account");
             }
         }
     }

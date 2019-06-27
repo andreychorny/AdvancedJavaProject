@@ -6,8 +6,8 @@ login= login2
  dateOfBirth= 1999-12-31,
  dateOfJoiningToBank= 2019-06-27,
  accounts:
-0). bankone.com.accounts.RegularAccount: BC-00013-329
-1). bankone.com.accounts.InternationalAccount: BC-00013-733
+0). bankone.com.accounts.RegularAccount: BC-00035-783
+1). bankone.com.accounts.InternationalAccount: BC-00035-521
 }
 Customer{
 login= AzorAhai
