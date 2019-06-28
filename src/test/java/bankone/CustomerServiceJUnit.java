@@ -1,11 +1,11 @@
 package bankone;
 
-import bankone.com.bankdata.Bank;
-import bankone.com.bankdata.Country;
-import bankone.com.bankdata.Customer;
 import bankone.com.accounts.InternationalAccount;
 import bankone.com.accounts.RegularAccount;
 import bankone.com.accounts.SavingAccount;
+import bankone.com.bankdata.Bank;
+import bankone.com.bankdata.Country;
+import bankone.com.bankdata.Customer;
 import bankone.com.services.CustomerService;
 import bankone.com.services.EmployeeService;
 import org.apache.logging.log4j.LogManager;
@@ -34,17 +34,19 @@ public class CustomerServiceJUnit {
     private EmployeeService employeeService;
     private Bank bank;
     private static Logger logger = LogManager.getLogger(CustomerServiceJUnit.class);
-
-
+    private static final String LOGIN_EMPLOYEE = "loginEmployee";
+    private static final String LOGIN_CUSTOMER = "loginCustomer";
+    private static final String PASSWORD_EMP = "password";
+    private static final String PASSWORD_CUST = "qwerty";
     @BeforeEach
     void createCustomerToWorkWith() throws IllegalArgumentException {
         bank = Bank.getInstance();
-        bank.createNewEmployee("loginEmployee", "password", "Employee", "Employee");
-        employeeService = new EmployeeService("loginEmployee", "password");
+        bank.createNewEmployee(LOGIN_EMPLOYEE, PASSWORD_EMP, "Employee", "Employee");
+        employeeService = new EmployeeService(LOGIN_EMPLOYEE, PASSWORD_EMP);
         LocalDate dateOfCustomerBirth = LocalDate.of(1955, 10, 26);
-        currentCustomer = employeeService.createNewCustomer("loginCustomer", "qwerty",
+        currentCustomer = employeeService.createNewCustomer(LOGIN_CUSTOMER, PASSWORD_CUST,
                 "Bob", "Dylan", dateOfCustomerBirth, Country.AMERICA);
-        customerService = new CustomerService("loginCustomer", "qwerty");
+        customerService = new CustomerService(LOGIN_CUSTOMER, PASSWORD_CUST);
 
     }
 
@@ -57,10 +59,10 @@ public class CustomerServiceJUnit {
 
     @Test
     void testLoggingIntoCustomerService() throws IllegalArgumentException {
-        CustomerService customerServiceToTest = new CustomerService("loginCustomer", "qwerty");
+        CustomerService customerServiceToTest = new CustomerService(LOGIN_CUSTOMER, PASSWORD_CUST);
         assertNotNull(customerServiceToTest);
         assertEquals(currentCustomer, customerServiceToTest.getCurrentCustomer());
-        assertThrows(IllegalArgumentException.class, () -> new CustomerService("loginCustomer",
+        assertThrows(IllegalArgumentException.class, () -> new CustomerService(LOGIN_CUSTOMER,
                 "WrongPassword"), "Login exist in database - IllegalArgumentException");
     }
 
@@ -229,7 +231,7 @@ public class CustomerServiceJUnit {
     }
 
     private void employeeAcceptsAllAccounts() throws IllegalArgumentException {
-        EmployeeService employeeService = new EmployeeService("loginEmployee", "password");
+        EmployeeService employeeService = new EmployeeService(LOGIN_EMPLOYEE, PASSWORD_EMP);
         while (bank.getRequestsForAccount().size() != 0) {
             employeeService.acceptRequestsForAccounts(true);
         }
@@ -341,7 +343,7 @@ public class CustomerServiceJUnit {
                 "International Out Transaction id= 0, at date:" + dateNow.minusDays(35) + ":\n" +
                 "AccountFrom: " + custOneIntAcc1Number + ", amount of money sent: 550.00; " +
                 "to Account:" + custTwoIntAcc1Number + "; IBAN code: " + custOneIntAcc1IBAN + "\n" +
-                "Local Send Transaction id= 0, at date:"+dateNow+":\n" +
+                "Local Send Transaction id= 0, at date:" + dateNow + ":\n" +
                 "AccountFrom: " + custOneSavAcc1Number + ", amount of money sent: 1150.00; " +
                 "to Account:" + custOneRegAcc1Number + "\n" +
                 "Receive Transaction id= 0, at date:" + dateNow + ":\n" +
