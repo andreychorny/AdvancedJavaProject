@@ -9,11 +9,11 @@ import java.time.LocalDate;
 
 public class InternationalAccount extends Account {
 
-    private String IBAN;
+    private String iban;
 
-    public InternationalAccount(BigDecimal amountOfMoney, String number, Customer ownerOfAccount, String IBAN) {
+    public InternationalAccount(BigDecimal amountOfMoney, String number, Customer ownerOfAccount, String iban) {
         super(amountOfMoney, number, ownerOfAccount);
-        this.IBAN = generateIBAN(IBAN);
+        this.iban = generateIban(iban);
     }
 
     public void wire(Account toWhichAccount, BigDecimal howMuch) throws IllegalArgumentException {
@@ -36,22 +36,22 @@ public class InternationalAccount extends Account {
     private InternationalOutTransaction createNewInternationalOutTransaction(BigDecimal howMuch,
                                                                              Account toWhichAccount) {
         return new InternationalOutTransaction(getOwnerOfAccount().getInternationalIdCount(),
-                howMuch, this, toWhichAccount.getNumber(), IBAN);
+                howMuch, this, toWhichAccount.getNumber(), iban);
     }
 
-    private String generateIBAN(String countryIBANCode) {
-        StringBuilder generatedIBAN = new StringBuilder();
-        generatedIBAN.append(countryIBANCode + "-");
+    private String generateIban(String countryibanCode) {
+        StringBuilder generatediban = new StringBuilder();
+        generatediban.append(countryibanCode + "-");
         for (int i = 0; i < 8; i++) {
-            generatedIBAN.append((int) (Math.random() * 10));
+            generatediban.append((int) (Math.random() * 10));
         }
-        if (BankUtil.checkIfIBANIsUnique(generatedIBAN.toString())) {
-            return generatedIBAN.toString();
+        if (BankUtil.checkIfIbanIsUnique(generatediban.toString())) {
+            return generatediban.toString();
         }
-        return generateIBAN(countryIBANCode);
+        return generateIban(countryibanCode);
     }
 
-    public String getIBAN() {
-        return IBAN;
+    public String getIban() {
+        return iban;
     }
 }

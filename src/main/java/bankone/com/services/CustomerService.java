@@ -181,22 +181,22 @@ public class CustomerService {
 
     public String checkTransactionsPerSpecificDate(LocalDate dateFrom, LocalDate dateTo) {
         File file = new File(PARRENT_LOCATION, "customerReportHistoryBetween2Dates.txt");
-        String resultOutput;
-        resultOutput = "Customer: " + currentCustomer.getFirstName() + " " +
+        StringBuilder resultOutput = new StringBuilder();
+        resultOutput.append("Customer: " + currentCustomer.getFirstName() + " " +
                 currentCustomer.getLastName() + "\nhistory of transactions between " + dateFrom + " and " +
-                dateTo + "\n";
+                dateTo + "\n");
         for (int i : currentCustomer.getHistory().keySet()) {
             LocalDate dateOfTransaction = currentCustomer.getHistory().get(i).getLocalDateOfTransaction();
             if (dateOfTransaction.compareTo(dateFrom) >= 0 && (dateOfTransaction.compareTo(dateTo) <= 0)) {
-                resultOutput += currentCustomer.getHistory().get(i) + "\n";
+                resultOutput.append(currentCustomer.getHistory().get(i) + "\n");
             }
         }
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()))) {
-            bw.write(resultOutput);
+            bw.write(resultOutput.toString());
         } catch (IOException e) {
             logger.error(e);
         }
-        return resultOutput;
+        return resultOutput.toString();
     }
 
     public Customer getCurrentCustomer() {

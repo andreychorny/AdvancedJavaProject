@@ -333,7 +333,7 @@ public class CustomerServiceJUnit {
         String custOneRegAcc1Number = currentCustomer.getAccounts().get(0).getNumber();
         String custOneSavAcc1Number = currentCustomer.getAccounts().get(1).getNumber();
         String custOneIntAcc1Number = currentCustomer.getAccounts().get(2).getNumber();
-        String custOneIntAcc1IBAN = ((InternationalAccount) currentCustomer.getAccounts().get(2)).getIBAN();
+        String custOneIntAcc1IBAN = ((InternationalAccount) currentCustomer.getAccounts().get(2)).getIban();
         String custTwoRegAcc1Number = bank.getCustomers().get(1).getAccounts().get(0).getNumber();
         String custTwoIntAcc1Number = bank.getCustomers().get(1).getAccounts().get(2).getNumber();
         return "Customer: Bob Dylan\n" +

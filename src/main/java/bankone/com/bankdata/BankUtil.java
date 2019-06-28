@@ -21,11 +21,11 @@ public class BankUtil {
         return login.matches("[A-Za-z0-9_]*");
     }
 
-    public static boolean checkIfIBANIsUnique(String IBANToCheck) {
+    public static boolean checkIfIbanIsUnique(String IBANToCheck) {
         for (Customer customer : Bank.getInstance().getCustomers()) {
             for (Account account : customer.getAccounts()) {
                 if ((account instanceof InternationalAccount) &&
-                        ((InternationalAccount) account).getIBAN().equals(IBANToCheck)) return false;
+                        ((InternationalAccount) account).getIban().equals(IBANToCheck)) return false;
             }
         }
         return true;
@@ -50,7 +50,7 @@ public class BankUtil {
         return true;
     }
 
-    public static <T extends Person> boolean checkIfLoggingInfoIsSuitable(String login,
+    public static boolean checkIfLoggingInfoIsSuitable(String login,
                                                                           String passwordString) {
         char[] password = passwordString.toCharArray();
         for (Customer customer : Bank.getInstance().getCustomers()) {
@@ -66,4 +66,6 @@ public class BankUtil {
         return false;
     }
 
+    private BankUtil() {
+    }
 }

@@ -160,7 +160,7 @@ public class ReportsServiceJUnit {
         String regulAcc1 = accountsCust1.get(0).getNumber();
         String savingAcc1 = accountsCust1.get(1).getNumber();
         String interAcc1 = accountsCust1.get(3).getNumber();
-        String interAcc1IBAN = ((InternationalAccount) accountsCust1.get(3)).getIBAN();
+        String interAcc1IBAN = ((InternationalAccount) accountsCust1.get(3)).getIban();
         String regulAcc2 = accountsCust1.get(2).getNumber();
         String secCustInterAcc1 = accountsCust2.get(1).getNumber();
         String secondCustRegulAcc1 = accountsCust2.get(0).getNumber();

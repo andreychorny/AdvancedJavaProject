@@ -2,5 +2,5 @@ projectKey=AdvancedJavaProject
 serverUrl=http://localhost:9000
 serverVersion=7.8.0.26217
 dashboardUrl=http://localhost:9000/dashboard?id=AdvancedJavaProject
-ceTaskId=AWuaaGkEM1PGZawwx1rT
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AWuaaGkEM1PGZawwx1rT
+ceTaskId=AWubPpRjM1PGZawwx1rU
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AWubPpRjM1PGZawwx1rU

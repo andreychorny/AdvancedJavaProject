@@ -43,7 +43,7 @@ public class Bank {
         requestsForAccount = new ArrayList<>();
     }
 
-    public synchronized static Bank getInstance() {
+    public static synchronized Bank getInstance() {
         if (bankInstance == null) {
             bankInstance = new Bank();
         }
@@ -89,7 +89,7 @@ public class Bank {
     }
 
     public String createRandomNumberForAcc(Customer customer) {
-        StringBuffer generatedNumber = new StringBuffer();
+        StringBuilder generatedNumber = new StringBuilder();
         //"BC" is a Bank Code
         generatedNumber.append("BC-");
         DecimalFormat formatter = new DecimalFormat("00000");

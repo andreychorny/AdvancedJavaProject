@@ -16,7 +16,7 @@ public class ReceiveTransaction extends Transaction {
 
     @Override
     public String toString() {
-        return "Receive Transaction id= " + super.id + ", at date:" + super.getDateOfTransaction() + ":\n" +
+        return "Receive Transaction id= " + super.id + ", at date:" + super.getLocalDateOfTransaction() + ":\n" +
                 "ToAccount: " + super.getAccountOfTransaction().getNumber() + ", amount of money sent: " +
                 super.getDeliveredAmount()+ "; from account:" + fromWhichAccountNumber;
     }

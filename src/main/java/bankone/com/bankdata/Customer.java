@@ -29,7 +29,7 @@ public class Customer extends Person {
         this.country = country;
         internationalIdCount = 0;
         id = currentLastCustomerId;
-        currentLastCustomerId += 1;
+        currentLastCustomerId++;
     }
 
     public Map<Integer, Transaction> getHistory() {
@@ -62,10 +62,10 @@ public class Customer extends Person {
 
     @Override
     public String toString() {
-        String accountsInfo = new String("");
+        StringBuilder accountsInfo = new StringBuilder();
         for (Account account : accounts) {
-            accountsInfo = accountsInfo + accounts.indexOf(account) + "). " +
-                    account.getClass().getName() + ": " + account.getNumber() + "\n";
+            accountsInfo.append(accounts.indexOf(account) + "). " +
+                    account.getClass().getName() + ": " + account.getNumber() + "\n");
         }
         return "Customer{\n" +
                 "login= " + getLogin() + "\n" +

@@ -42,7 +42,4 @@ public abstract class Transaction {
         this.dateOfTransaction = dateOfTransaction;
     }
 
-    public LocalDate getDateOfTransaction() {
-        return dateOfTransaction;
-    }
 }
